@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>낚시 도감 - 두근두근타운</title>
+    <link rel="stylesheet" href="../../css/common.css">
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<main>
+    <div class="page-header">
+        <h1>🎣 낚시 도감</h1>
+        <p>두근두근타운의 모든 물고기 정보를 확인하세요</p>
+    </div>
+
+    <div class="stats" id="stats">
+        <div class="stat-card">
+            <div class="number">-</div>
+            <div class="label">총 물고기 종류</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">-</div>
+            <div class="label">서식지 종류</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">-</div>
+            <div class="label">최고 판매가</div>
+        </div>
+    </div>
+
+    <div class="filter-section">
+        <h2>🔍 필터</h2>
+
+        <div class="search-box">
+            <label for="fishSearch">🐟 물고기 이름 검색</label>
+            <input type="text" id="fishSearch" placeholder="예: 연어, 배스, 붕어..." oninput="applyFilters()">
+        </div>
+
+        <div class="filter-groups">
+            <div class="filter-group">
+                <h3>⏰ 출현 시간</h3>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="아침" onchange="applyFilters()"> 아침
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="낮" onchange="applyFilters()"> 낮
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="저녁" onchange="applyFilters()"> 저녁
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="밤" onchange="applyFilters()"> 밤
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h3>☁️ 날씨 조건</h3>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="맑음" onchange="applyFilters()"> 맑음
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="비" onchange="applyFilters()"> 비
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="무지개" onchange="applyFilters()"> 무지개
+                    </label>
+                    <label class="checkbox-label" style="border-top: 1px solid #e9ecef; margin-top: 5px; padding-top: 10px;">
+                        <input type="checkbox" id="rainbowOnly" onchange="applyFilters()"> 🌈 무지개에만 등장
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button onclick="selectAllTime()" class="filter-btn">시간 전체선택</button>
+                <button onclick="selectAllWeather()" class="filter-btn">날씨 전체선택</button>
+                <button onclick="resetFilters()" class="filter-btn-reset">필터 초기화</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="habitat-section" id="content">
+        <div class="loading">🐟 물고기 정보를 불러오는 중...</div>
+    </div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="../../common.js"></script>
+
+<script>
+    let fishData = [];
+    let currentSort = { column: 'name', order: 'asc' };
+
+    async function loadFishData() {
+        try {
+            // 여러 경로 시도
+            let response = await fetch('fish_data.json');
+
+            // 첫 번째 시도 실패 시 다른 경로 시도
+            if (!response.ok) {
+                response = await fetch('./fish_data.json');
+            }
+
+            if (!response.ok) {
+                throw new Error('fish_data.json 파일을 찾을 수 없습니다.');
+            }
+
+            fishData = await response.json();
+            console.log('물고기 데이터 로드 성공:', fishData.length + '종');
+            displayStats();
+            displayAllFish();
+        } catch (error) {
+            console.error('데이터 로드 에러:', error);
+            document.getElementById('content').innerHTML =
+                `<div class="error">❌ 데이터 파일을 불러올 수 없습니다.<br><small>fish_data.json 파일이 /src/pages/fish/ 폴더에 있는지 확인해주세요.<br>현재 경로: ${window.location.pathname}</small></div>`;
+        }
+    }
+
+    function getSelectedFilters() {
+        const timeCheckboxes = document.querySelectorAll('.filter-group:nth-child(1) input[type="checkbox"]:checked');
+        const weatherCheckboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]:checked:not(#rainbowOnly)');
+        const rainbowOnly = document.getElementById('rainbowOnly')?.checked || false;
+        const searchText = document.getElementById('fishSearch')?.value.trim().toLowerCase() || '';
+
+        return {
+            times: Array.from(timeCheckboxes).map(cb => cb.value),
+            weathers: Array.from(weatherCheckboxes).map(cb => cb.value),
+            rainbowOnly: rainbowOnly,
+            searchText: searchText
+        };
+    }
+
+    function applyFilters() {
+        displayAllFish();
+    }
+
+    function selectAllTime() {
+        const checkboxes = document.querySelectorAll('.filter-group:nth-child(1) input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = true);
+        applyFilters();
+    }
+
+    function selectAllWeather() {
+        const checkboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = true);
+        applyFilters();
+    }
+
+    function resetFilters() {
+        const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+        allCheckboxes.forEach(cb => cb.checked = false);
+        applyFilters();
+    }
+
+    function displayStats() {
+        const totalFish = fishData.length;
+        const habitats = [...new Set(fishData.map(f => f.habitat))].length;
+        const maxPrice = Math.max(...fishData.map(f => f.price));
+        const statsHTML = `
+            <div class="stat-card">
+                <div class="number">${totalFish}</div>
+                <div class="label">총 물고기 종류</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">${habitats}</div>
+                <div class="label">서식지 종류</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">₩${maxPrice}</div>
+                <div class="label">최고 판매가</div>
+            </div>
+        `;
+        document.getElementById('stats').innerHTML = statsHTML;
+    }
+
+    function sortFish(fishes, column, order) {
+        return [...fishes].sort((a, b) => {
+            let valueA, valueB;
+
+            if (column === 'name' || column === 'habitat') {
+                valueA = column === 'name' ? a.name : a.habitat;
+                valueB = column === 'name' ? b.name : b.habitat;
+                return order === 'asc' ? valueA.localeCompare(valueB, 'ko') : valueB.localeCompare(valueA, 'ko');
+            } else if (column === 'level') {
+                valueA = a.level;
+                valueB = b.level;
+            } else if (column === 'price') {
+                valueA = a.price;
+                valueB = b.price;
+            }
+
+            return order === 'asc' ? valueA - valueB : valueB - valueA;
+        });
+    }
+
+    function handleSort(column) {
+        if (currentSort.column === column) {
+            currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSort.column = column;
+            currentSort.order = 'asc';
+        }
+        displayAllFish();
+    }
+
+    function displayAllFish() {
+        const filters = getSelectedFilters();
+
+        // 필터 적용
+        let filteredFish = fishData;
+
+        // 이름 검색 필터
+        if (filters.searchText) {
+            filteredFish = filteredFish.filter(fish => {
+                return fish.name.toLowerCase().includes(filters.searchText);
+            });
+        }
+
+        // 시간 필터: 선택한 시간 중 하나라도 포함되면 표시 (OR 조건)
+        if (filters.times.length > 0) {
+            filteredFish = filteredFish.filter(fish => {
+                if (!fish.time || fish.time.length === 0) return false;
+                return fish.time.some(t => filters.times.includes(t));
+            });
+        }
+
+        // "무지개에만 등장" 필터
+        if (filters.rainbowOnly) {
+            filteredFish = filteredFish.filter(fish => {
+                if (!fish.weather || fish.weather.length === 0) return false;
+                // 날씨가 정확히 ["무지개"]만 있는 물고기
+                return fish.weather.length === 1 && fish.weather[0] === "무지개";
+            });
+        }
+        // 일반 날씨 필터: 선택한 날씨 중 하나라도 포함되면 표시 (OR 조건)
+        else if (filters.weathers.length > 0) {
+            filteredFish = filteredFish.filter(fish => {
+                if (!fish.weather || fish.weather.length === 0) return false;
+                return fish.weather.some(w => filters.weathers.includes(w));
+            });
+        }
+
+        const sortedFish = sortFish(filteredFish, currentSort.column, currentSort.order);
+
+        let html = `
+            <div class="habitat-group">
+                <div class="habitat-header">
+                    <span>전체 물고기 목록</span>
+                    <span class="count-badge">${sortedFish.length}종</span>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="sortable ${currentSort.column === 'name' ? 'sort-' + currentSort.order : ''}"
+                                    onclick="handleSort('name')">이름</th>
+                                <th class="sortable ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}"
+                                    onclick="handleSort('habitat')">서식지</th>
+                                <th class="sortable ${currentSort.column === 'level' ? 'sort-' + currentSort.order : ''}"
+                                    onclick="handleSort('level')">레벨</th>
+                                <th class="sortable ${currentSort.column === 'price' ? 'sort-' + currentSort.order : ''}"
+                                    onclick="handleSort('price')">판매가</th>
+                                <th>출현 시간</th>
+                                <th>날씨 조건</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        `;
+
+        sortedFish.forEach(fish => {
+            const timeDisplay = fish.timeAll ? '하루 종일' : fish.time.map(t => `<span class="time-badge">${t}</span>`).join(' ');
+            const weatherDisplay = fish.weatherAll ? '항상' : fish.weather.map(w => `<span class="weather-badge">${w}</span>`).join(' ');
+
+            html += `
+                <tr>
+                    <td class="fish-name">${fish.name}</td>
+                    <td>${getHabitatIcon(fish.habitat)} ${fish.habitat}</td>
+                    <td><span class="level-badge">Lv.${fish.level}</span></td>
+                    <td class="price">₩${fish.price}</td>
+                    <td>${timeDisplay}</td>
+                    <td>${weatherDisplay}</td>
+                </tr>
+            `;
+        });
+
+        html += `
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('content').innerHTML = html;
+    }
+
+    function getHabitatIcon(habitat) {
+        const icons = {
+            '모든 강': '🌊',
+            '얕은 강': '💧',
+            '노을강': '🌅',
+            '고요한 강': '🏞️',
+            '거목강': '🌳',
+            '모든 호수': '💦',
+            '근교 호수': '🏘️',
+            '초원 호수': '🌾',
+            '온천 산수': '♨️',
+            '숲속 호수': '🌲',
+            '모든 바다': '🌊',
+            '구해': '🏖️',
+            '동해': '🐚',
+            '잔잔한 바다': '🌅',
+            '고래바다': '🐋',
+            '바다낚시': '⚓'
+        };
+        return icons[habitat] || '🐟';
+    }
+
+    window.onload = loadFishData;
+</script>
+</body>
+</html>

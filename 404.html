@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 페이지를 찾을 수 없습니다</title>
+    <link rel="stylesheet" href="src/css/common.css">
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .error-icon {
+            font-size: 8em;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .error-title {
+            font-size: 6em;
+            font-weight: 800;
+            color: #ff6b9d;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(255, 107, 157, 0.2);
+        }
+
+        .error-message {
+            font-size: 1.8em;
+            color: #666;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .error-description {
+            font-size: 1.2em;
+            color: #888;
+            margin-bottom: 40px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .error-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-home, .btn-back {
+            padding: 18px 40px;
+            font-size: 1.2em;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-home {
+            background: #ff6b9d;
+            color: white;
+            border: none;
+        }
+
+        .btn-home:hover {
+            background: #ff5588;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-back {
+            background: white;
+            color: #ff6b9d;
+            border: 2px solid #ff6b9d;
+        }
+
+        .btn-back:hover {
+            background: #fff5f8;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.2);
+        }
+
+        .helpful-links {
+            margin-top: 60px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .helpful-links h3 {
+            font-size: 1.8em;
+            color: #ff6b9d;
+            margin-bottom: 25px;
+        }
+
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .quick-link:hover {
+            background: #ff6b9d;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .quick-link-icon {
+            font-size: 1.5em;
+        }
+
+        @media (max-width: 768px) {
+            .error-title {
+                font-size: 4em;
+            }
+
+            .error-icon {
+                font-size: 5em;
+            }
+
+            .error-message {
+                font-size: 1.4em;
+            }
+
+            .error-description {
+                font-size: 1em;
+            }
+
+            .error-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-home, .btn-back {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div class="error-container">
+            <div class="error-icon">🎣</div>
+            <h1 class="error-title">404</h1>
+            <p class="error-message">앗! 물고기가 도망쳤어요!</p>
+            <p class="error-description">
+                찾으시는 페이지가 존재하지 않거나 이동되었습니다.<br>
+                주소를 다시 확인해주시거나 아래 버튼을 통해 이동해주세요.
+            </p>
+
+            <div class="error-buttons">
+                <a href="https://polarprince.dothome.co.kr/heartopia/src/pages/main.html" class="btn-home">🏠 홈으로 가기</a>
+                <button onclick="history.back()" class="btn-back">⬅️ 이전 페이지</button>
+            </div>
+
+            <div class="helpful-links">
+                <h3>🔗 빠른 링크</h3>
+                <div class="link-grid">
+                    <a href="https://polarprince.dothome.co.kr/heartopia/src/pages/main.html" class="quick-link">
+                        <span class="quick-link-icon">🏡</span>
+                        <span>메인 페이지</span>
+                    </a>
+                    <a href="https://polarprince.dothome.co.kr/heartopia/src/pages/fish/fishing.html" class="quick-link">
+                        <span class="quick-link-icon">📖</span>
+                        <span>낚시 도감</span>
+                    </a>
+                    <a href="https://polarprince.dothome.co.kr/heartopia/src/pages/fish/fishing_finder.html" class="quick-link">
+                        <span class="quick-link-icon">🔍</span>
+                        <span>물고기 찾기</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="src/common.js"></script>
+</body>
+</html>

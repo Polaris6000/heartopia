@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물고기 찾기 - 두근두근타운</title>
+    <link rel="stylesheet" href="../../css/common.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div class="datetime-section">
+            <h1>🔍 물고기 찾기</h1>
+            <p>현재 조건에서 잡을 수 있는 물고기를 찾아보세요</p>
+
+            <div class="datetime-display">
+                <div class="date-info">
+                    <div class="current-date" id="currentDate"></div>
+                    <div class="current-time" id="currentTime"></div>
+                </div>
+            </div>
+            <div class="time-bar">
+                <div class="time-segment morning">
+                    <div class="segment-label">🌅 아침</div>
+                    <div class="segment-time">06:00 - 12:00</div>
+                </div>
+                <div class="time-segment afternoon">
+                    <div class="segment-label">☀️ 낮</div>
+                    <div class="segment-time">12:00 - 18:00</div>
+                </div>
+                <div class="time-segment evening">
+                    <div class="segment-label">🌆 저녁</div>
+                    <div class="segment-time">18:00 - 00:00</div>
+                </div>
+                <div class="time-segment night">
+                    <div class="segment-label">🌙 밤</div>
+                    <div class="segment-time">00:00 - 06:00</div>
+                </div>
+                <div class="time-indicator" id="timeIndicator"></div>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <div class="input-item">
+                    <label for="fishName">🐟 물고기 이름</label>
+                    <input type="text" id="fishName" placeholder="예: 배스, 연어, 붕어" oninput="filterFish()">
+                </div>
+
+                <div class="input-item">
+                    <label for="level">🎣 낚시 레벨</label>
+                    <input type="number" id="level" min="1" max="20" value="5">
+                </div>
+
+                <div class="input-item">
+                    <label for="time">🕐 시간대</label>
+                    <select id="time">
+                        <option value="아침">아침</option>
+                        <option value="낮">낮</option>
+                        <option value="저녁">저녁</option>
+                        <option value="밤" selected>밤</option>
+                    </select>
+                </div>
+
+                <div class="input-item">
+                    <label for="weather">🌤️ 날씨</label>
+                    <select id="weather">
+                        <option value="맑음" selected>맑음</option>
+                        <option value="비">비</option>
+                        <option value="무지개">무지개</option>
+                    </select>
+                </div>
+            </div>
+
+            <button onclick="filterFish()">🔍 물고기 찾기</button>
+        </div>
+
+        <div id="results" class="results"></div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../../common.js"></script>
+    <script>
+        let fishData = [];
+        let currentSort = { column: 'name', order: 'asc' };
+
+        function updateDateTime() {
+            const now = new Date();
+            const days = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const date = String(now.getDate()).padStart(2, '0');
+            const dayName = days[now.getDay()];
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            document.getElementById('currentDate').textContent =
+                `${year}년 ${month}월 ${date}일 ${dayName}`;
+            document.getElementById('currentTime').textContent =
+                `${hours}:${minutes}:${seconds}`;
+
+            // 현재 시간대 계산 및 활성화
+            const hour = now.getHours();
+            let currentPeriod = '';
+            let position = 0;
+
+            if (hour >= 6 && hour < 12) {
+                currentPeriod = 'morning';
+                position = ((hour - 6) * 60 + now.getMinutes()) / 360;
+                position = position * 25 + 12.5;
+            } else if (hour >= 12 && hour < 18) {
+                currentPeriod = 'afternoon';
+                position = ((hour - 12) * 60 + now.getMinutes()) / 360;
+                position = position * 25 + 37.5;
+            } else if (hour >= 18 && hour < 24) {
+                currentPeriod = 'evening';
+                position = ((hour - 18) * 60 + now.getMinutes()) / 360;
+                position = position * 25 + 62.5;
+            } else {
+                currentPeriod = 'night';
+                position = (hour * 60 + now.getMinutes()) / 360;
+                position = position * 25 + 87.5;
+            }
+
+            // 모든 세그먼트에서 active 클래스 제거
+            document.querySelectorAll('.time-segment').forEach(seg => {
+                seg.classList.remove('active');
+            });
+
+            // 현재 시간대에 active 클래스 추가
+            const activeSegment = document.querySelector(`.time-segment.${currentPeriod}`);
+            if (activeSegment) {
+                activeSegment.classList.add('active');
+            }
+
+            // 인디케이터 위치 설정
+            const indicator = document.getElementById('timeIndicator');
+            indicator.style.left = `calc(${position}% - 12px)`;
+        }
+
+        // 1초마다 업데이트
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        async function loadFishData() {
+            try {
+                const response = await fetch('fish_data.json');
+                if (!response.ok) throw new Error('fish_data.json 파일을 찾을 수 없습니다.');
+                fishData = await response.json();
+                filterFish();
+            } catch (error) {
+                document.getElementById('results').innerHTML =
+                    `<div class="error">❌ 데이터 파일을 불러올 수 없습니다.<br><small>fish_data.json 파일이 같은 폴더에 있는지 확인해주세요.</small></div>`;
+            }
+        }
+
+        function filterFish() {
+            if (fishData.length === 0) {
+                document.getElementById('results').innerHTML = '<div class="loading">⏳ 데이터를 불러오는 중...</div>';
+                return;
+            }
+
+            const fishName = document.getElementById('fishName').value.trim().toLowerCase();
+            const level = parseInt(document.getElementById('level').value);
+            const time = document.getElementById('time').value;
+            const weather = document.getElementById('weather').value;
+
+            const filtered = fishData.filter(fish => {
+                if (fishName && !fish.name.toLowerCase().includes(fishName)) return false;
+                if (fish.level > level) return false;
+                const timeOk = fish.time && fish.time.includes(time);
+                const weatherOk = fish.weather && fish.weather.includes(weather);
+                return timeOk && weatherOk;
+            });
+
+            displayResults(filtered);
+        }
+
+        function sortFish(fishes, column, order) {
+            return [...fishes].sort((a, b) => {
+                let valueA, valueB;
+                if (column === 'name' || column === 'habitat') {
+                    valueA = column === 'name' ? a.name : a.habitat;
+                    valueB = column === 'name' ? b.name : b.habitat;
+                    return order === 'asc' ? valueA.localeCompare(valueB, 'ko') : valueB.localeCompare(valueA, 'ko');
+                } else if (column === 'level') {
+                    valueA = a.level;
+                    valueB = b.level;
+                } else if (column === 'price') {
+                    valueA = a.price;
+                    valueB = b.price;
+                }
+                return order === 'asc' ? valueA - valueB : valueB - valueA;
+            });
+        }
+
+        function handleSort(column) {
+            if (currentSort.column === column) {
+                currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.order = 'asc';
+            }
+            filterFish();
+        }
+
+        function displayResults(fishes) {
+            const resultsDiv = document.getElementById('results');
+
+            if (fishes.length === 0) {
+                resultsDiv.innerHTML = '<div class="no-results">⚠️ 현재 조건에서 잡을 수 있는 물고기가 없어요!</div>';
+                return;
+            }
+
+            const sortedFishes = sortFish(fishes, currentSort.column, currentSort.order);
+
+            let html = `
+                <div class="habitat-group">
+                    <div class="habitat-header">
+                        <span>검색 결과</span>
+                        <span class="count-badge">${sortedFishes.length} 종</span>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="sortable ${currentSort.column === 'name' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('name')">이름</th>
+                                    <th class="sortable ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('habitat')">서식지</th>
+                                    <th class="sortable ${currentSort.column === 'level' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('level')">레벨</th>
+                                    <th class="sortable ${currentSort.column === 'price' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('price')">판매가</th>
+                                    <th>출현 시간</th>
+                                    <th>날씨 조건</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+            sortedFishes.forEach(fish => {
+                const timeDisplay = fish.time ? fish.time.map(t => `<span class="time-badge">${t}</span>`).join(' ') : '-';
+                const weatherDisplay = fish.weather ? fish.weather.map(w => `<span class="weather-badge">${w}</span>`).join(' ') : '-';
+
+                html += `
+                    <tr>
+                        <td class="fish-name">${fish.name}</td>
+                        <td>${fish.habitat}</td>
+                        <td><span class="level-badge">Lv.${fish.level}</span></td>
+                        <td class="price">₩${fish.price}</td>
+                        <td>${timeDisplay}</td>
+                        <td>${weatherDisplay}</td>
+                    </tr>`;
+            });
+
+            html += `</tbody></table></div></div>`;
+            resultsDiv.innerHTML = html;
+        }
+
+        window.onload = loadFishData;
+    </script>
+</body>
+</html>
