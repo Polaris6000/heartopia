@@ -141,13 +141,21 @@
 
     function selectAllTime() {
         const checkboxes = document.querySelectorAll('.filter-group:nth-child(1) input[type="checkbox"]');
-        checkboxes.forEach(cb => cb.checked = true);
+        checkboxes.forEach(cb => {
+                if (!cb.id.includes('Only')) { // Only 들어간 것만 빼고
+                    cb.checked = true;
+                }
+            });
         applyFilters();
     }
 
     function selectAllWeather() {
         const checkboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]');
-        checkboxes.forEach(cb => cb.checked = true);
+        checkboxes.forEach(cb => {
+                if (!cb.id.includes('Only')) { // Only 들어간 것만 빼고
+                    cb.checked = true;
+                }
+            });
         applyFilters();
     }
 
