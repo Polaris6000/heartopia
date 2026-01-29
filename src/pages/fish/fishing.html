@@ -43,33 +43,45 @@
                 <h3>⏰ 출현 시간</h3>
                 <div class="checkbox-group">
                     <label class="checkbox-label">
-                        <input type="checkbox" value="아침" onchange="applyFilters()"> 아침
+                        <input type="checkbox" value="아침" onchange="applyFilters()"> 🌅 아침
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" value="낮" onchange="applyFilters()"> 낮
+                        <input type="checkbox" value="낮" onchange="applyFilters()"> ☀️ 낮
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" value="저녁" onchange="applyFilters()"> 저녁
+                        <input type="checkbox" value="저녁" onchange="applyFilters()"> 🌇 저녁
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" value="밤" onchange="applyFilters()"> 밤
+                        <input type="checkbox" value="밤" onchange="applyFilters()"> 🌙 밤
                     </label>
                 </div>
             </div>
 
             <div class="filter-group">
-                <h3>☁️ 날씨 조건</h3>
+                <h3>🌤️ 포함할 날씨</h3>
                 <div class="checkbox-group">
                     <label class="checkbox-label">
-                        <input type="checkbox" value="맑음" onchange="applyFilters()"> 맑음
+                        <input type="checkbox" value="맑음" onchange="applyFilters()"> ☀️ 맑음
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" value="비" onchange="applyFilters()"> 비
+                        <input type="checkbox" value="비" onchange="applyFilters()"> 🌧️ 비
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" value="무지개" onchange="applyFilters()"> 무지개
+                        <input type="checkbox" value="무지개" onchange="applyFilters()"> 🌈 무지개
                     </label>
-                    <label class="checkbox-label" style="border-top: 1px solid #e9ecef; margin-top: 5px; padding-top: 10px;">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h3>🔒 전용 날씨</h3>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="sunnyOnly" onchange="applyFilters()"> ☀️ 맑음에만 등장
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rainyOnly" onchange="applyFilters()"> 🌧️ 비에만 등장
+                    </label>
+                    <label class="checkbox-label">
                         <input type="checkbox" id="rainbowOnly" onchange="applyFilters()"> 🌈 무지개에만 등장
                     </label>
                 </div>
@@ -123,14 +135,18 @@
 
     function getSelectedFilters() {
         const timeCheckboxes = document.querySelectorAll('.filter-group:nth-child(1) input[type="checkbox"]:checked');
-        const weatherCheckboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]:checked:not(#rainbowOnly)');
+        const weatherCheckboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]:checked:not(#rainbowOnly):not(#sunnyOnly):not(#rainyOnly)');
         const rainbowOnly = document.getElementById('rainbowOnly')?.checked || false;
+        const sunnyOnly = document.getElementById('sunnyOnly')?.checked || false;
+        const rainyOnly = document.getElementById('rainyOnly')?.checked || false;
         const searchText = document.getElementById('fishSearch')?.value.trim().toLowerCase() || '';
 
         return {
             times: Array.from(timeCheckboxes).map(cb => cb.value),
             weathers: Array.from(weatherCheckboxes).map(cb => cb.value),
             rainbowOnly: rainbowOnly,
+            sunnyOnly: sunnyOnly,
+            rainyOnly: rainyOnly,
             searchText: searchText
         };
     }
@@ -141,27 +157,24 @@
 
     function selectAllTime() {
         const checkboxes = document.querySelectorAll('.filter-group:nth-child(1) input[type="checkbox"]');
-        checkboxes.forEach(cb => {
-                if (!cb.id.includes('Only')) { // Only 들어간 것만 빼고
-                    cb.checked = true;
-                }
-            });
+        checkboxes.forEach(cb => cb.checked = true);
         applyFilters();
     }
 
     function selectAllWeather() {
         const checkboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]');
         checkboxes.forEach(cb => {
-                if (!cb.id.includes('Only')) { // Only 들어간 것만 빼고
-                    cb.checked = true;
-                }
-            });
+            if (!cb.id.includes('Only')) { // Only 들어간 것만 빼고
+                cb.checked = true;
+            }
+        });
         applyFilters();
     }
 
     function resetFilters() {
         const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
         allCheckboxes.forEach(cb => cb.checked = false);
+        document.getElementById('fishSearch').value = '';
         applyFilters();
     }
 
@@ -237,12 +250,29 @@
             });
         }
 
+        // 날씨 필터 로직
         // "무지개에만 등장" 필터
         if (filters.rainbowOnly) {
             filteredFish = filteredFish.filter(fish => {
                 if (!fish.weather || fish.weather.length === 0) return false;
                 // 날씨가 정확히 ["무지개"]만 있는 물고기
                 return fish.weather.length === 1 && fish.weather[0] === "무지개";
+            });
+        }
+        // "맑음에만 등장" 필터 (맑음 + 무지개는 OK, 비가 포함되면 안 됨)
+        else if (filters.sunnyOnly) {
+            filteredFish = filteredFish.filter(fish => {
+                if (!fish.weather || fish.weather.length === 0) return false;
+                // 맑음이 포함되어야 하고, 비가 포함되면 안 됨 (무지개는 상관없음)
+                return fish.weather.includes("맑음") && !fish.weather.includes("비");
+            });
+        }
+        // "비에만 등장" 필터 (비 + 무지개는 OK, 맑음이 포함되면 안 됨)
+        else if (filters.rainyOnly) {
+            filteredFish = filteredFish.filter(fish => {
+                if (!fish.weather || fish.weather.length === 0) return false;
+                // 비가 포함되어야 하고, 맑음이 포함되면 안 됨 (무지개는 상관없음)
+                return fish.weather.includes("비") && !fish.weather.includes("맑음");
             });
         }
         // 일반 날씨 필터: 선택한 날씨 중 하나라도 포함되면 표시 (OR 조건)
@@ -269,6 +299,7 @@
                                     onclick="handleSort('name')">이름</th>
                                 <th class="sortable ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}"
                                     onclick="handleSort('habitat')">서식지</th>
+                                <th>크기</th>
                                 <th class="sortable ${currentSort.column === 'level' ? 'sort-' + currentSort.order : ''}"
                                     onclick="handleSort('level')">레벨</th>
                                 <th class="sortable ${currentSort.column === 'price' ? 'sort-' + currentSort.order : ''}"
@@ -283,11 +314,13 @@
         sortedFish.forEach(fish => {
             const timeDisplay = fish.timeAll ? '하루 종일' : fish.time.map(t => `<span class="time-badge">${t}</span>`).join(' ');
             const weatherDisplay = fish.weatherAll ? '항상' : fish.weather.map(w => `<span class="weather-badge">${w}</span>`).join(' ');
+            const sizeDisplay = fish.size || '-';
 
             html += `
                 <tr>
                     <td class="fish-name">${fish.name}</td>
                     <td>${getHabitatIcon(fish.habitat)} ${fish.habitat}</td>
+                    <td>${sizeDisplay}</td>
                     <td><span class="level-badge">Lv.${fish.level}</span></td>
                     <td class="price">₩${fish.price}</td>
                     <td>${timeDisplay}</td>
