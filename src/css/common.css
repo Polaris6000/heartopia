@@ -451,17 +451,17 @@ th:hover {
 }
 
 th.sortable::after {
-    content: ' â‡…';
+    content: ' ↕'; /* 정렬 가능 상태 */
     opacity: 0.3;
 }
 
 th.sort-asc::after {
-    content: ' â†‘';
+    content: ' ↑'; /* 오름차순 */
     opacity: 1;
 }
 
 th.sort-desc::after {
-    content: ' â†“';
+    content: ' ↓'; /* 내림차순 */
     opacity: 1;
 }
 
