@@ -1,4 +1,4 @@
-/* ê³µí†µ ìŠ¤íƒ€ì¼ */
+/* 공통 스타일 */
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +13,7 @@ body {
     flex-direction: column;
 }
 
-/* í—¤ë” */
+/* 헤더 */
 header {
     background: white;
     padding: 20px 0;
@@ -61,7 +61,7 @@ nav a:hover {
     transform: translateY(-2px);
 }
 
-/* ë©”ì¸ ì»¨í…ì¸  */
+/* 메인 컨텐츠 */
 main {
     flex: 1;
     max-width: 1200px;
@@ -70,7 +70,7 @@ main {
     width: 100%;
 }
 
-/* í‘¸í„° */
+/* 푸터 */
 footer {
     background: white;
     padding: 30px 0;
@@ -107,7 +107,7 @@ footer {
     color: #ff9a9e;
 }
 
-/* íŽ˜ì´ì§€ í—¤ë” */
+/* 페이지 헤더 */
 .page-header {
     background: white;
     padding: 40px;
@@ -128,7 +128,7 @@ footer {
     color: #888;
 }
 
-/* ë‚ ì§œ/ì‹œê°„ ì„¹ì…˜ */
+/* 날짜/시간 섹션 */
 .datetime-section {
     background: white;
     padding: 40px;
@@ -238,7 +238,7 @@ footer {
     transition: left 0.5s ease;
 }
 
-/* í†µê³„ ì¹´ë“œ */
+/* 통계 카드 */
 .stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -266,7 +266,7 @@ footer {
     font-size: 1.1em;
 }
 
-/* í•„í„° ì„¹ì…˜ */
+/* 필터 섹션 */
 .filter-section {
     background: white;
     padding: 30px;
@@ -386,7 +386,7 @@ footer {
     background: #e9ecef;
 }
 
-/* ì„œì‹ì§€ ê·¸ë£¹ */
+/* 서식지 그룹 */
 .habitat-section {
     margin-bottom: 40px;
 }
@@ -424,7 +424,7 @@ footer {
     font-weight: 600;
 }
 
-/* í…Œì´ë¸” */
+/* 테이블 */
 .table-container {
     overflow-x: auto;
 }
@@ -506,7 +506,7 @@ tr:hover {
     color: #4caf50;
 }
 
-/* ìž…ë ¥ ì„¹ì…˜ */
+/* 입력 섹션 */
 .input-section {
     background: white;
     padding: 40px;
@@ -571,7 +571,7 @@ button:active {
     transform: translateY(0);
 }
 
-/* ê²°ê³¼ ì„¹ì…˜ */
+/* 결과 섹션 */
 .results {
     margin-top: 40px;
 }
