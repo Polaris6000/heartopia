@@ -26,7 +26,7 @@
     "size": "푸른색",
     "time": ["아침", "낮", "저녁", "밤"],
     "weather": ["맑음", "비", "무지개"],
-    "price": 55,
+    "price": 360,
     "special": "집어기"
   },
   {
@@ -46,7 +46,7 @@
     "size": "작음",
     "time": ["아침", "낮", "저녁", "밤"],
     "weather": ["비", "무지개"],
-    "price": 450,
+    "price": 150,
     "special": false
   },
   {
@@ -106,7 +106,7 @@
     "size": "작음",
     "time": ["아침", "낮", "저녁", "밤"],
     "weather": ["무지개"],
-    "price": 400,
+    "price": 200,
     "special": false
   },
   {
@@ -120,7 +120,7 @@
     "special": false
   },
   {
-    "name": "민물젠더",
+    "name": "민물잰더",
     "level": 3,
     "habitat": "거목강",
     "size": "중간",
@@ -176,7 +176,7 @@
     "size": "푸른색",
     "time": ["아침", "낮", "저녁", "밤"],
     "weather": ["맑음", "비", "무지개"],
-    "price": 30,
+    "price": 320,
     "special": "집어기"
   },
   {
@@ -216,7 +216,7 @@
     "size": "작음",
     "time": ["아침", "낮", "저녁", "밤"],
     "weather": ["비", "무지개"],
-    "price": 180,
+    "price": 100,
     "special": false
   },
   {
@@ -270,13 +270,23 @@
     "special": false
   },
   {
+    "name": "펄고기",
+    "level": 8,
+    "habitat": "근교 호수",
+    "size": "작음",
+    "time": ["아침", "낮"],
+    "weather": ["맑음", "무지개"],
+    "price": 250,
+    "special": false
+  },
+  {
     "name": "강꼬치고기",
     "level": 9,
     "habitat": "근교 호수",
     "size": "중간",
     "time": ["아침", "저녁", "밤"],
     "weather": ["비", "무지개"],
-    "price": 550,
+    "price": 610,
     "special": false
   },
   {
@@ -306,7 +316,7 @@
     "size": "중간",
     "time": ["아침", "저녁", "밤"],
     "weather": ["맑음", "무지개"],
-    "price": 350,
+    "price": 230,
     "special": false
   },
   {
@@ -316,13 +326,13 @@
     "size": "작음",
     "time": ["아침", "낮", "저녁"],
     "weather": ["비", "무지개"],
-    "price": 500,
+    "price": 250,
     "special": false
   },
   {
     "name": "극지연어",
     "level": 1,
-    "habitat": "온천 산수",
+    "habitat": "온천산 호수",
     "size": "중간",
     "time": ["아침", "낮", "저녁", "밤"],
     "weather": ["맑음", "비", "무지개"],
@@ -332,7 +342,7 @@
   {
     "name": "매화농어",
     "level": 2,
-    "habitat": "온천 산수",
+    "habitat": "온천산 호수",
     "size": "작음",
     "time": ["낮", "저녁", "밤"],
     "weather": ["맑음", "비", "무지개"],
@@ -342,7 +352,7 @@
   {
     "name": "올챙이",
     "level": 3,
-    "habitat": "온천 산수",
+    "habitat": "온천산 호수",
     "size": "작음",
     "time": ["아침", "낮", "저녁", "밤"],
     "weather": ["비", "무지개"],
@@ -352,7 +362,7 @@
   {
     "name": "둑중개",
     "level": 7,
-    "habitat": "온천 산수",
+    "habitat": "온천산 호수",
     "size": "작음",
     "time": ["아침", "낮", "저녁"],
     "weather": ["비", "무지개"],
@@ -362,10 +372,10 @@
   {
     "name": "펌프킨시드",
     "level": 9,
-    "habitat": "온천 산수",
+    "habitat": "온천산 호수",
     "size": "작음",
     "time": ["아침", "낮", "저녁"],
-    "weather": ["맑음", "비", "무지개"],
+    "weather": ["맑음", "무지개"],
     "price": 250,
     "special": false
   },
@@ -420,13 +430,13 @@
     "special": false
   },
   {
-    "name": "블루크로우",
+    "name": "북유럽파란가재",
     "level": 8,
     "habitat": "숲속 호수",
     "size": "작음",
-    "time": ["아침", "저녁", "밤"],
+    "time": ["아침", "저녁"],
     "weather": ["맑음", "비", "무지개"],
-    "price": 510,
+    "price": 250,
     "special": false
   },
   {
@@ -506,7 +516,7 @@
     "size": "중간",
     "time": ["낮", "저녁", "밤"],
     "weather": ["맑음", "비", "무지개"],
-    "price": 400,
+    "price": 300,
     "special": false
   },
   {
@@ -550,7 +560,7 @@
     "special": false
   },
   {
-    "name": "등뿔성대",
+    "name": "등불성대",
     "level": 6,
     "habitat": "동해",
     "size": "중간",
@@ -560,7 +570,7 @@
     "special": false
   },
   {
-    "name": "대구",
+    "name": "해덕대구",
     "level": 8,
     "habitat": "동해",
     "size": "중간",
@@ -812,7 +822,7 @@
   {
     "name": "블루길",
     "level": 10,
-    "habitat": "온천 산수",
+    "habitat": "온천산 호수",
     "size": "중간",
     "time": ["저녁", "밤"],
     "weather": ["맑음", "비", "무지개"],
@@ -822,7 +832,7 @@
   {
     "name": "라이언헤드",
     "level": 11,
-    "habitat": "온천 산수",
+    "habitat": "온천산 호수",
     "size": "중간",
     "time": ["아침", "낮", "저녁", "밤"],
     "weather": ["무지개"],
