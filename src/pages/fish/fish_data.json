@@ -514,7 +514,7 @@
     "level": 5,
     "habitat": "잔잔한 바다",
     "size": "중간",
-    "time": ["아침", "저녁", "밤"],
+    "time": ["저녁", "밤"],
     "weather": ["맑음", "비", "무지개"],
     "price": 230,
     "special": false
