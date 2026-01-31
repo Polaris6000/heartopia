@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>새 도감 - 두근두근타운</title>
+    <link rel="stylesheet" href="../../css/common.css">
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<main>
+    <div class="page-header">
+        <h1>🐦 새 도감</h1>
+        <p>두근두근타운의 모든 새 정보를 확인하세요</p>
+    </div>
+
+    <div class="stats" id="stats">
+        <div class="stat-card">
+            <div class="number">-</div>
+            <div class="label">총 새 종류</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">-</div>
+            <div class="label">서식지 종류</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">-</div>
+            <div class="label">최고 판매가</div>
+        </div>
+    </div>
+
+    <div class="filter-section">
+        <h2>🔍 필터</h2>
+
+        <div class="search-box">
+            <label for="birdSearch">🐦 새 이름 검색</label>
+            <input type="text" id="birdSearch" placeholder="예: 비둘기, 앵무, 홍학..." oninput="applyFilters()">
+        </div>
+
+        <div class="filter-groups">
+            <div class="filter-group">
+                <h3>⏰ 출현 시간</h3>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="아침" onchange="applyFilters()"> 🌅 아침
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="낮" onchange="applyFilters()"> ☀️ 낮
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="저녁" onchange="applyFilters()"> 🌇 저녁
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="밤" onchange="applyFilters()"> 🌙 밤
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h3>🌤️ 포함할 날씨</h3>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="맑음" onchange="applyFilters()"> ☀️ 맑음
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="비" onchange="applyFilters()"> 🌧️ 비
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="무지개" onchange="applyFilters()"> 🌈 무지개
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h3>🔒 전용 날씨</h3>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="sunnyOnly" onchange="applyFilters()"> ☀️ 맑음에만 등장
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rainyOnly" onchange="applyFilters()"> 🌧️ 비에만 등장
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rainbowOnly" onchange="applyFilters()"> 🌈 무지개에만 등장
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button onclick="selectAllTime()" class="filter-btn">시간 전체선택</button>
+                <button onclick="selectAllWeather()" class="filter-btn">날씨 전체선택</button>
+                <button onclick="resetFilters()" class="filter-btn-reset">필터 초기화</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="habitat-section" id="content">
+        <div class="loading">🐦 새 정보를 불러오는 중...</div>
+    </div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="../../common.js"></script>
+
+<script>
+    let birdData = [];
+    let currentSort = { column: 'name', order: 'asc' };
+
+    async function loadBirdData() {
+        try {
+            let response = await fetch('bird_data.json');
+
+            if (!response.ok) {
+                response = await fetch('./bird_data.json');
+            }
+
+            if (!response.ok) {
+                throw new Error('bird_data.json 파일을 찾을 수 없습니다.');
+            }
+
+            birdData = await response.json();
+            console.log('새 데이터 로드 성공:', birdData.length + '종');
+            displayStats();
+            displayAllBirds();
+        } catch (error) {
+            console.error('데이터 로드 에러:', error);
+            document.getElementById('content').innerHTML =
+                '<div class="error">❌ 데이터 파일을 불러올 수 없습니다.<br><small>bird_data.json 파일이 같은 폴더에 있는지 확인해주세요.</small></div>';
+        }
+    }
+
+    function getSelectedFilters() {
+        const timeCheckboxes = document.querySelectorAll('.filter-group:nth-child(1) input[type="checkbox"]:checked');
+        const weatherCheckboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]:checked:not(#rainbowOnly):not(#sunnyOnly):not(#rainyOnly)');
+        const rainbowOnly = document.getElementById('rainbowOnly')?.checked || false;
+        const sunnyOnly = document.getElementById('sunnyOnly')?.checked || false;
+        const rainyOnly = document.getElementById('rainyOnly')?.checked || false;
+        const searchText = document.getElementById('birdSearch')?.value.trim().toLowerCase() || '';
+
+        return {
+            times: Array.from(timeCheckboxes).map(cb => cb.value),
+            weathers: Array.from(weatherCheckboxes).map(cb => cb.value),
+            rainbowOnly: rainbowOnly,
+            sunnyOnly: sunnyOnly,
+            rainyOnly: rainyOnly,
+            searchText: searchText
+        };
+    }
+
+    function applyFilters() {
+        displayAllBirds();
+    }
+
+    function selectAllTime() {
+        const checkboxes = document.querySelectorAll('.filter-group:nth-child(1) input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = true);
+        applyFilters();
+    }
+
+    function selectAllWeather() {
+        const checkboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]');
+        checkboxes.forEach(cb => {
+            if (!cb.id.includes('Only')) {
+                cb.checked = true;
+            }
+        });
+        applyFilters();
+    }
+
+    function resetFilters() {
+        const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+        allCheckboxes.forEach(cb => cb.checked = false);
+        document.getElementById('birdSearch').value = '';
+        applyFilters();
+    }
+
+    function displayStats() {
+        const totalBirds = birdData.length;
+        const habitats = [...new Set(birdData.map(b => b.habitat))].length;
+        const maxPrice = Math.max(...birdData.map(b => b.price));
+        const statsHTML =
+            '<div class="stat-card">' +
+                '<div class="number">' + totalBirds + '</div>' +
+                '<div class="label">총 새 종류</div>' +
+            '</div>' +
+            '<div class="stat-card">' +
+                '<div class="number">' + habitats + '</div>' +
+                '<div class="label">서식지 종류</div>' +
+            '</div>' +
+            '<div class="stat-card">' +
+                '<div class="number">₩' + maxPrice + '</div>' +
+                '<div class="label">최고 판매가</div>' +
+            '</div>';
+        document.getElementById('stats').innerHTML = statsHTML;
+    }
+
+    function sortBirds(birds, column, order) {
+        return [...birds].sort((a, b) => {
+            let valueA, valueB;
+
+            if (column === 'name' || column === 'habitat') {
+                valueA = column === 'name' ? a.name : a.habitat;
+                valueB = column === 'name' ? b.name : b.habitat;
+                return order === 'asc' ? valueA.localeCompare(valueB, 'ko') : valueB.localeCompare(valueA, 'ko');
+            } else if (column === 'level') {
+                valueA = a.level;
+                valueB = b.level;
+            } else if (column === 'price') {
+                valueA = a.price;
+                valueB = b.price;
+            } else if (column === 'expert_photos') {
+                valueA = a.expert_photos || 0;
+                valueB = b.expert_photos || 0;
+            }
+
+            return order === 'asc' ? valueA - valueB : valueB - valueA;
+        });
+    }
+
+    function handleSort(column) {
+        if (currentSort.column === column) {
+            currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSort.column = column;
+            currentSort.order = 'asc';
+        }
+        displayAllBirds();
+    }
+
+    function displayAllBirds() {
+        const filters = getSelectedFilters();
+        let filteredBirds = birdData;
+
+        if (filters.searchText) {
+            filteredBirds = filteredBirds.filter(bird => {
+                return bird.name.toLowerCase().includes(filters.searchText);
+            });
+        }
+
+        if (filters.times.length > 0) {
+            filteredBirds = filteredBirds.filter(bird => {
+                if (!bird.time || bird.time.length === 0) return false;
+                return bird.time.some(t => filters.times.includes(t));
+            });
+        }
+
+        if (filters.rainbowOnly) {
+            filteredBirds = filteredBirds.filter(bird => {
+                if (!bird.weather || bird.weather.length === 0) return false;
+                return bird.weather.length === 1 && bird.weather[0] === "무지개";
+            });
+        }
+        else if (filters.sunnyOnly) {
+            filteredBirds = filteredBirds.filter(bird => {
+                if (!bird.weather || bird.weather.length === 0) return false;
+                return bird.weather.includes("맑음") && !bird.weather.includes("비");
+            });
+        }
+        else if (filters.rainyOnly) {
+            filteredBirds = filteredBirds.filter(bird => {
+                if (!bird.weather || bird.weather.length === 0) return false;
+                return bird.weather.includes("비") && !bird.weather.includes("맑음");
+            });
+        }
+        else if (filters.weathers.length > 0) {
+            filteredBirds = filteredBirds.filter(bird => {
+                if (!bird.weather || bird.weather.length === 0) return false;
+                return bird.weather.some(w => filters.weathers.includes(w));
+            });
+        }
+
+        const sortedBirds = sortBirds(filteredBirds, currentSort.column, currentSort.order);
+
+        let html = '<div class="habitat-group">' +
+                '<div class="habitat-header">' +
+                    '<span>전체 새 목록</span>' +
+                    '<span class="count-badge">' + sortedBirds.length + '종</span>' +
+                '</div>' +
+                '<div class="table-container">' +
+                    '<table>' +
+                        '<thead>' +
+                            '<tr>' +
+                                '<th class="sortable ' + (currentSort.column === 'name' ? 'sort-' + currentSort.order : '') + '" onclick="handleSort(\'name\')">이름</th>' +
+                                '<th class="sortable ' + (currentSort.column === 'habitat' ? 'sort-' + currentSort.order : '') + '" onclick="handleSort(\'habitat\')">서식지</th>' +
+                                '<th class="sortable ' + (currentSort.column === 'level' ? 'sort-' + currentSort.order : '') + '" onclick="handleSort(\'level\')">레벨</th>' +
+                                '<th class="sortable ' + (currentSort.column === 'price' ? 'sort-' + currentSort.order : '') + '" onclick="handleSort(\'price\')">판매가</th>' +
+                                '<th class="sortable ' + (currentSort.column === 'expert_photos' ? 'sort-' + currentSort.order : '') + '" onclick="handleSort(\'expert_photos\')">전문가 사진</th>' +
+                                '<th>출현 시간</th>' +
+                                '<th>날씨 조건</th>' +
+                                '<th>특수</th>' +
+                            '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+
+        sortedBirds.forEach(bird => {
+            const timeDisplay = bird.time.map(t => '<span class="time-badge">' + t + '</span>').join(' ');
+            const weatherDisplay = bird.weather.map(w => '<span class="weather-badge">' + w + '</span>').join(' ');
+            const specialDisplay = bird.special ? '<span class="level-badge">' + bird.special + '</span>' : '-';
+            const expertPhotosDisplay = bird.expert_photos || 0;
+
+            html += '<tr>' +
+                '<td class="fish-name">' + bird.name + '</td>' +
+                '<td>' + getHabitatIcon(bird.habitat) + ' ' + bird.habitat + '</td>' +
+                '<td><span class="level-badge">Lv.' + bird.level + '</span></td>' +
+                '<td class="price">₩' + bird.price + '</td>' +
+                '<td>' + expertPhotosDisplay + '</td>' +
+                '<td>' + timeDisplay + '</td>' +
+                '<td>' + weatherDisplay + '</td>' +
+                '<td>' + specialDisplay + '</td>' +
+            '</tr>';
+        });
+
+        html += '</tbody></table></div></div>';
+        document.getElementById('content').innerHTML = html;
+    }
+
+    function getHabitatIcon(habitat) {
+        const icons = {
+            '도심': '🌆',
+            '온천산': '♨️',
+            '숲': '🌲',
+            '도시 근교': '🏘️',
+            '꽃밭': '🌸',
+            '새들의 복귀 사건': '🎯',
+            '홈': '🏠',
+            '어촌': '🎣',
+            '물가': '💧',
+            '호수': '🏞️',
+            '강': '🌊',
+            '해변': '🏖️',
+            '바다': '🌊'
+        };
+
+        for (let key in icons) {
+            if (habitat.includes(key)) {
+                return icons[key];
+            }
+        }
+
+        return '🐦';
+    }
+
+    window.onload = loadBirdData;
+</script>
+</body>
+</html>
