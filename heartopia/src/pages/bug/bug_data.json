@@ -1,6 +1,6 @@
 [
   {
-    "name": "나비",
+    "name": "호랑나비",
     "level": 1,
     "habitat": "숲",
     "time": ["아침", "낮", "저녁", "밤"],
@@ -263,7 +263,7 @@
   {
     "name": "매미",
     "level": 4,
-    "habitat": "숲-영혼의 참나무 숲",
+    "habitat": "숲-영혼의참나무숲",
     "time": ["아침", "낮", "저녁", "밤"],
     "weather": ["맑음", "비", "무지개"],
     "price": 220,
@@ -407,7 +407,7 @@
   {
     "name": "메넬라우스나비",
     "level": 7,
-    "habitat": "숲-영혼의 참나무숲",
+    "habitat": "숲-영혼의참나무숲",
     "time": ["낮", "저녁", "밤"],
     "weather": ["맑음", "무지개"],
     "price": 150,
@@ -438,6 +438,60 @@
     "time": ["낮", "저녁"],
     "weather": ["비", "무지개"],
     "price": 275,
+    "special": false
+  },
+  {
+    "name": "황금보석풍뎅이",
+    "level": 7,
+    "habitat": "숲-점핑플랫폼",
+    "time": ["낮", "저녁"],
+    "weather": ["맑음", "무지개"],
+    "price": 275,
+    "special": false
+  },
+  {
+    "name": "찔레잠자리",
+    "level": 7,
+    "habitat": "온천산-온천산수",
+    "time": ["낮", "저녁", "밤"],
+    "weather": ["무지개"],
+    "price": 185,
+    "special": false
+  },
+  {
+    "name": "이사벨라나방",
+    "level": 8,
+    "habitat": "숲-영혼의참나무숲",
+    "time": ["낮", "저녁"],
+    "weather": ["맑음", "무지개"],
+    "price": 150,
+    "special": false
+  },
+  {
+    "name": "혜성꼬리나방",
+    "level": 8,
+    "habitat": "도시 근교",
+    "time": ["저녁", "밤"],
+    "weather": ["맑음", "무지개"],
+    "price": 240,
+    "special": false
+  },
+  {
+    "name": "장수풍뎅이",
+    "level": 8,
+    "habitat": "어촌-어촌 광장",
+    "time": ["저녁", "밤"],
+    "weather": ["맑음", "무지개"],
+    "price": 275,
+    "special": false
+  },
+  {
+    "name": "피카소노린재",
+    "level": 8,
+    "habitat": "꽃밭-보라빛 해변",
+    "time": ["저녁", "밤"],
+    "weather": ["맑음", "무지개"],
+    "price": 185,
     "special": false
   }
 ]
