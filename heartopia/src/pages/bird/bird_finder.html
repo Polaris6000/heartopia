@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>물고기 찾기 - 두근두근타운</title>
+    <title>새 찾기 - 두근두근타운</title>
     <link href="../../css/common.css" rel="stylesheet">
 </head>
 <body>
@@ -11,8 +11,8 @@
 
 <main>
     <div class="datetime-section">
-        <h1>🔍 물고기 찾기</h1>
-        <p>현재 조건에서 잡을 수 있는 물고기를 찾아보세요</p>
+        <h1>🔍 새 찾기</h1>
+        <p>현재 조건에서 잡을 수 있는 새를 찾아보세요</p>
 
         <div class="datetime-display">
             <div class="date-info">
@@ -43,13 +43,13 @@
     <div class="input-section">
         <div class="input-group">
             <div class="input-item">
-                <label for="fishName">🐟 물고기 이름</label>
-                <input id="fishName" oninput="filterFish()" placeholder="예: 연어, 배스, 붕어..." type="text">
+                <label for="birdName">🐦 새 이름</label>
+                <input id="birdName" oninput="filterbird()" placeholder="예: 비둘기, 앵무, 홍학..." type="text">
             </div>
 
             <div class="input-item">
-                <label for="level">🎣 취미 레벨</label>
-                <input id="level" max="20" min="1" type="number" value="7">
+                <label for="level">📸 취미 레벨</label>
+                <input id="level" max="20" min="1" type="number" value="6">
             </div>
 
             <div class="input-item">
@@ -73,8 +73,8 @@
         </div>
 
         <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
-            <button onclick="filterFish()">🔍 물고기 찾기</button>
-            <button class="filter-btn winter-season-btn" onclick="loadSeasonData('winter_fish.json')">❄️ 빙설 시즌 추가
+            <button onclick="filterbird()">🔍 새 찾기</button>
+            <button class="filter-btn winter-season-btn" onclick="loadSeasonData('winter_bird.json')">❄️ 빙설 시즌 추가
             </button>
             <button class="filter-btn-reset winter-season-btn" onclick="removeSeasonData()">🗑️ 시즌 데이터 제거</button>
         </div>
@@ -87,14 +87,14 @@
 
 <script src="../../js/common.js"></script>
 <script>
-    let fishData = [];
+    let birdData = [];
     let currentSort = {column: 'name', order: 'asc'};
     let loadedSeasons = new Set();
 
     // 등급별 가격 배율
     const starMultipliers = {
-        1: 1,
-        2: 1.5,
+        1: 0.25,
+        2: 1,
         3: 2,
         4: 4,
         5: 8
@@ -169,21 +169,21 @@
         }
     }
 
-    async function loadFishData() {
+    async function loadbirdData() {
         try {
-            let response = await fetch('../../data/fish_data.json');
+            let response = await fetch('../../data/bird_data.json');
 
             if (!response.ok) {
-                response = await fetch('./fish_data.json');
+                response = await fetch('./bird_data.json');
             }
 
             if (!response.ok) {
-                throw new Error('fish_data.json 파일을 찾을 수 없습니다.');
+                throw new Error('bird_data.json 파일을 찾을 수 없습니다.');
             }
 
-            fishData = await response.json();
-            console.log('물고기 데이터 로드 성공:', fishData.length + '종');
-            filterFish();
+            birdData = await response.json();
+            console.log('새 데이터 로드 성공:', birdData.length + '종');
+            filterbird();
         } catch (error) {
             console.error('데이터 로드 에러:', error);
             document.getElementById('results').innerHTML =
@@ -211,15 +211,15 @@
             const seasonData = await response.json();
 
             // 이름 기준 중복 제거하며 병합
-            const combined = [...fishData, ...seasonData];
-            fishData = combined.filter((fish, index, self) =>
-                index === self.findIndex((f) => f.name === fish.name)
+            const combined = [...birdData, ...seasonData];
+            birdData = combined.filter((bird, index, self) =>
+                index === self.findIndex((f) => f.name === bird.name)
             );
 
             loadedSeasons.add(filename);
 
-            alert(`${seasonData.length}종의 시즌 데이터가 병합되었습니다.\n(이 ${fishData.length}종)`);
-            filterFish();
+            alert(`${seasonData.length}종의 시즌 데이터가 병합되었습니다.\n(이 ${birdData.length}종)`);
+            filterbird();
         } catch (error) {
             console.error('시즌 데이터 로드 에러:', error);
             alert(`시즌 데이터를 불러오지 못했습니다.\n${error.message}`);
@@ -233,50 +233,50 @@
         }
 
         try {
-            let response = await fetch('../../data/fish_data.json');
+            let response = await fetch('../../data/bird_data.json');
             if (!response.ok) {
-                response = await fetch('./fish_data.json');
+                response = await fetch('./bird_data.json');
             }
 
             if (!response.ok) {
-                throw new Error('fish_data.json 파일을 찾을 수 없습니다.');
+                throw new Error('bird_data.json 파일을 찾을 수 없습니다.');
             }
 
-            fishData = await response.json();
+            birdData = await response.json();
             loadedSeasons.clear();
 
             alert('모든 시즌 데이터가 제거되었습니다.\n기본 데이터만 표시됩니다.');
-            filterFish();
+            filterbird();
         } catch (error) {
             console.error('데이터 초기화 에러:', error);
             alert('데이터를 초기화하지 못했습니다.');
         }
     }
 
-    function filterFish() {
-        if (fishData.length === 0) {
+    function filterbird() {
+        if (birdData.length === 0) {
             document.getElementById('results').innerHTML = '<div class="loading">⏳ 데이터를 불러오는 중...</div>';
             return;
         }
 
-        const fishName = document.getElementById('fishName').value.trim().toLowerCase();
+        const birdName = document.getElementById('birdName').value.trim().toLowerCase();
         const level = parseInt(document.getElementById('level').value);
         const time = document.getElementById('time').value;
         const weather = document.getElementById('weather').value;
 
-        const filtered = fishData.filter(fish => {
-            if (fishName && !fish.name.toLowerCase().includes(fishName)) return false;
-            if (fish.level > level) return false;
-            const timeOk = fish.time && fish.time.includes(time);
-            const weatherOk = fish.weather && fish.weather.includes(weather);
+        const filtered = birdData.filter(bird => {
+            if (birdName && !bird.name.toLowerCase().includes(birdName)) return false;
+            if (bird.level > level) return false;
+            const timeOk = bird.time && bird.time.includes(time);
+            const weatherOk = bird.weather && bird.weather.includes(weather);
             return timeOk && weatherOk;
         });
 
         displayResults(filtered);
     }
 
-    function sortFish(fishes, column, order) {
-        return [...fishes].sort((a, b) => {
+    function sortbird(birdes, column, order) {
+        return [...birdes].sort((a, b) => {
             let valueA, valueB;
             if (column === 'name' || column === 'habitat') {
                 valueA = column === 'name' ? a.name : a.habitat;
@@ -300,10 +300,10 @@
             currentSort.column = column;
             currentSort.order = 'asc';
         }
-        filterFish();
+        filterbird();
     }
 
-    function updatePrice(fishName, basePrice, selectElement) {
+    function updatePrice(birdName, basePrice, selectElement) {
         const star = parseInt(selectElement.value);
         const multiplier = starMultipliers[star];
         const calculatedPrice = Math.floor(basePrice * multiplier);
@@ -314,36 +314,34 @@
 
     function getSpecialIcon(special) {
         const icons = {
-            '빙설 시즌': '❄️',
-            '집어기': '💎',
-            '황금': '✨'
+            '빙설 시즌': '❄️'
         }
         return icons[special] || '';
     }
 
-    function getSizeIcon(size) {
+    function getHabitatIcon(habitat) {
         const icons = {
-            '푸른색': '🐟',
-            '황금': '✨'
+            '새 유인 사건': '🎯',
+            '새 유인기': '📡',
         }
-        return icons[size] || '';
+        return icons[habitat] || '';
     }
 
-    function displayResults(fishes) {
+    function displayResults(birdes) {
         const resultsDiv = document.getElementById('results');
 
-        if (fishes.length === 0) {
-            resultsDiv.innerHTML = '<div class="no-results">⚠️ 현재 조건에서 잡을 수 있는 물고기가 없어요!</div>';
+        if (birdes.length === 0) {
+            resultsDiv.innerHTML = '<div class="no-results">⚠️ 현재 조건에서 잡을 수 있는 새가 없어요!</div>';
             return;
         }
 
-        const sortedFishes = sortFish(fishes, currentSort.column, currentSort.order);
+        const sortedbirdes = sortbird(birdes, currentSort.column, currentSort.order);
 
         let html = `
                 <div class="habitat-group">
                     <div class="habitat-header">
                         <span>검색 결과</span>
-                        <span class="count-badge">${sortedFishes.length} 종</span>
+                        <span class="count-badge">${sortedbirdes.length} 종</span>
                     </div>
                     <div class="table-container">
                         <table>
@@ -351,7 +349,6 @@
                                 <tr>
                                     <th class="sortable ${currentSort.column === 'name' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('name')">이름</th>
                                     <th class="sortable ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('habitat')">서식지</th>
-                                    <th>크기</th>
                                     <th class="sortable ${currentSort.column === 'level' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('level')">레벨</th>
                                     <th class="sortable ${currentSort.column === 'price' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('price')">판매가 (등급별)</th>
                                     <th>출현 시간</th>
@@ -360,40 +357,37 @@
                             </thead>
                             <tbody>`;
 
-        sortedFishes.forEach(fish => {
+        sortedbirdes.forEach(bird => {
             // --- 시간 표시 로직 ---
             const allTimes = ['아침', '낮', '저녁', '밤'];
-            const isAlwaysTime = fish.timeAll || (fish.time && allTimes.every(t => fish.time.includes(t)));
+            const isAlwaysTime = bird.timeAll || (bird.time && allTimes.every(t => bird.time.includes(t)));
             const timeDisplay = isAlwaysTime
                 ? '<span class="time-badge always">하루 종일</span>'
-                : fish.time.map(t => `<span class="time-badge">${t}</span>`).join(' ');
+                : bird.time.map(t => `<span class="time-badge">${t}</span>`).join(' ');
 
             // --- 날씨 표시 로직 ---
             const allWeathers = ['맑음', '비', '무지개'];
-            const isAlwaysWeather = fish.weatherAll || (fish.weather && allWeathers.every(w => fish.weather.includes(w)));
+            const isAlwaysWeather = bird.weatherAll || (bird.weather && allWeathers.every(w => bird.weather.includes(w)));
             const weatherDisplay = isAlwaysWeather
                 ? '<span class="weather-badge always">항상</span>'
-                : fish.weather.map(w => `<span class="weather-badge">${w}</span>`).join(' ');
-
-            const sizeDisplay = fish.size || '-';
+                : bird.weather.map(w => `<span class="weather-badge">${w}</span>`).join(' ');
 
             html += `
                     <tr>
-                        <td class="item-name">${getSpecialIcon(fish.special)}${fish.name}</td>
-                        <td>${fish.habitat}</td>
-                        <td>${getSizeIcon(fish.size)}${sizeDisplay}</td>
-                        <td><span class="level-badge">Lv.${fish.level}</span></td>
+                        <td class="item-name">${getSpecialIcon(bird.special)}${bird.name}</td>
+                        <td>${getHabitatIcon(bird.habitat)}${bird.habitat}</td>
+                        <td><span class="level-badge">Lv.${bird.level}</span></td>
                         <td>
                             <div class="price-cell">
                                 <span>⭐</span>
-                                <select class="star-selector" onchange="updatePrice('${fish.name}', ${fish.price}, this)">
+                                <select class="star-selector" onchange="updatePrice('${bird.name}', ${bird.price}, this)">
                                     <option value="1">1성</option>
-                                    <option value="2">2성</option>
+                                    <option value="2" selected>2성</option>
                                     <option value="3">3성</option>
                                     <option value="4">4성</option>
                                     <option value="5">5성</option>
                                 </select>
-                                <span class="price">₩${fish.price}</span>
+                                <span class="price">₩${bird.price}</span>
                             </div>
                         </td>
                         <td>${timeDisplay}</td>
@@ -408,7 +402,7 @@
     // 시간 선택을 먼저 하고 데이터를 로드하도록 변경
     window.onload = async function () {
         setInitialTimeOption();
-        await loadFishData();
+        await loadbirdData();
     };
 </script>
 </body>

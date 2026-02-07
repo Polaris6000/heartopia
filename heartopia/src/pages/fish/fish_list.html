@@ -11,6 +11,11 @@
 
 <main>
     <div class="page-header">
+        <nav>
+            <ul>
+                <li><a href="/heartopia/src/pages/fish/fish_finder.html">물고기 찾기</a></li>
+            </ul>
+        </nav>
         <h1>🎣 낚시 도감</h1>
         <p>두근두근타운의 모든 물고기 정보를 확인하세요</p>
     </div>
@@ -111,6 +116,15 @@
     let currentSort = {column: 'name', order: 'asc'};
     let loadedSeasons = new Set(); // 이미 로드한 시즌 추적
 
+    // 등급별 가격 배율
+    const starMultipliers = {
+        1: 1,
+        2: 1.5,
+        3: 2,
+        4: 4,
+        5: 8
+    };
+
 
     async function loadFishData() {
         try {
@@ -133,7 +147,7 @@
         } catch (error) {
             console.error('데이터 로드 에러:', error);
             document.getElementById('content').innerHTML =
-                `<div class="error">❌ 데이터 파일을 불러올 수 없습니다.<br><small>fish_data.json 파일이 /src/pages/fish/ 폴더에 있는지 확인해주세요.<br>현재 경로: ${window.location.pathname}</small></div>`;
+                `<div class="error">❌ 데이터 파일을 불러올 수 없습니다.</div>`;
         }
     }
 
@@ -304,6 +318,15 @@
         displayAllFish();
     }
 
+    function updatePrice(fishName, basePrice, selectElement) {
+        const star = parseInt(selectElement.value);
+        const multiplier = starMultipliers[star];
+        const calculatedPrice = Math.floor(basePrice * multiplier);
+
+        const priceSpan = selectElement.parentElement.querySelector('.price');
+        priceSpan.textContent = `₩${calculatedPrice}`;
+    }
+
     function displayAllFish() {
         const filters = getSelectedFilters();
 
@@ -403,11 +426,21 @@
 
             html += `
             <tr>
-                <td class="fish-name">${getSpecialIcon(fish.special)}${fish.name}</td>
+                <td class="item-name">${getSpecialIcon(fish.special)}${fish.name}</td>
                 <td>${getHabitatIcon(fish.habitat)} ${fish.habitat}</td>
                 <td>${getSizeIcon(fish.size)}${fish.size}</td>
                 <td><span class="level-badge">Lv.${fish.level}</span></td>
-                <td class="price">₩${fish.price}</td>
+                <td><div class="price-cell">
+                                <span>⭐</span>
+                                <select class="star-selector" onchange="updatePrice('${fish.name}', ${fish.price}, this)">
+                                    <option value="1">1성</option>
+                                    <option value="2">2성</option>
+                                    <option value="3">3성</option>
+                                    <option value="4">4성</option>
+                                    <option value="5">5성</option>
+                                </select>
+                                <span class="price">₩${fish.price}</span>
+                            </div></td>
                 <td>${timeDisplay}</td>
                 <td>${weatherDisplay}</td>
             </tr>
@@ -427,23 +460,11 @@
     function getHabitatIcon(habitat) {
         const icons = {
             '모든 강': '🌊',
-            '얕은 강': '💧',
-            '노을강': '🌅',
-            '고요한 강': '🏞️',
-            '거목강': '🌳',
-            '모든 호수': '💦',
-            '근교 호수': '🏘️',
-            '초원 호수': '🌾',
-            '온천산수': '♨️',
-            '숲속 호수': '🌲',
-            '모든 바다': '🌊',
-            '구해': '🏖️',
-            '동해': '🐚',
-            '잔잔한 바다': '🌅',
-            '고래바다': '🐋',
+            '모든 호수': '🏞️',
+            '모든 바다': '🌅',
             '바다낚시': '⚓',
         };
-        return icons[habitat] || '🐟';
+        return icons[habitat] || '';
     }
 
     function getSpecialIcon(special) {

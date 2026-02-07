@@ -1,6 +1,4 @@
-/* ========================================
-   기본 설정
-======================================== */
+/* 공통 스타일 */
 * {
     margin: 0;
     padding: 0;
@@ -15,18 +13,7 @@ body {
     flex-direction: column;
 }
 
-main {
-    flex: 1;
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-    width: 100%;
-}
-
-
-/* ========================================
-   헤더 영역
-======================================== */
+/* 헤더 */
 header {
     background: white;
     padding: 20px 0;
@@ -52,7 +39,6 @@ header {
     cursor: pointer;
 }
 
-/* 네비게이션 */
 nav ul {
     list-style: none;
     display: flex;
@@ -75,9 +61,16 @@ nav a:hover {
     transform: translateY(-2px);
 }
 
-/* ========================================
-   푸터 영역
-======================================== */
+/* 메인 컨텐츠 */
+main {
+    flex: 1;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+/* 푸터 */
 footer {
     background: white;
     padding: 30px 0;
@@ -114,10 +107,7 @@ footer {
     color: #ff9a9e;
 }
 
-
-/* ========================================
-   페이지 헤더
-======================================== */
+/* 페이지 헤더 */
 .page-header {
     background: white;
     padding: 40px;
@@ -137,16 +127,8 @@ footer {
     font-size: 1.2em;
     color: #888;
 }
-.page-header :first-child {
-    margin-left: auto;
-    display: flex; /* 혹은 block */
-    width: fit-content; /* 자기 크기만큼만 차지하게 */
-}
 
-
-/* ========================================
-   날짜/시간 섹션
-======================================== */
+/* 날짜/시간 섹션 */
 .datetime-section {
     background: white;
     padding: 40px;
@@ -169,7 +151,6 @@ footer {
     margin-bottom: 30px;
 }
 
-/* 날짜/시간 표시 */
 .datetime-display {
     text-align: center;
     margin-bottom: 25px;
@@ -194,7 +175,6 @@ footer {
     font-family: 'Courier New', monospace;
 }
 
-/* 시간대 바 */
 .time-bar {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -219,19 +199,19 @@ footer {
 }
 
 .time-segment.morning {
-    background: linear-gradient(135deg, #fff5e6, #ffe4cc);
+    background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
 }
 
 .time-segment.afternoon {
-    background: linear-gradient(135deg, #e8f4fd, #d4ebf7);
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
 }
 
 .time-segment.evening {
-    background: linear-gradient(135deg, #ffe4ed, #ffd4e0);
+    background: linear-gradient(135deg, #fd79a8, #e17055);
 }
 
 .time-segment.night {
-    background: linear-gradient(135deg, #e8e4f3, #d9d4f0);
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
 }
 
 .segment-label {
@@ -247,21 +227,8 @@ footer {
     font-weight: 600;
 }
 
-.time-indicator {
-    position: absolute;
-    bottom: -15px;
-    width: 0;
-    height: 0;
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-top: 15px solid #ff6b9d;
-    transition: left 0.5s ease;
-}
 
-
-/* ========================================
-   통계 카드
-======================================== */
+/* 통계 카드 */
 .stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -289,42 +256,7 @@ footer {
     font-size: 1.1em;
 }
 
-/* ========================================
-   별 가격표 (성별 판매가)
-======================================== */
-
-.star-selector {
-            display: inline-block;
-            margin: 5px;
-            padding: 5px;
-            color: #555;
-        }
-
-        .star-selector select {
-            padding: 5px 5px;
-            border: 2px solid #e9ecef;
-            border-radius: 5px;
-            font-size: 0.9em;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .star-selector select:focus {
-            outline: none;
-            border-color: #ff6b9d;
-            box-shadow: 0 0 0 2px rgba(255, 107, 157, 0.1);
-        }
-
-        .price-cell {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-/* ========================================
-   필터 섹션
-======================================== */
+/* 필터 섹션 */
 .filter-section {
     background: white;
     padding: 30px;
@@ -339,7 +271,6 @@ footer {
     margin-bottom: 20px;
 }
 
-/* 검색창 */
 .search-box {
     margin-bottom: 25px;
 }
@@ -367,7 +298,6 @@ footer {
     box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
 }
 
-/* 필터 그룹 */
 .filter-groups {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
@@ -410,15 +340,13 @@ footer {
     accent-color: #ff6b9d;
 }
 
-/* 필터 버튼 */
 .filter-actions {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.filter-btn,
-.filter-btn-reset {
+.filter-btn, .filter-btn-reset {
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
@@ -448,19 +376,13 @@ footer {
     background: #e9ecef;
 }
 
-/* ========================================
-   시즌 버튼
-======================================== */
-
 .winter-season-btn {
     background-color: #e3f2fd !important;
     color: #1565c0 !important;
+    border: 1px solid #1565c0 !important;
 }
 
-
-/* ========================================
-   서식지 그룹
-======================================== */
+/* 서식지 그룹 */
 .habitat-section {
     margin-bottom: 40px;
 }
@@ -498,10 +420,7 @@ footer {
     font-weight: 600;
 }
 
-
-/* ========================================
-   테이블
-======================================== */
+/* 테이블 */
 .table-container {
     overflow-x: auto;
 }
@@ -511,7 +430,6 @@ table {
     border-collapse: collapse;
 }
 
-/* 테이블 헤더 */
 th {
     background: #f8f9fa;
     padding: 15px;
@@ -528,23 +446,21 @@ th:hover {
     background: #e9ecef;
 }
 
-/* 정렬 아이콘 */
 th.sortable::after {
-    content: ' ⇅';
+    content: ' ⇅'; /* 정렬 가능 상태 */
     opacity: 0.3;
 }
 
 th.sort-asc::after {
-    content: ' ↑';
+    content: ' ↑'; /* 오름차순 */
     opacity: 1;
 }
 
 th.sort-desc::after {
-    content: ' ↓';
+    content: ' ↓'; /* 내림차순 */
     opacity: 1;
 }
 
-/* 테이블 바디 */
 td {
     padding: 15px;
     border-bottom: 1px solid #f0f0f0;
@@ -555,7 +471,6 @@ tr:hover {
     background: #f8f9fa;
 }
 
-/* 테이블 셀 스타일 */
 .item-name {
     font-weight: 600;
     color: #ff6b9d;
@@ -572,8 +487,7 @@ tr:hover {
     font-size: 0.9em;
 }
 
-.time-badge,
-.weather-badge {
+.time-badge, .weather-badge {
     display: inline-block;
     background: #f8f9fa;
     color: #666;
@@ -588,10 +502,7 @@ tr:hover {
     color: #4caf50;
 }
 
-
-/* ========================================
-   입력 섹션
-======================================== */
+/* 입력 섹션 */
 .input-section {
     background: white;
     padding: 40px;
@@ -612,7 +523,6 @@ tr:hover {
     flex-direction: column;
 }
 
-/* 입력 폼 요소 */
 label {
     font-weight: 600;
     margin-bottom: 10px;
@@ -620,8 +530,7 @@ label {
     font-size: 1.1em;
 }
 
-input,
-select {
+input, select {
     padding: 15px;
     border: 2px solid #e9ecef;
     border-radius: 8px;
@@ -630,8 +539,7 @@ select {
     background: white;
 }
 
-input:focus,
-select:focus {
+input:focus, select:focus {
     outline: none;
     border-color: #ff6b9d;
     box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
@@ -659,17 +567,12 @@ button:active {
     transform: translateY(0);
 }
 
-
-/* ========================================
-   결과 섹션
-======================================== */
+/* 결과 섹션 */
 .results {
     margin-top: 40px;
 }
 
-.no-results,
-.loading,
-.error {
+.no-results, .loading, .error {
     background: white;
     text-align: center;
     padding: 60px 40px;
@@ -680,12 +583,8 @@ button:active {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-
-/* ========================================
-   반응형 디자인 - 모바일 (768px 이하)
-======================================== */
+/* 모바일 사이즈 768px 이하 */
 @media (max-width: 768px) {
-    /* 헤더 */
     .header-container {
         flex-direction: column;
         gap: 20px;
@@ -696,12 +595,10 @@ button:active {
         justify-content: center;
     }
 
-    /* 페이지 헤더 */
     .page-header h1 {
         font-size: 2em;
     }
 
-    /* 날짜/시간 섹션 */
     .datetime-section h1 {
         font-size: 2em;
     }
@@ -730,7 +627,6 @@ button:active {
         font-size: 0.85em;
     }
 
-    /* 필터 */
     .filter-groups {
         grid-template-columns: 1fr;
     }
@@ -740,38 +636,29 @@ button:active {
         flex-wrap: wrap;
     }
 
-    .filter-btn,
-    .filter-btn-reset {
+    .filter-btn, .filter-btn-reset {
         flex: 1;
         min-width: 120px;
     }
 
-    /* 입력 */
     .input-group {
         grid-template-columns: 1fr;
     }
 
-    /* 테이블 */
     th, td {
         padding: 10px;
         font-size: 0.9em;
     }
 }
 
-
-/* ========================================
-   반응형 디자인 - 태블릿 (600px 이상)
-======================================== */
+/* 태블릿 사이즈 (예: 600px 이상) */
 @media (min-width: 600px) {
     .filter-groups {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-
-/* ========================================
-   반응형 디자인 - PC (1024px 이상)
-======================================== */
+/* PC 사이즈 (예: 1024px 이상) */
 @media (min-width: 1024px) {
     .filter-groups {
         grid-template-columns: repeat(4, 1fr);
