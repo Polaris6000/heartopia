@@ -88,7 +88,8 @@
             </div>
 
             <div class="filter-actions">
-                <button class="filter-btn season-btn" onclick="loadSeasonData('winter_fish.json')">❄️ 시즌 추가</button>
+                <button class="filter-btn season-btn" onclick="loadSeasonData('winter_fish.json')">❄️ 빙설 시즌 추가</button>
+                <button class="filter-btn-reset season-btn" onclick="removeSeasonData()">🗑️ 시즌 데이터 제거</button>
                 <button class="filter-btn" onclick="selectAllTime()">시간 전체선택</button>
                 <button class="filter-btn" onclick="selectAllWeather()">날씨 전체선택</button>
                 <button class="filter-btn-reset" onclick="resetFilters()">필터 초기화</button>
@@ -108,6 +109,7 @@
 <script>
     let fishData = [];
     let currentSort = {column: 'name', order: 'asc'};
+    let loadedSeasons = new Set(); // 이미 로드한 시즌 추적
 
 
     async function loadFishData() {
@@ -135,11 +137,26 @@
         }
     }
 
-    // [추가] 시즌 데이터 로드 함수
-    async function loadSeasonData() {
+    // 매개변수를 제대로 받고 중복 확인
+    async function loadSeasonData(filename) {
+        // 이미 로드한 시즌이면 중복 로드 방지
+        if (loadedSeasons.has(filename)) {
+            alert('이미 추가된 시즌입니다.');
+            return;
+        }
+
         try {
-            const response = await fetch(`../../data/winter_fish.json`);
-            if (!response.ok) throw new Error('파일을 찾을 수 없습니다.');
+            // 여러 경로 시도
+            let response = await fetch(`../../data/${filename}`);
+
+            if (!response.ok) {
+                response = await fetch(`./${filename}`);
+            }
+
+            if (!response.ok) {
+                throw new Error(`${filename} 파일을 찾을 수 없습니다.`);
+            }
+
             const seasonData = await response.json();
 
             // 이름 기준 중복 제거하며 병합
@@ -148,11 +165,45 @@
                 index === self.findIndex((f) => f.name === fish.name)
             );
 
-            alert(`${seasonData.length}종의 시즌 데이터가 병합되었습니다.`);
+            // 로드한 시즌 기록
+            loadedSeasons.add(filename);
+
+            alert(`${seasonData.length}종의 시즌 데이터가 병합되었습니다.\n(총 ${fishData.length}종)`);
             displayStats();
             displayAllFish();
-        } catch (e) {
-            alert('시즌 데이터를 불러오지 못했습니다.');
+        } catch (error) {
+            console.error('시즌 데이터 로드 에러:', error);
+            alert(`시즌 데이터를 불러오지 못했습니다.\n${error.message}`);
+        }
+    }
+
+    // 시즌 데이터 제거 함수
+    async function removeSeasonData() {
+        if (loadedSeasons.size === 0) {
+            alert('제거할 시즌 데이터가 없습니다.');
+            return;
+        }
+
+        // 원본 데이터를 다시 로드
+        try {
+            let response = await fetch('../../data/fish_data.json');
+            if (!response.ok) {
+                response = await fetch('./fish_data.json');
+            }
+
+            if (!response.ok) {
+                throw new Error('fish_data.json 파일을 찾을 수 없습니다.');
+            }
+
+            fishData = await response.json();
+            loadedSeasons.clear(); // 시즌 기록 초기화
+
+            alert('모든 시즌 데이터가 제거되었습니다.\n기본 데이터만 표시됩니다.');
+            displayStats();
+            displayAllFish();
+        } catch (error) {
+            console.error('데이터 초기화 에러:', error);
+            alert('데이터를 초기화하지 못했습니다.');
         }
     }
 
@@ -398,7 +449,7 @@
     function getSpecialIcon(special) {
         const icons = {
             '빙설 시즌': '❄️',
-            '집어기': '🐟',
+            '집어기': '💎',
             '황금': '✨'
         }
         return icons[special] || '';
@@ -409,7 +460,7 @@
             '푸른색': '🐟',
             '황금': '✨'
         }
-        return icons[special] || '';
+        return icons[size] || '';
     }
 
     window.onload = loadFishData;
