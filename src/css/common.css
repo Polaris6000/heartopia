@@ -697,7 +697,7 @@ button:active {
     }
 
     nav a {
-        margin-bottom: auto;
+        margin-bottom: 5px;
     }
 
     /* 페이지 헤더 */
