@@ -50,7 +50,7 @@
 
             <div class="input-item">
                 <label for="level">🎣 낚시 레벨</label>
-                <input id="level" max="20" min="1" type="number" value="6">
+                <input id="level" max="20" min="1" type="number" value="7">
             </div>
 
             <div class="input-item">
@@ -81,7 +81,7 @@
 
 <div id="footer-placeholder"></div>
 
-<script src="../../common.js"></script>
+<script src="../../js/common.js"></script>
 <script>
     let fishData = [];
     let currentSort = {column: 'name', order: 'asc'};
@@ -161,7 +161,7 @@
 
     async function loadFishData() {
         try {
-            const response = await fetch('fish_data.json');
+            const response = await fetch('../../data/fish_data.json');
             if (!response.ok) throw new Error('fish_data.json 파일을 찾을 수 없습니다.');
             fishData = await response.json();
             filterFish();

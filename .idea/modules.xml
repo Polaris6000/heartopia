@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/heartopia.iml" filepath="$PROJECT_DIR$/.idea/heartopia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/heartopia_data_hub.iml" filepath="$PROJECT_DIR$/.idea/heartopia_data_hub.iml" />
     </modules>
   </component>
 </project>

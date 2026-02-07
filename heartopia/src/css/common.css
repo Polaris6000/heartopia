@@ -386,6 +386,12 @@ footer {
     background: #e9ecef;
 }
 
+.season-btn {
+    background-color: #e3f2fd !important;
+    color: #1565c0 !important;
+    border: 1px solid #1565c0 !important;
+}
+
 /* 서식지 그룹 */
 .habitat-section {
     margin-bottom: 40px;

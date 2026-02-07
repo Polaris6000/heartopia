@@ -102,7 +102,7 @@
 
 <div id="footer-placeholder"></div>
 
-<script src="../../common.js"></script>
+<script src="../../js/common.js"></script>
 
 <script>
     let bugData = [];
@@ -110,7 +110,7 @@
 
     async function loadBugData() {
         try {
-            let response = await fetch('bug_data.json');
+            let response = await fetch('../../data/bug_data.json');
 
             if (!response.ok) {
                 response = await fetch('./bug_data.json');

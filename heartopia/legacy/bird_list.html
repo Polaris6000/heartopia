@@ -102,7 +102,7 @@
 
 <div id="footer-placeholder"></div>
 
-<script src="../../js/common.js"></script>
+<script src="../../common.js"></script>
 
 <script>
     let birdData = [];
@@ -110,7 +110,7 @@
 
     async function loadBirdData() {
         try {
-            let response = await fetch('../../data/bird_data.json');
+            let response = await fetch('bird_data.json');
 
             if (!response.ok) {
                 response = await fetch('./bird_data.json');
@@ -286,6 +286,7 @@
                                 '<th class="sortable ' + (currentSort.column === 'habitat' ? 'sort-' + currentSort.order : '') + '" onclick="handleSort(\'habitat\')">서식지</th>' +
                                 '<th class="sortable ' + (currentSort.column === 'level' ? 'sort-' + currentSort.order : '') + '" onclick="handleSort(\'level\')">레벨</th>' +
                                 '<th class="sortable ' + (currentSort.column === 'price' ? 'sort-' + currentSort.order : '') + '" onclick="handleSort(\'price\')">판매가(2⭐)</th>' +
+                                '<th class="sortable ' + (currentSort.column === 'expert_photos' ? 'sort-' + currentSort.order : '') + '" onclick="handleSort(\'expert_photos\')">전문가 사진</th>' +
                                 '<th>출현 시간</th>' +
                                 '<th>날씨 조건</th>' +
                                 '<th>특수</th>' +
@@ -297,12 +298,14 @@
             const timeDisplay = bird.time.map(t => '<span class="time-badge">' + t + '</span>').join(' ');
             const weatherDisplay = bird.weather.map(w => '<span class="weather-badge">' + w + '</span>').join(' ');
             const specialDisplay = bird.special ? '<span class="level-badge">' + bird.special + '</span>' : '-';
+            const expertPhotosDisplay = bird.expert_photos || 0;
 
             html += '<tr>' +
                 '<td class="fish-name">' + bird.name + '</td>' +
                 '<td>' + getHabitatIcon(bird.habitat) + ' ' + bird.habitat + '</td>' +
                 '<td><span class="level-badge">Lv.' + bird.level + '</span></td>' +
                 '<td class="price">₩' + bird.price + '</td>' +
+                '<td>' + expertPhotosDisplay + '</td>' +
                 '<td>' + timeDisplay + '</td>' +
                 '<td>' + weatherDisplay + '</td>' +
                 '<td>' + specialDisplay + '</td>' +
