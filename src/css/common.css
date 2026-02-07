@@ -696,6 +696,10 @@ button:active {
         justify-content: center;
     }
 
+    nav a {
+        margin-bottom: auto;
+    }
+
     /* 페이지 헤더 */
     .page-header h1 {
         font-size: 2em;
