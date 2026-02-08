@@ -309,7 +309,7 @@
     "name": "신선나비",
     "level": 5,
     "habitat": "온천산-온천",
-    "time": ["아침", "낮", "저녁"],
+    "time": ["아침", "낮", "밤"],
     "weather": ["맑음", "무지개"],
     "price": 90,
     "special": false
