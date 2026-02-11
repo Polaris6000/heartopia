@@ -846,7 +846,7 @@
     "size": "중간",
     "time": ["아침", "저녁", "밤"],
     "weather": ["무지개"],
-    "price": 650,
+    "price": 395,
     "special": false
   },
   {
@@ -856,7 +856,7 @@
     "size": "중간",
     "time": ["아침", "낮", "저녁", "밤"],
     "weather": ["무지개"],
-    "price": 620,
+    "price": 395,
     "special": false
   },
   {
@@ -866,7 +866,7 @@
     "size": "중간",
     "time": ["낮", "저녁"],
     "weather": ["맑음", "무지개"],
-    "price": 640,
+    "price": 610,
     "special": false
   },
   {
@@ -876,7 +876,7 @@
     "size": "황금",
     "time": ["아침", "저녁", "밤"],
     "weather": ["맑음", "무지개"],
-    "price": 650,
+    "price": 850,
     "special": false
   },
   {
@@ -886,17 +886,17 @@
     "size": "중간",
     "time": ["저녁", "밤"],
     "weather": ["무지개"],
-    "price": 700,
+    "price": 610,
     "special": false
   },
   {
-    "name": "베타/투어/버들붕어",
+    "name": "버들붕어",
     "level": 12,
     "habitat": "숲속 호수",
     "size": "작음",
     "time": ["낮", "저녁"],
     "weather": ["비", "무지개"],
-    "price": 720,
+    "price": 395,
     "special": false
   },
   {
@@ -906,7 +906,7 @@
     "size": "중간",
     "time": ["아침", "낮"],
     "weather": ["무지개"],
-    "price": 680,
+    "price": 850,
     "special": false
   },
   {
@@ -916,7 +916,7 @@
     "size": "큼",
     "time": ["낮", "저녁"],
     "weather": ["무지개"],
-    "price": 700,
+    "price": 850,
     "special": false
   },
   {
@@ -926,7 +926,7 @@
     "size": "황금",
     "time": ["낮", "저녁", "밤"],
     "weather": ["비", "무지개"],
-    "price": 700,
+    "price": 850,
     "special": false
   },
   {
@@ -936,7 +936,7 @@
     "size": "작음",
     "time": ["낮", "저녁", "밤"],
     "weather": ["비", "무지개"],
-    "price": 750,
+    "price": 610,
     "special": false
   },
   {
@@ -946,7 +946,7 @@
     "size": "중간",
     "time": ["아침", "밤"],
     "weather": ["비", "무지개"],
-    "price": 750,
+    "price": 610,
     "special": false
   },
   {
@@ -956,8 +956,8 @@
     "size": "큼",
     "time": ["아침", "낮", "저녁"],
     "weather": ["맑음", "비", "무지개"],
-    "price": 1000,
-    "special": "전설"
+    "price": 610,
+    "special": false
   },
   {
     "name": "저고리파랑돔",
@@ -966,7 +966,7 @@
     "size": "중간",
     "time": ["낮", "저녁"],
     "weather": ["맑음", "무지개"],
-    "price": 850,
+    "price": 395,
     "special": false
   }
 ]
