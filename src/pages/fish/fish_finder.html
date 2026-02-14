@@ -312,30 +312,30 @@
         priceSpan.textContent = `₩${calculatedPrice}`;
     }
 
+    function getSpecialIcon(special) {
+        const icons = {
+            '빙설 시즌': '❄️',
+            '집어기': '💎',
+            '황금': '✨',
+        }
+        return icons[special] || '';
+    }
+
     function getHabitatIcon(habitat) {
         const icons = {
             '모든 강': '🌊',
             '모든 호수': '🏞️',
             '모든 바다': '🌅',
             '바다낚시': '⚓',
-            '얼음 결정 물고기 사건': '❄️'
+            '얼음 결정 물고기 사건': '❄️',
         };
         return icons[habitat] || '';
-    }
-
-    function getSpecialIcon(special) {
-        const icons = {
-            '빙설 시즌': '❄️',
-            '집어기': '💎',
-            '황금': '✨'
-        }
-        return icons[special] || '';
     }
 
     function getSizeIcon(size) {
         const icons = {
             '푸른색': '🐟',
-            '황금': '✨'
+            '황금': '✨',
         }
         return icons[size] || '';
     }

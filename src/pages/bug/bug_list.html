@@ -434,20 +434,20 @@
         document.getElementById('content').innerHTML = html;
     }
 
+    function getSpecialIcon(special) {
+        const icons = {
+            '빙설 시즌': '❄️'
+        }
+        return icons[special] || '';
+    }
+
     function getHabitatIcon(habitat) {
         const icons = {
             '곤충 유인 사건': '🎯',
             '곤충 유인기': '📡',
-            '얼음 결정 나비 사건': '❄️'
+            '얼음 결정 나비 사건': '❄️',
         }
         return icons[habitat] || '';
-    }
-
-    function getSpecialIcon(special) {
-        const icons = {
-            '빙설 시즌': '❄️',
-        }
-        return icons[special] || '';
     }
 
     window.onload = loadBugData;

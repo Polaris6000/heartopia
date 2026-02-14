@@ -93,7 +93,8 @@
             </div>
 
             <div class="filter-actions">
-                <button class="filter-btn winter-season-btn" onclick="loadSeasonData('winter_fish.json')">❄️ 빙설 시즌 추가</button>
+                <button class="filter-btn winter-season-btn" onclick="loadSeasonData('winter_fish.json')">❄️ 빙설 시즌 추가
+                </button>
                 <button class="filter-btn-reset winter-season-btn" onclick="removeSeasonData()">🗑️ 시즌 데이터 제거</button>
                 <button class="filter-btn" onclick="selectAllTime()">시간 전체선택</button>
                 <button class="filter-btn" onclick="selectAllWeather()">날씨 전체선택</button>
@@ -457,30 +458,30 @@
         document.getElementById('content').innerHTML = html;
     }
 
+    function getSpecialIcon(special) {
+        const icons = {
+            '빙설 시즌': '❄️',
+            '집어기': '💎',
+            '황금': '✨',
+        }
+        return icons[special] || '';
+    }
+
     function getHabitatIcon(habitat) {
         const icons = {
             '모든 강': '🌊',
             '모든 호수': '🏞️',
             '모든 바다': '🌅',
             '바다낚시': '⚓',
-            '얼음 결정 물고기 사건': '❄️'
+            '얼음 결정 물고기 사건': '❄️',
         };
         return icons[habitat] || '';
-    }
-
-    function getSpecialIcon(special) {
-        const icons = {
-            '빙설 시즌': '❄️',
-            '집어기': '💎',
-            '황금': '✨'
-        }
-        return icons[special] || '';
     }
 
     function getSizeIcon(size) {
         const icons = {
             '푸른색': '🐟',
-            '황금': '✨'
+            '황금': '✨',
         }
         return icons[size] || '';
     }

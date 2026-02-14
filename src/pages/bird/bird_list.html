@@ -434,26 +434,19 @@
         document.getElementById('content').innerHTML = html;
     }
 
+    function getSpecialIcon(special) {
+        const icons = {
+            '빙설 시즌': '❄️'
+        }
+        return icons[special] || '';
+    }
+
     function getHabitatIcon(habitat) {
         const icons = {
             '새들의 복귀 사건': '🎯',
-            '겨울 기록 채집 사건': '❄️'
-        };
-
-        for (let key in icons) {
-            if (habitat.includes(key)) {
-                return icons[key];
-            }
+            '겨울 기록 채집 사건': '❄️',
         }
-
-        return '';
-    }
-
-    function getSpecialIcon(special) {
-        const icons = {
-            '빙설 시즌': '❄️',
-        }
-        return icons[special] || '';
+        return icons[habitat] || '';
     }
 
     window.onload = loadbirdData;
