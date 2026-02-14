@@ -312,6 +312,17 @@
         priceSpan.textContent = `₩${calculatedPrice}`;
     }
 
+    function getHabitatIcon(habitat) {
+        const icons = {
+            '모든 강': '🌊',
+            '모든 호수': '🏞️',
+            '모든 바다': '🌅',
+            '바다낚시': '⚓',
+            '얼음 결정 물고기 사건': '❄️'
+        };
+        return icons[habitat] || '';
+    }
+
     function getSpecialIcon(special) {
         const icons = {
             '빙설 시즌': '❄️',
@@ -380,7 +391,7 @@
             html += `
                     <tr>
                         <td class="item-name">${getSpecialIcon(fish.special)}${fish.name}</td>
-                        <td>${fish.habitat}</td>
+                        <td>${getHabitatIcon(fish.habitat)}${fish.habitat}</td>
                         <td>${getSizeIcon(fish.size)}${sizeDisplay}</td>
                         <td><span class="level-badge">Lv.${fish.level}</span></td>
                         <td>
