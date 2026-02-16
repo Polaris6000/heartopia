@@ -493,5 +493,50 @@
     "weather": ["맑음", "무지개"],
     "price": 185,
     "special": false
+  },
+  {
+    "name": "진주네발나비",
+    "level": 9,
+    "habitat": "꽃밭",
+    "time": ["아침", "밤"],
+    "weather": ["비", "무지개"],
+    "price": 240,
+    "special": false
+  },
+  {
+    "name": "황금귀신사슴벌레",
+    "level": 9,
+    "habitat": "숲-영혼의 참나무 숲",
+    "time": ["저녁", "밤"],
+    "weather": ["비", "무지개"],
+    "price": 440,
+    "special": false
+  },
+  {
+    "name": "무지개사슴벌레",
+    "level": 9,
+    "habitat": "곤충 유인 사건",
+    "time": ["아침", "낮", "저녁", "밤"],
+    "weather": ["맑음", "비", "무지개"],
+    "price": 440,
+    "special": false
+  },
+  {
+    "name": "악마꽃사마귀",
+    "level": 9,
+    "habitat": "온천산-유적",
+    "time": ["낮", "저녁"],
+    "weather": ["비", "무지개"],
+    "price": 515,
+    "special": false
+  },
+  {
+    "name": "나선주머니나방",
+    "level": 10,
+    "habitat": "숲-순록탑",
+    "time": ["저녁", "밤"],
+    "weather": ["맑음", "무지개"],
+    "price": 440,
+    "special": false
   }
 ]
