@@ -491,7 +491,7 @@
     "habitat": "도시 근교",
     "time": ["낮", "저녁"],
     "weather": ["무지개"],
-    "price": 150,
+    "price": 120,
     "special": false
   },
   {
@@ -500,7 +500,7 @@
     "habitat": "꽃밭-보라빛 해변",
     "time": ["낮", "저녁"],
     "weather": ["무지개"],
-    "price": 180,
+    "price": 220,
     "special": false
   },
   {
@@ -509,8 +509,8 @@
     "habitat": "새들의 복귀 사건",
     "time": ["아침", "낮", "저녁", "밤"],
     "weather": ["맑음", "비", "무지개"],
-    "price": 110,
-    "special": false
+    "price": 150,
+    "special": "보너스 스테이지"
   },
   {
     "name": "흰머리오리",
@@ -536,7 +536,7 @@
     "habitat": "어촌-등대",
     "time": ["아침", "낮", "저녁", "밤"],
     "weather": ["무지개"],
-    "price": 200,
+    "price": 120,
     "special": "희귀"
   },
   {
@@ -545,7 +545,7 @@
     "habitat": "숲-점프대",
     "time": ["아침", "낮", "저녁", "밤"],
     "weather": ["무지개"],
-    "price": 200,
+    "price": 120,
     "special": "희귀"
   },
   {
@@ -563,7 +563,7 @@
     "habitat": "숲-사슴탑",
     "time": ["저녁", "밤"],
     "weather": ["비", "무지개"],
-    "price": 290,
+    "price": 260,
     "special": false
   }
 ]
