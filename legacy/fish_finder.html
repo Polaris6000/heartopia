@@ -34,7 +34,7 @@
                 <div class="segment-time">18:00 - 00:00</div>
             </div>
             <div class="time-segment night">
-                <div class="segment-label">🌙 밤</div>
+                <div class="segment-label">🌙 새벽</div>
                 <div class="segment-time">00:00 - 06:00</div>
             </div>
             <div class="time-indicator" id="timeIndicator"></div>
@@ -59,7 +59,7 @@
                     <option value="아침">아침</option>
                     <option value="낮">낮</option>
                     <option value="저녁">저녁</option>
-                    <option value="밤">밤</option>
+                    <option value="새벽">새벽</option>
                 </select>
             </div>
 
@@ -155,7 +155,7 @@
         } else if (hour >= 18 && hour < 24) {
             timeSelect.value = '저녁';
         } else {
-            timeSelect.value = '밤';
+            timeSelect.value = '새벽';
         }
     }
 

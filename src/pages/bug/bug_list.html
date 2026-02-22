@@ -57,7 +57,7 @@
                         <input onchange="applyFilters()" type="checkbox" value="저녁"> 🌇 저녁
                     </label>
                     <label class="checkbox-label">
-                        <input onchange="applyFilters()" type="checkbox" value="밤"> 🌙 밤
+                        <input onchange="applyFilters()" type="checkbox" value="새벽"> 🌙 새벽
                     </label>
                 </div>
             </div>
@@ -389,7 +389,7 @@
 
         sortedBugs.forEach(bug => {
             // 시간 표시 로직
-            const allTimes = ['아침', '낮', '저녁', '밤'];
+            const allTimes = ['아침', '낮', '저녁', '새벽'];
             const isAlwaysTime = bug.timeAll || (bug.time && allTimes.every(t => bug.time.includes(t)));
             const timeDisplay = isAlwaysTime
                 ? '<span class="time-badge always">하루 종일</span>'

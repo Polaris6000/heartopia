@@ -11,6 +11,11 @@
 
 <main>
     <div class="datetime-section">
+        <nav>
+            <ul>
+                <li><a href="bug_list.html">곤충 도감</a></li>
+            </ul>
+        </nav>
         <h1>🔍 곤충 찾기</h1>
         <p>현재 조건에서 잡을 수 있는 곤충을 찾아보세요</p>
 
@@ -34,7 +39,7 @@
                 <div class="segment-time">18:00 - 00:00</div>
             </div>
             <div class="time-segment night">
-                <div class="segment-label">🌙 밤</div>
+                <div class="segment-label">🌙 새벽</div>
                 <div class="segment-time">00:00 - 06:00</div>
             </div></div>
         </div>
@@ -58,7 +63,7 @@
                     <option value="아침">아침</option>
                     <option value="낮">낮</option>
                     <option value="저녁">저녁</option>
-                    <option value="밤">밤</option>
+                    <option value="새벽">새벽</option>
                 </select>
             </div>
 
@@ -165,7 +170,7 @@
         } else if (hour >= 18 && hour < 24) {
             timeSelect.value = '저녁';
         } else {
-            timeSelect.value = '밤';
+            timeSelect.value = '새벽';
         }
     }
 
@@ -360,7 +365,7 @@
 
         sortedbuges.forEach(bug => {
             // --- 시간 표시 로직 ---
-            const allTimes = ['아침', '낮', '저녁', '밤'];
+            const allTimes = ['아침', '낮', '저녁', '새벽'];
             const isAlwaysTime = bug.timeAll || (bug.time && allTimes.every(t => bug.time.includes(t)));
             const timeDisplay = isAlwaysTime
                 ? '<span class="time-badge always">하루 종일</span>'

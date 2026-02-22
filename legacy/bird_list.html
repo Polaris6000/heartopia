@@ -2,15 +2,20 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>새 도감 - 두근두근타운</title>
-    <link rel="stylesheet" href="../../css/common.css">
+    <link href="../../css/common.css" rel="stylesheet">
 </head>
 <body>
 <div id="header-placeholder"></div>
 
 <main>
     <div class="page-header">
+        <nav>
+            <ul>
+                <li><a href="bird_finder.html">새 찾기</a></li>
+            </ul>
+        </nav>
         <h1>🐦 새 도감</h1>
         <p>두근두근타운의 모든 새 정보를 확인하세요</p>
     </div>
@@ -35,7 +40,7 @@
 
         <div class="search-box">
             <label for="birdSearch">🐦 새 이름 검색</label>
-            <input type="text" id="birdSearch" placeholder="예: 비둘기, 앵무, 홍학..." oninput="applyFilters()">
+            <input id="birdSearch" oninput="applyFilters()" placeholder="예: 비둘기, 앵무, 홍학..." type="text">
         </div>
 
         <div class="filter-groups">
@@ -43,16 +48,16 @@
                 <h3>⏰ 출현 시간</h3>
                 <div class="checkbox-group">
                     <label class="checkbox-label">
-                        <input type="checkbox" value="아침" onchange="applyFilters()"> 🌅 아침
+                        <input onchange="applyFilters()" type="checkbox" value="아침"> 🌅 아침
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" value="낮" onchange="applyFilters()"> ☀️ 낮
+                        <input onchange="applyFilters()" type="checkbox" value="낮"> ☀️ 낮
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" value="저녁" onchange="applyFilters()"> 🌇 저녁
+                        <input onchange="applyFilters()" type="checkbox" value="저녁"> 🌇 저녁
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" value="밤" onchange="applyFilters()"> 🌙 밤
+                        <input onchange="applyFilters()" type="checkbox" value="새벽"> 🌙 새벽
                     </label>
                 </div>
             </div>
@@ -61,13 +66,13 @@
                 <h3>🌤️ 포함할 날씨</h3>
                 <div class="checkbox-group">
                     <label class="checkbox-label">
-                        <input type="checkbox" value="맑음" onchange="applyFilters()"> ☀️ 맑음
+                        <input onchange="applyFilters()" type="checkbox" value="맑음"> ☀️ 맑음
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" value="비" onchange="applyFilters()"> 🌧️ 비
+                        <input onchange="applyFilters()" type="checkbox" value="비"> 🌧️ 비
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" value="무지개" onchange="applyFilters()"> 🌈 무지개
+                        <input onchange="applyFilters()" type="checkbox" value="무지개"> 🌈 무지개
                     </label>
                 </div>
             </div>
@@ -76,21 +81,23 @@
                 <h3>🔒 전용 날씨</h3>
                 <div class="checkbox-group">
                     <label class="checkbox-label">
-                        <input type="checkbox" id="sunnyOnly" onchange="applyFilters()"> ☀️ 맑음에만 등장
+                        <input id="sunnyOnly" onchange="applyFilters()" type="checkbox"> ☀️ 맑음에만 등장
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" id="rainyOnly" onchange="applyFilters()"> 🌧️ 비에만 등장
+                        <input id="rainyOnly" onchange="applyFilters()" type="checkbox"> 🌧️ 비에만 등장
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" id="rainbowOnly" onchange="applyFilters()"> 🌈 무지개에만 등장
+                        <input id="rainbowOnly" onchange="applyFilters()" type="checkbox"> 🌈 무지개에만 등장
                     </label>
                 </div>
             </div>
 
             <div class="filter-actions">
-                <button onclick="selectAllTime()" class="filter-btn">시간 전체선택</button>
-                <button onclick="selectAllWeather()" class="filter-btn">날씨 전체선택</button>
-                <button onclick="resetFilters()" class="filter-btn-reset">필터 초기화</button>
+                <button class="filter-btn winter-season-btn" onclick="loadSeasonData('winter_bird.json')">❄️ 빙설 시즌 추가</button>
+                <button class="filter-btn-reset winter-season-btn" onclick="removeSeasonData()">🗑️ 시즌 데이터 제거</button>
+                <button class="filter-btn" onclick="selectAllTime()">시간 전체선택</button>
+                <button class="filter-btn" onclick="selectAllWeather()">날씨 전체선택</button>
+                <button class="filter-btn-reset" onclick="resetFilters()">필터 초기화</button>
             </div>
         </div>
     </div>
@@ -106,9 +113,23 @@
 
 <script>
     let birdData = [];
-    let currentSort = { column: 'name', order: 'asc' };
+    let currentSort = {column: 'price', order: 'desc'};
+    let loadedSeasons = new Set();
 
-    async function loadBirdData() {
+    /**
+     * 등급(성)별 판매가 배율 테이블
+     * JSON의 price 값은 3성 기준이므로 3성 배율을 1로 설정
+     * 1성: 12.5%, 2성: 50%, 3성: 100%(기준), 4성: 200%, 5성: 400%
+     */
+    const starMultipliers = {
+        1: 0.125,
+        2: 0.5,
+        3: 1,
+        4: 2,
+        5: 4
+    };
+
+    async function loadbirdData() {
         try {
             let response = await fetch('../../data/bird_data.json');
 
@@ -123,17 +144,81 @@
             birdData = await response.json();
             console.log('새 데이터 로드 성공:', birdData.length + '종');
             displayStats();
-            displayAllBirds();
+            displayAllbirds();
         } catch (error) {
             console.error('데이터 로드 에러:', error);
             document.getElementById('content').innerHTML =
-                '<div class="error">❌ 데이터 파일을 불러올 수 없습니다.<br><small>bird_data.json 파일이 같은 폴더에 있는지 확인해주세요.</small></div>';
+                `<div class="error">❌ 데이터 파일을 불러올 수 없습니다.</div>`;
+        }
+    }
+
+    async function loadSeasonData(filename) {
+        if (loadedSeasons.has(filename)) {
+            alert('이미 추가된 시즌입니다.');
+            return;
+        }
+
+        try {
+            let response = await fetch(`../../data/${filename}`);
+
+            if (!response.ok) {
+                response = await fetch(`./${filename}`);
+            }
+
+            if (!response.ok) {
+                throw new Error(`${filename} 파일을 찾을 수 없습니다.`);
+            }
+
+            const seasonData = await response.json();
+
+            // 이름 기준 중복 제거하며 병합
+            const combined = [...birdData, ...seasonData];
+            birdData = combined.filter((bird, index, self) =>
+                index === self.findIndex((b) => b.name === bird.name)
+            );
+
+            loadedSeasons.add(filename);
+
+            alert(`${seasonData.length}종의 시즌 데이터가 병합되었습니다.\n(총 ${birdData.length}종)`);
+            displayStats();
+            displayAllbirds();
+        } catch (error) {
+            console.error('시즌 데이터 로드 에러:', error);
+            alert(`시즌 데이터를 불러오지 못했습니다.\n${error.message}`);
+        }
+    }
+
+    async function removeSeasonData() {
+        if (loadedSeasons.size === 0) {
+            alert('제거할 시즌 데이터가 없습니다.');
+            return;
+        }
+
+        try {
+            let response = await fetch('../../data/bird_data.json');
+            if (!response.ok) {
+                response = await fetch('./bird_data.json');
+            }
+
+            if (!response.ok) {
+                throw new Error('bird_data.json 파일을 찾을 수 없습니다.');
+            }
+
+            birdData = await response.json();
+            loadedSeasons.clear();
+
+            alert('모든 시즌 데이터가 제거되었습니다.\n기본 데이터만 표시됩니다.');
+            displayStats();
+            displayAllbirds();
+        } catch (error) {
+            console.error('데이터 초기화 에러:', error);
+            alert('데이터를 초기화하지 못했습니다.');
         }
     }
 
     function getSelectedFilters() {
         const timeCheckboxes = document.querySelectorAll('.filter-group:nth-child(1) input[type="checkbox"]:checked');
-        const weatherCheckboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]:checked:not(#rainbowOnly):not(#sunnyOnly):not(#rainyOnly)');
+        const weatherCheckboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]:checked');
         const rainbowOnly = document.getElementById('rainbowOnly')?.checked || false;
         const sunnyOnly = document.getElementById('sunnyOnly')?.checked || false;
         const rainyOnly = document.getElementById('rainyOnly')?.checked || false;
@@ -150,7 +235,7 @@
     }
 
     function applyFilters() {
-        displayAllBirds();
+        displayAllbirds();
     }
 
     function selectAllTime() {
@@ -177,26 +262,28 @@
     }
 
     function displayStats() {
-        const totalBirds = birdData.length;
+        const totalbirds = birdData.length;
         const habitats = [...new Set(birdData.map(b => b.habitat))].length;
         const maxPrice = Math.max(...birdData.map(b => b.price));
-        const statsHTML =
-            '<div class="stat-card">' +
-                '<div class="number">' + totalBirds + '</div>' +
-                '<div class="label">총 새 종류</div>' +
-            '</div>' +
-            '<div class="stat-card">' +
-                '<div class="number">' + habitats + '</div>' +
-                '<div class="label">서식지 종류</div>' +
-            '</div>' +
-            '<div class="stat-card">' +
-                '<div class="number">₩' + maxPrice + '</div>' +
-                '<div class="label">최고 판매가</div>' +
-            '</div>';
+
+        const statsHTML = `
+            <div class="stat-card">
+                <div class="number">${totalbirds}</div>
+                <div class="label">총 새 종류</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">${habitats}</div>
+                <div class="label">서식지 종류</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">₩${maxPrice}</div>
+                <div class="label">최고 판매가</div>
+            </div>
+        `;
         document.getElementById('stats').innerHTML = statsHTML;
     }
 
-    function sortBirds(birds, column, order) {
+    function sortbirds(birds, column, order) {
         return [...birds].sort((a, b) => {
             let valueA, valueB;
 
@@ -210,9 +297,6 @@
             } else if (column === 'price') {
                 valueA = a.price;
                 valueB = b.price;
-            } else if (column === 'expert_photos') {
-                valueA = a.expert_photos || 0;
-                valueB = b.expert_photos || 0;
             }
 
             return order === 'asc' ? valueA - valueB : valueB - valueA;
@@ -226,120 +310,172 @@
             currentSort.column = column;
             currentSort.order = 'asc';
         }
-        displayAllBirds();
+        displayAllbirds();
     }
 
-    function displayAllBirds() {
-        const filters = getSelectedFilters();
-        let filteredBirds = birdData;
+    function updatePrice(birdName, basePrice, selectElement) {
+        const star = parseInt(selectElement.value);
+        const multiplier = starMultipliers[star];
+        const calculatedPrice = Math.floor(basePrice * multiplier);
 
+        const priceSpan = selectElement.parentElement.querySelector('.price');
+        priceSpan.textContent = `₩${calculatedPrice}`;
+    }
+
+    function displayAllbirds() {
+        const filters = getSelectedFilters();
+        let filteredbirds = birdData;
+
+        // 이름 검색 필터
         if (filters.searchText) {
-            filteredBirds = filteredBirds.filter(bird => {
+            filteredbirds = filteredbirds.filter(bird => {
                 return bird.name.toLowerCase().includes(filters.searchText);
             });
         }
 
+        // 시간 필터
         if (filters.times.length > 0) {
-            filteredBirds = filteredBirds.filter(bird => {
+            filteredbirds = filteredbirds.filter(bird => {
                 if (!bird.time || bird.time.length === 0) return false;
                 return bird.time.some(t => filters.times.includes(t));
             });
         }
 
+        // 날씨 필터 로직
         if (filters.rainbowOnly) {
-            filteredBirds = filteredBirds.filter(bird => {
+            filteredbirds = filteredbirds.filter(bird => {
                 if (!bird.weather || bird.weather.length === 0) return false;
                 return bird.weather.length === 1 && bird.weather[0] === "무지개";
             });
-        }
-        else if (filters.sunnyOnly) {
-            filteredBirds = filteredBirds.filter(bird => {
+        } else if (filters.sunnyOnly) {
+            filteredbirds = filteredbirds.filter(bird => {
                 if (!bird.weather || bird.weather.length === 0) return false;
                 return bird.weather.includes("맑음") && !bird.weather.includes("비");
             });
-        }
-        else if (filters.rainyOnly) {
-            filteredBirds = filteredBirds.filter(bird => {
+        } else if (filters.rainyOnly) {
+            filteredbirds = filteredbirds.filter(bird => {
                 if (!bird.weather || bird.weather.length === 0) return false;
                 return bird.weather.includes("비") && !bird.weather.includes("맑음");
             });
-        }
-        else if (filters.weathers.length > 0) {
-            filteredBirds = filteredBirds.filter(bird => {
+        } else if (filters.weathers.length > 0) {
+            filteredbirds = filteredbirds.filter(bird => {
                 if (!bird.weather || bird.weather.length === 0) return false;
                 return bird.weather.some(w => filters.weathers.includes(w));
             });
         }
 
-        const sortedBirds = sortBirds(filteredBirds, currentSort.column, currentSort.order);
+        const sortedbirds = sortbirds(filteredbirds, currentSort.column, currentSort.order);
 
-        let html = '<div class="habitat-group">' +
-                '<div class="habitat-header">' +
-                    '<span>전체 새 목록</span>' +
-                    '<span class="count-badge">' + sortedBirds.length + '종</span>' +
-                '</div>' +
-                '<div class="table-container">' +
-                    '<table>' +
-                        '<thead>' +
-                            '<tr>' +
-                                '<th class="sortable ' + (currentSort.column === 'name' ? 'sort-' + currentSort.order : '') + '" onclick="handleSort(\'name\')">이름</th>' +
-                                '<th class="sortable ' + (currentSort.column === 'habitat' ? 'sort-' + currentSort.order : '') + '" onclick="handleSort(\'habitat\')">서식지</th>' +
-                                '<th class="sortable ' + (currentSort.column === 'level' ? 'sort-' + currentSort.order : '') + '" onclick="handleSort(\'level\')">레벨</th>' +
-                                '<th class="sortable ' + (currentSort.column === 'price' ? 'sort-' + currentSort.order : '') + '" onclick="handleSort(\'price\')">판매가(2⭐)</th>' +
-                                '<th>출현 시간</th>' +
-                                '<th>날씨 조건</th>' +
-                                '<th>특수</th>' +
-                            '</tr>' +
-                        '</thead>' +
-                        '<tbody>';
+        let html = `
+            <div class="habitat-group">
+                <div class="habitat-header">
+                    <span>전체 새 목록</span>
+                    <span class="count-badge">${sortedbirds.length}종</span>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="sortable ${currentSort.column === 'name' ? 'sort-' + currentSort.order : ''}"
+                                    onclick="handleSort('name')">이름</th>
+                                <th class="sortable ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}"
+                                    onclick="handleSort('habitat')">서식지</th>
+                                <th class="sortable ${currentSort.column === 'level' ? 'sort-' + currentSort.order : ''}"
+                                    onclick="handleSort('level')">레벨</th>
+                                <th class="sortable ${currentSort.column === 'price' ? 'sort-' + currentSort.order : ''}"
+                                    onclick="handleSort('price')">판매가</th>
+                                <th>출현 시간</th>
+                                <th>날씨 조건</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        `;
 
-        sortedBirds.forEach(bird => {
-            const timeDisplay = bird.time.map(t => '<span class="time-badge">' + t + '</span>').join(' ');
-            const weatherDisplay = bird.weather.map(w => '<span class="weather-badge">' + w + '</span>').join(' ');
-            const specialDisplay = bird.special ? '<span class="level-badge">' + bird.special + '</span>' : '-';
+        sortedbirds.forEach(bird => {
+            // 시간 표시 로직
+            const allTimes = ['아침', '낮', '저녁', '새벽'];
+            const isAlwaysTime = bird.timeAll || (bird.time && allTimes.every(t => bird.time.includes(t)));
+            const timeDisplay = isAlwaysTime
+                ? '<span class="time-badge always">하루 종일</span>'
+                : bird.time.map(t => `<span class="time-badge">${t}</span>`).join(' ');
 
-            html += '<tr>' +
-                '<td class="item-name">' + bird.name + '</td>' +
-                '<td>' + getHabitatIcon(bird.habitat) + ' ' + bird.habitat + '</td>' +
-                '<td><span class="level-badge">Lv.' + bird.level + '</span></td>' +
-                '<td class="price">₩' + bird.price + '</td>' +
-                '<td>' + timeDisplay + '</td>' +
-                '<td>' + weatherDisplay + '</td>' +
-                '<td>' + specialDisplay + '</td>' +
-            '</tr>';
+            // 날씨 표시 로직
+            const allWeathers = ['맑음', '비', '무지개'];
+            const isAlwaysWeather = bird.weatherAll || (bird.weather && allWeathers.every(w => bird.weather.includes(w)));
+            const weatherDisplay = isAlwaysWeather
+                ? '<span class="weather-badge always">항상</span>'
+                : bird.weather.map(w => `<span class="weather-badge">${w}</span>`).join(' ');
+
+            html += `
+            <tr>
+                <td class="item-name">${getSpecialIcon(bird.special)}${bird.name}</td>
+                <td>${getHabitatIcon(bird.habitat)} ${bird.habitat}</td>
+                <td><span class="level-badge">Lv.${bird.level}</span></td>
+                <td><div class="price-cell">
+                                <span>⭐</span>
+                                <!-- 3성이 JSON price 기준값이므로 selected를 3성으로 설정 -->
+                                <select class="star-selector" onchange="updatePrice('${bird.name}', ${bird.price}, this)">
+                                    <option value="1">1성</option>
+                                    <option value="2">2성</option>
+                                    <option value="3" selected>3성</option>
+                                    <option value="4">4성</option>
+                                    <option value="5">5성</option>
+                                </select>
+                                <!-- 초기 표시 가격: bird.price = 3성 기준값, starMultipliers[3] = 1이므로 그대로 표시 -->
+                                <span class="price">₩${bird.price}</span>
+                            </div></td>
+                <td>${timeDisplay}</td>
+                <td>${weatherDisplay}</td>
+            </tr>
+        `;
         });
 
-        html += '</tbody></table></div></div>';
+        html += `
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+
         document.getElementById('content').innerHTML = html;
     }
 
-    function getHabitatIcon(habitat) {
+    /**
+     * special 필드 값에 따른 아이콘 반환 함수
+     * JSON 데이터의 실제 special 값:
+     *   - false           : 일반 새 (아이콘 없음)
+     *   - "특수"           : 특수 조건 등장 새 (🌟) → 오목눈이
+     *   - "보너스 스테이지"  : 보너스 스테이지 전용 새 (🎁) → 녹공작
+     *   - "희귀"           : 희귀 새 (💎) → 아조레스멋쟁이새, 파랑딱새
+     *   - "빙설 시즌"       : 빙설 시즌 한정 새 (❄️) → 시즌 데이터용
+     * @param {string|boolean} special - 새 데이터의 special 필드 값
+     * @returns {string} 해당 유형에 대응하는 이모지 아이콘 (없으면 빈 문자열)
+     */
+    function getSpecialIcon(special) {
         const icons = {
-            '도심': '🌆',
-            '온천산': '♨️',
-            '숲': '🌲',
-            '도시 근교': '🏘️',
-            '꽃밭': '🌸',
-            '새들의 복귀 사건': '🎯',
-            '홈': '🏠',
-            '어촌': '🎣',
-            '물가': '💧',
-            '호수': '🏞️',
-            '강': '🌊',
-            '해변': '🏖️',
-            '바다': '🌊'
+            '특수': '🌟',
+            '보너스 스테이지': '🎁',
+            '희귀': '💎',
+            '빙설 시즌': '❄️'
         };
-
-        for (let key in icons) {
-            if (habitat.includes(key)) {
-                return icons[key];
-            }
-        }
-
-        return '🐦';
+        return icons[special] || '';
     }
 
-    window.onload = loadBirdData;
+    /**
+     * 서식지 이름에 따른 아이콘 반환 함수
+     * 이벤트성 서식지에 별도 아이콘을 붙여 일반 서식지와 구분
+     * @param {string} habitat - 새 데이터의 habitat 필드 값
+     * @returns {string} 해당 서식지에 대응하는 이모지 아이콘 (없으면 빈 문자열)
+     */
+    function getHabitatIcon(habitat) {
+        const icons = {
+            '새들의 복귀 사건': '🎯',
+            '겨울 기록 채집 사건': '❄️'
+        };
+        return icons[habitat] || '';
+    }
+
+    window.onload = loadbirdData;
 </script>
 </body>
 </html>
