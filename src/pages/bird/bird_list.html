@@ -135,7 +135,7 @@
     };
 
     /** 시간대 이모지 맵 */
-    const timeIcons    = { '아침': '🌅', '낮': '☀️', '저녁': '🌆', '새벽': '🌙' };
+    // const timeIcons    = { '아침': '🌅', '낮': '☀️', '저녁': '🌆', '새벽': '🌙' };
     /** 날씨 이모지 맵 */
     const weatherIcons = { '맑음': '☀️', '비': '🌧️', '무지개': '🌈' };
 
@@ -513,7 +513,7 @@
 
         return entries.map(([time, weathers]) => {
             const weatherStr = weathers.map(w => `${weatherIcons[w] || ''}${w}`).join(' ');
-            return `<span class="motion-badge">${timeIcons[time] || ''}${time} · ${weatherStr}</span>`;
+            return `<span class="motion-badge">${time} · ${weatherStr}</span>`;
         }).join('');
     }
 

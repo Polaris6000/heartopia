@@ -574,6 +574,18 @@ th.sort-desc::after {
     width: 100px;
 }
 
+.col-habitat-fish {
+    min-width: 130px;
+    max-width: 130px;
+    width: 130px;
+}
+
+.col-size {
+    min-width: 100px;
+    max-width: 100px;
+    width: 100px;
+}
+
 /* 테이블 바디 */
 td {
     padding: 15px;
