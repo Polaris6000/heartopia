@@ -324,13 +324,6 @@
             } else if (column === 'price') {
                 valueA = a.price;
                 valueB = b.price;
-            } else if (column === 'preening') {
-                // 현재 조건 일치 여부로 점수화: 일치(2) > 조건있음(1) > null(-1)
-                valueA = getMotionScore(a.motion_preening, currentTime, currentWeather);
-                valueB = getMotionScore(b.motion_preening, currentTime, currentWeather);
-            } else if (column === 'wingspread') {
-                valueA = getMotionScore(a.motion_wingspread, currentTime, currentWeather);
-                valueB = getMotionScore(b.motion_wingspread, currentTime, currentWeather);
             }
 
             return order === 'asc' ? valueA - valueB : valueB - valueA;
@@ -410,21 +403,6 @@
         }).join('');
     }
 
-    /**
-     * 정렬용 motion 점수 계산 (finder 전용)
-     * 현재 조건과 일치하면 2점, 조건은 있으나 불일치면 1점, null이면 -1점
-     *
-     * @param {Object|null} motionObj
-     * @param {string} time    - 현재 선택 시간대
-     * @param {string} weather - 현재 선택 날씨
-     * @returns {number}
-     */
-    function getMotionScore(motionObj, time, weather) {
-        if (!motionObj) return -1;
-        if (motionObj[time] && motionObj[time].includes(weather)) return 2;
-        return 1;
-    }
-
     function displayResults(birdes) {
         const resultsDiv = document.getElementById('results');
 
@@ -446,13 +424,13 @@
                             <thead>
                                 <tr>
                                     <th class="sortable ${currentSort.column === 'name' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('name')">이름</th>
-                                    <th class="sortable ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('habitat')">서식지</th>
+                                    <th class="sortable col-habitat-bird ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('habitat')">서식지</th>
                                     <th class="sortable col-level ${currentSort.column === 'level' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('level')">레벨</th>
                                     <th class="sortable ${currentSort.column === 'price' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('price')">판매가 (등급별)</th>
                                     <th class="col-time">출현 시간</th>
                                     <th class="col-weather">날씨 조건</th>
-                                    <th class="sortable ${currentSort.column === 'preening' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('preening')" title="현재 조건 일치 시 초록 하이라이트">3⭐ 깃털 다듬기</th>
-                                    <th class="sortable ${currentSort.column === 'wingspread' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('wingspread')" title="현재 조건 일치 시 초록 하이라이트">4⭐ 날개 펼치기</th>
+                                    <th title="현재 조건 일치 시 초록 하이라이트">3⭐ 깃털 다듬기</th>
+                                    <th title="현재 조건 일치 시 초록 하이라이트">4⭐ 날개 펼치기</th>
                                 </tr>
                             </thead>
                             <tbody>`;

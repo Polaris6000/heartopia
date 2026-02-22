@@ -11,6 +11,11 @@
 
 <main>
     <div class="datetime-section">
+        <nav>
+            <ul>
+                <li><a href="bird_list.html">조류 도감</a></li>
+            </ul>
+        </nav>
         <h1>🔍 새 찾기</h1>
         <p>현재 조건에서 잡을 수 있는 새를 찾아보세요</p>
 
@@ -49,7 +54,7 @@
 
             <div class="input-item">
                 <label for="level">📸 취미 레벨</label>
-                <!-- JSON 데이터 기준 최고 레벨은 10이므로 max를 10으로 설정 -->
+                <!-- JSON 데이터 기준 최고 레벨은 10 -->
                 <input id="level" max="10" min="1" type="number" value="10">
             </div>
 
@@ -88,14 +93,19 @@
 
 <script src="../../js/common.js"></script>
 <script>
+    /** @type {Array<Object>} 로드된 새 데이터 배열 */
     let birdData = [];
+
+    /** @type {{column: string, order: string}} 현재 정렬 기준 */
     let currentSort = {column: 'price', order: 'desc'};
+
+    /** @type {Set<string>} 로드된 시즌 파일명 집합 (중복 방지) */
     let loadedSeasons = new Set();
 
     /**
      * 등급(성)별 판매가 배율 테이블
-     * JSON의 price 값은 3성 기준이므로 3성 배율을 1로 설정
-     * 1성: 12.5%, 2성: 50%, 3성: 100%(기준), 4성: 200%, 5성: 400%
+     * JSON의 price 값은 3성 기준 → 3성 배율을 1로 설정
+     * 1성: 12.5%  2성: 50%  3성: 100%(기준)  4성: 200%  5성: 400%
      */
     const starMultipliers = {
         1: 0.125,
@@ -104,6 +114,11 @@
         4: 2,
         5: 4
     };
+
+    /** 시간대 이모지 맵 */
+    // const timeIcons    = { '아침': '🌅', '낮': '☀️', '저녁': '🌆', '새벽': '🌙' };
+    /** 날씨 이모지 맵 */
+    const weatherIcons = { '맑음': '☀️', '비': '🌧️', '무지개': '🌈' };
 
     function updateDateTime() {
         const now = new Date();
@@ -280,20 +295,44 @@
         displayResults(filtered);
     }
 
+    /**
+     * 새 배열을 지정 열·방향으로 정렬 (원본 불변)
+     * preening/wingspread는 현재 선택된 시간+날씨 기준 점수로 정렬
+     *
+     * @param {Array<Object>} birdes
+     * @param {string} column - 'name'|'habitat'|'level'|'price'|'preening'|'wingspread'
+     * @param {string} order  - 'asc'|'desc'
+     * @returns {Array<Object>}
+     */
     function sortbird(birdes, column, order) {
+        // motion 정렬 시 현재 선택 조건을 DOM에서 읽음
+        const currentTime    = document.getElementById('time')?.value    || '';
+        const currentWeather = document.getElementById('weather')?.value || '';
+
         return [...birdes].sort((a, b) => {
             let valueA, valueB;
+
             if (column === 'name' || column === 'habitat') {
                 valueA = column === 'name' ? a.name : a.habitat;
                 valueB = column === 'name' ? b.name : b.habitat;
-                return order === 'asc' ? valueA.localeCompare(valueB, 'ko') : valueB.localeCompare(valueA, 'ko');
+                return order === 'asc'
+                    ? valueA.localeCompare(valueB, 'ko')
+                    : valueB.localeCompare(valueA, 'ko');
             } else if (column === 'level') {
                 valueA = a.level;
                 valueB = b.level;
             } else if (column === 'price') {
                 valueA = a.price;
                 valueB = b.price;
+            } else if (column === 'preening') {
+                // 현재 조건 일치 여부로 점수화: 일치(2) > 조건있음(1) > null(-1)
+                valueA = getMotionScore(a.motion_preening, currentTime, currentWeather);
+                valueB = getMotionScore(b.motion_preening, currentTime, currentWeather);
+            } else if (column === 'wingspread') {
+                valueA = getMotionScore(a.motion_wingspread, currentTime, currentWeather);
+                valueB = getMotionScore(b.motion_wingspread, currentTime, currentWeather);
             }
+
             return order === 'asc' ? valueA - valueB : valueB - valueA;
         });
     }
@@ -318,15 +357,8 @@
     }
 
     /**
-     * special 필드 값에 따른 아이콘 반환 함수
-     * JSON 데이터의 실제 special 값:
-     *   - false           : 일반 새 (아이콘 없음)
-     *   - "특수"           : 특수 조건 등장 새 (🌟) → 오목눈이
-     *   - "보너스 스테이지"  : 보너스 스테이지 전용 새 (🎁) → 녹공작
-     *   - "희귀"           : 희귀 새 (💎) → 아조레스멋쟁이새, 파랑딱새
-     *   - "빙설 시즌"       : 빙설 시즌 한정 새 (❄️) → 시즌 데이터용
-     * @param {string|boolean} special - 새 데이터의 special 필드 값
-     * @returns {string} 해당 유형에 대응하는 이모지 아이콘 (없으면 빈 문자열)
+     * special 값에 따른 아이콘 반환
+     * JSON 실제 값: false | "특수" | "보너스 스테이지" | "희귀" | "빙설 시즌"
      */
     function getSpecialIcon(special) {
         const icons = {
@@ -339,10 +371,7 @@
     }
 
     /**
-     * 서식지 이름에 따른 아이콘 반환 함수
-     * 이벤트성 서식지에 별도 아이콘을 붙여 일반 서식지와 구분
-     * @param {string} habitat - 새 데이터의 habitat 필드 값
-     * @returns {string} 해당 서식지에 대응하는 이모지 아이콘 (없으면 빈 문자열)
+     * 이벤트성 서식지에 아이콘 부여
      */
     function getHabitatIcon(habitat) {
         const icons = {
@@ -350,6 +379,50 @@
             '겨울 기록 채집 사건': '❄️'
         };
         return icons[habitat] || '';
+    }
+
+    /**
+     * motion 객체(깃털 다듬기 / 날개 펼치기)를 HTML 뱃지 문자열로 변환
+     * activeTime·activeWeather가 주어지면 일치하는 뱃지에 'motion-match' 클래스 추가
+     *
+     * @param {Object|null} motionObj  - { 시간: [날씨, ...], ... } 형태 또는 null
+     * @param {string|null} activeTime    - 현재 선택 시간대 (하이라이트용)
+     * @param {string|null} activeWeather - 현재 선택 날씨 (하이라이트용)
+     * @returns {string} HTML 문자열
+     */
+    function formatMotion(motionObj, activeTime = null, activeWeather = null) {
+        if (!motionObj) return '<span class="motion-none">-</span>';
+
+        const entries = Object.entries(motionObj);
+        if (entries.length === 0) return '<span class="motion-none">-</span>';
+
+        return entries.map(([time, weathers]) => {
+            // 현재 조건(시간 AND 날씨)이 모두 일치하면 하이라이트
+            const isMatch = activeTime !== null
+                && activeWeather !== null
+                && time === activeTime
+                && weathers.includes(activeWeather);
+
+            const matchClass = isMatch ? ' motion-match' : '';
+            // 해당 시간대의 날씨 목록을 이모지+텍스트로 나열
+            const weatherStr = weathers.map(w => `${weatherIcons[w] || ''}${w}`).join(' ');
+            return `<span class="motion-badge${matchClass}">${time} · ${weatherStr}</span>`;
+        }).join('');
+    }
+
+    /**
+     * 정렬용 motion 점수 계산 (finder 전용)
+     * 현재 조건과 일치하면 2점, 조건은 있으나 불일치면 1점, null이면 -1점
+     *
+     * @param {Object|null} motionObj
+     * @param {string} time    - 현재 선택 시간대
+     * @param {string} weather - 현재 선택 날씨
+     * @returns {number}
+     */
+    function getMotionScore(motionObj, time, weather) {
+        if (!motionObj) return -1;
+        if (motionObj[time] && motionObj[time].includes(weather)) return 2;
+        return 1;
     }
 
     function displayResults(birdes) {
@@ -373,21 +446,27 @@
                             <thead>
                                 <tr>
                                     <th class="sortable ${currentSort.column === 'name' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('name')">이름</th>
-                                    <th class="sortable ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('habitat')">서식지</th>
-                                    <th class="sortable ${currentSort.column === 'level' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('level')">레벨</th>
+                                    <th class="sortable col-habitat-bird ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('habitat')">서식지</th>
+                                    <th class="sortable col-level ${currentSort.column === 'level' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('level')">레벨</th>
                                     <th class="sortable ${currentSort.column === 'price' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('price')">판매가 (등급별)</th>
-                                    <th>출현 시간</th>
-                                    <th>날씨 조건</th>
+                                    <th class="col-time">출현 시간</th>
+                                    <th class="col-weather">날씨 조건</th>
+                                    <th class="sortable ${currentSort.column === 'preening' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('preening')" title="현재 조건 일치 시 초록 하이라이트">3⭐ 깃털 다듬기</th>
+                                    <th class="sortable ${currentSort.column === 'wingspread' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('wingspread')" title="현재 조건 일치 시 초록 하이라이트">4⭐ 날개 펼치기</th>
                                 </tr>
                             </thead>
                             <tbody>`;
+
+        // 현재 선택된 시간·날씨 (하이라이트 기준)
+        const currentTime    = document.getElementById('time').value;
+        const currentWeather = document.getElementById('weather').value;
 
         sortedbirdes.forEach(bird => {
             // --- 시간 표시 로직 ---
             const allTimes = ['아침', '낮', '저녁', '새벽'];
             const isAlwaysTime = bird.timeAll || (bird.time && allTimes.every(t => bird.time.includes(t)));
             const timeDisplay = isAlwaysTime
-                ? '<span class="time-badge always">하루 종일</span>'
+                ? '<span class="time-badge always">종일</span>'
                 : bird.time.map(t => `<span class="time-badge">${t}</span>`).join(' ');
 
             // --- 날씨 표시 로직 ---
@@ -413,12 +492,14 @@
                                     <option value="4">4성</option>
                                     <option value="5">5성</option>
                                 </select>
-                                <!-- 초기 표시 가격: bird.price = 3성 기준값, starMultipliers[3] = 1이므로 그대로 표시 -->
+                                <!-- 초기 표시: bird.price = 3성 기준값 (배율 1 적용) -->
                                 <span class="price">₩${bird.price}</span>
                             </div>
                         </td>
                         <td>${timeDisplay}</td>
                         <td>${weatherDisplay}</td>
+                        <td class="motion-cell">${formatMotion(bird.motion_preening, currentTime, currentWeather)}</td>
+                        <td class="motion-cell">${formatMotion(bird.motion_wingspread, currentTime, currentWeather)}</td>
                     </tr>`;
         });
 

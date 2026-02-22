@@ -318,13 +318,6 @@
             } else if (column === 'price') {
                 valueA = a.price;
                 valueB = b.price;
-            } else if (column === 'preening') {
-                // 총 (시간, 날씨) 쌍의 수로 정렬, null은 -1
-                valueA = getMotionTotalCount(a.motion_preening);
-                valueB = getMotionTotalCount(b.motion_preening);
-            } else if (column === 'wingspread') {
-                valueA = getMotionTotalCount(a.motion_wingspread);
-                valueB = getMotionTotalCount(b.motion_wingspread);
             }
 
             return order === 'asc' ? valueA - valueB : valueB - valueA;
@@ -406,7 +399,7 @@
                             <tr>
                                 <th class="sortable ${currentSort.column === 'name' ? 'sort-' + currentSort.order : ''}"
                                     onclick="handleSort('name')">이름</th>
-                                <th class="sortable ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}"
+                                <th class="sortable col-habitat-bird ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}"
                                     onclick="handleSort('habitat')">서식지</th>
                                 <th class="sortable col-level ${currentSort.column === 'level' ? 'sort-' + currentSort.order : ''}"
                                     onclick="handleSort('level')">레벨</th>
@@ -414,10 +407,8 @@
                                     onclick="handleSort('price')">판매가</th>
                                 <th class="col-time">출현 시간</th>
                                 <th class="col-weather">날씨 조건</th>
-                                <th class="sortable ${currentSort.column === 'preening' ? 'sort-' + currentSort.order : ''}"
-                                    onclick="handleSort('preening')" title="조건 수 기준 정렬">3⭐ 깃털 다듬기</th>
-                                <th class="sortable ${currentSort.column === 'wingspread' ? 'sort-' + currentSort.order : ''}"
-                                    onclick="handleSort('wingspread')" title="조건 수 기준 정렬">4⭐ 날개 펼치기</th>
+                                <th title="조건 수 기준 정렬 없음">3⭐ 깃털 다듬기</th>
+                                <th title="조건 수 기준 정렬 없음">4⭐ 날개 펼치기</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -515,19 +506,6 @@
             const weatherStr = weathers.map(w => `${weatherIcons[w] || ''}${w}`).join(' ');
             return `<span class="motion-badge">${time} · ${weatherStr}</span>`;
         }).join('');
-    }
-
-    /**
-     * 정렬용 motion 총 조건 수 반환 (list 전용)
-     * null이면 -1을 반환하여 정렬 시 맨 뒤로 이동
-     *
-     * @param {Object|null} motionObj
-     * @returns {number}
-     */
-    function getMotionTotalCount(motionObj) {
-        if (!motionObj) return -1;
-        // 각 시간대의 날씨 배열 길이 합산
-        return Object.values(motionObj).reduce((sum, arr) => sum + arr.length, 0);
     }
 
     window.onload = loadbirdData;
