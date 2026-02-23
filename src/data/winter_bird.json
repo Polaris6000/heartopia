@@ -5,7 +5,7 @@
     "habitat": "근교 호숫가",
     "time": ["아침", "낮", "저녁", "새벽"],
     "weather": ["맑음", "비", "무지개"],
-    "price": 80,
+    "price": 160,
     "special": "빙설 시즌",
     "category": "홍학",
     "motion_preening": {
@@ -23,7 +23,7 @@
     "habitat": "근교 호수",
     "time": ["아침", "낮", "저녁", "새벽"],
     "weather": ["맑음", "비", "무지개"],
-    "price": 70,
+    "price": 140,
     "special": "빙설 시즌",
     "category": "오리",
     "motion_preening": {
@@ -41,7 +41,7 @@
     "habitat": "근교 호수",
     "time": ["아침", "낮", "저녁", "새벽"],
     "weather": ["맑음", "비", "무지개"],
-    "price": 70,
+    "price": 140,
     "special": "빙설 시즌",
     "category": "오리",
     "motion_preening": {
@@ -59,7 +59,7 @@
     "habitat": "근교 호수",
     "time": ["아침", "낮", "저녁", "새벽"],
     "weather": ["맑음", "비", "무지개"],
-    "price": 70,
+    "price": 140,
     "special": "빙설 시즌",
     "category": "오리",
     "motion_preening": {
@@ -77,7 +77,7 @@
     "habitat": "겨울 기록 채집 사건",
     "time": ["아침", "낮", "저녁", "새벽"],
     "weather": ["맑음", "비", "무지개"],
-    "price": 90,
+    "price": 180,
     "special": "빙설 시즌",
     "category": "오리",
     "motion_preening": {
