@@ -1,0 +1,71 @@
+{
+  "gradeMultipliers": {
+    "1": 1.0,
+    "2": 1.33,
+    "3": 1.67,
+    "4": 2.0,
+    "5": 3.0
+  },
+  "items": [
+    {
+      "name": "토마토",
+      "seedPrice": 10,
+      "harvestMinutes": 15,
+      "sellPrice": 30
+    },
+    {
+      "name": "감자",
+      "seedPrice": 30,
+      "harvestMinutes": 60,
+      "sellPrice": 90
+    },
+    {
+      "name": "밀",
+      "seedPrice": 95,
+      "harvestMinutes": 240,
+      "sellPrice": 285
+    },
+    {
+      "name": "양상추",
+      "seedPrice": 145,
+      "harvestMinutes": 480,
+      "sellPrice": 435
+    },
+    {
+      "name": "파인애플",
+      "seedPrice": 15,
+      "harvestMinutes": 30,
+      "sellPrice": 52
+    },
+    {
+      "name": "당근",
+      "seedPrice": 50,
+      "harvestMinutes": 120,
+      "sellPrice": 155
+    },
+    {
+      "name": "딸기",
+      "seedPrice": 125,
+      "harvestMinutes": 360,
+      "sellPrice": 375
+    },
+    {
+      "name": "옥수수",
+      "seedPrice": 170,
+      "harvestMinutes": 720,
+      "sellPrice": 515
+    },
+    {
+      "name": "포도",
+      "seedPrice": 160,
+      "harvestMinutes": 600,
+      "sellPrice": 480
+    },
+    {
+      "name": "가지",
+      "seedPrice": 135,
+      "harvestMinutes": 420,
+      "sellPrice": 406
+    }
+  ]
+}

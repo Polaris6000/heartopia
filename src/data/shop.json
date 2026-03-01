@@ -1,0 +1,17 @@
+[
+  { "name": "슈가파우더",   "shopPrice": 50, "dailyLimit": 50, "availability": "season_ice" },
+  { "name": "고기",     "shopPrice": 200, "dailyLimit": 50 },
+  { "name": "달걀",     "shopPrice": 100, "dailyLimit": 50 },
+  { "name": "우유",     "shopPrice": 50,  "dailyLimit": 50 },
+  { "name": "치즈",     "shopPrice": 100, "dailyLimit": 50 },
+  { "name": "버터",     "shopPrice": 150, "dailyLimit": 50 },
+  { "name": "커피원두", "shopPrice": 50,  "dailyLimit": 50 },
+  { "name": "홍차",     "shopPrice": 250, "dailyLimit": 50 },
+  { "name": "말차가루", "shopPrice": 150, "dailyLimit": 50 },
+  { "name": "쌀가루",   "shopPrice": 50,  "dailyLimit": 50 },
+  { "name": "팥",       "shopPrice": 50,  "dailyLimit": 50 },
+  { "name": "식용유",   "shopPrice": 100, "dailyLimit": 50 },
+  { "name": "멸균란",   "shopPrice": 100, "dailyLimit": 50 },
+  { "name": "사탕(150)",   "shopPrice": 150, "dailyLimit": 20, "availability": "weather_special" },
+  { "name": "사탕(200)",   "shopPrice": 200, "dailyLimit": 20, "availability": "weather_special" }
+]
