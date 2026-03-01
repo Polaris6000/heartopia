@@ -1,4 +1,40 @@
 /* ========================================
+   CSS 커스텀 프로퍼티 (디자인 토큰)
+   ─ 색상 하나만 바꾸면 전체에 반영됨
+======================================== */
+:root {
+    /* ── 주요색 (핑크 계열) ──────────────────────────── */
+    --color-primary:         #ff6b9d;   /* 메인 핑크: 로고, 제목, 버튼 등 */
+    --color-primary-dark:    #ff5588;   /* 진한 핑크: 호버 상태 */
+    --color-primary-light:   #ff9a9e;   /* 연한 핑크: 서브 강조 */
+    --color-primary-surface: #fff0f5;   /* 가장 연한 핑크: 드롭다운 호버 배경 */
+
+    /* rgba 투명도 변형 (그림자·활성 배경 등에 사용) */
+    --color-primary-a10: rgba(255, 107, 157, 0.1);
+    --color-primary-a20: rgba(255, 107, 157, 0.2);
+    --color-primary-a30: rgba(255, 107, 157, 0.3);
+
+    /* ── 텍스트 계열 ──────────────────────────────────── */
+    --color-text-strong: #333;   /* 제목, 테이블 헤더 */
+    --color-text:        #555;   /* 본문, 일반 텍스트 */
+    --color-text-soft:   #666;   /* 보조 텍스트 */
+    --color-text-muted:  #888;   /* 설명, 힌트 */
+    --color-text-faint:  #bbb;   /* 비활성, 없음 표시 */
+
+    /* ── 배경 / 서피스 계열 ──────────────────────────── */
+    --color-surface:       white;    /* 카드, 헤더, 푸터 배경 */
+    --color-surface-light: #f8f9fa; /* 테이블 헤더, nav 버튼, tr 호버 */
+    --color-surface-dim:   #f0f0f0; /* 테이블 구분선, 뱃지 배경 */
+    --color-border:        #e9ecef; /* 입력창 테두리, 구분선 */
+    --color-border-soft:   #ddd;    /* 뱃지 등 소프트 테두리 */
+
+    /* ── 바디 배경 그라데이션 ────────────────────────── */
+    --color-bg-from: #a8edea;
+    --color-bg-to:   #fed6e3;
+}
+
+
+/* ========================================
    기본 설정
 ======================================== */
 * {
@@ -9,7 +45,7 @@
 
 body {
     font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
-    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    background: linear-gradient(135deg, var(--color-bg-from) 0%, var(--color-bg-to) 100%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -28,7 +64,7 @@ main {
    헤더 영역
 ======================================== */
 header {
-    background: white;
+    background: var(--color-surface);
     padding: 20px 0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     position: sticky;
@@ -48,7 +84,7 @@ header {
 .logo {
     font-size: 2em;
     font-weight: bold;
-    color: #ff6b9d;
+    color: var(--color-primary);
     cursor: pointer;
 }
 
@@ -61,17 +97,17 @@ nav ul {
 
 nav a {
     text-decoration: none;
-    color: #555;
+    color: var(--color-text);
     font-weight: 600;
     padding: 10px 20px;
     border-radius: 8px;
     transition: all 0.3s;
-    background: #f8f9fa;
+    background: var(--color-surface-light);
 }
 
 nav a:hover {
-    background: #ff6b9d;
-    color: white;
+    background: var(--color-primary);
+    color: var(--color-surface);
     transform: translateY(-2px);
 }
 
@@ -88,7 +124,7 @@ nav a:hover {
     position: absolute;
     top: calc(100% + 6px);       /* 부모 버튼 바로 아래에 띄움 */
     left: 0;
-    background: white;
+    background: var(--color-surface);
     border-radius: 10px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     min-width: 150px;
@@ -113,7 +149,7 @@ nav a:hover {
 .dropdown-menu li a {
     display: block;
     padding: 10px 18px;
-    color: #555;
+    color: var(--color-text);
     font-weight: 600;
     font-size: 0.95em;
     background: transparent;      /* 부모 nav a 스타일 초기화 */
@@ -124,16 +160,17 @@ nav a:hover {
 }
 
 .dropdown-menu li a:hover {
-    background: #fff0f5;
-    color: #ff6b9d;
+    background: var(--color-primary-surface);
+    color: var(--color-primary);
     transform: none;              /* 부모 호버 translateY 효과 제거 */
 }
+
 
 /* ========================================
    푸터 영역
 ======================================== */
 footer {
-    background: white;
+    background: var(--color-surface);
     padding: 30px 0;
     margin-top: 60px;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
@@ -147,7 +184,7 @@ footer {
 }
 
 .footer-container p {
-    color: #666;
+    color: var(--color-text-soft);
     font-size: 1em;
     margin-bottom: 10px;
 }
@@ -157,7 +194,7 @@ footer {
 }
 
 .footer-links a {
-    color: #ff6b9d;
+    color: var(--color-primary);
     text-decoration: none;
     margin: 0 15px;
     font-weight: 600;
@@ -165,7 +202,7 @@ footer {
 }
 
 .footer-links a:hover {
-    color: #ff9a9e;
+    color: var(--color-primary-light);
 }
 
 
@@ -173,7 +210,7 @@ footer {
    페이지 헤더
 ======================================== */
 .page-header {
-    background: white;
+    background: var(--color-surface);
     padding: 40px;
     border-radius: 20px;
     text-align: center;
@@ -190,13 +227,13 @@ footer {
 
 .page-header h1 {
     font-size: 3em;
-    color: #ff6b9d;
+    color: var(--color-primary);
     margin-bottom: 15px;
 }
 
 .page-header p {
     font-size: 1.2em;
-    color: #888;
+    color: var(--color-text-muted);
 }
 
 
@@ -204,7 +241,7 @@ footer {
    날짜/시간 섹션
 ======================================== */
 .datetime-section {
-    background: white;
+    background: var(--color-surface);
     padding: 40px;
     border-radius: 20px;
     margin-bottom: 30px;
@@ -221,14 +258,14 @@ footer {
 
 .datetime-section h1 {
     font-size: 3em;
-    color: #ff6b9d;
+    color: var(--color-primary);
     margin-bottom: 10px;
     text-align: center;
 }
 
 .datetime-section > p {
     font-size: 1.2em;
-    color: #888;
+    color: var(--color-text-muted);
     text-align: center;
     margin-bottom: 30px;
 }
@@ -248,13 +285,13 @@ footer {
 .current-date {
     font-size: 1.8em;
     font-weight: 700;
-    color: #ff6b9d;
+    color: var(--color-primary);
 }
 
 .current-time {
     font-size: 2.5em;
     font-weight: 800;
-    color: #333;
+    color: var(--color-text-strong);
     font-family: 'Courier New', monospace;
 }
 
@@ -276,10 +313,10 @@ footer {
 }
 
 .time-segment.active {
-    border-color: #ff6b9d;
-    background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(255, 107, 157, 0.2));
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary-a10), var(--color-primary-a20));
     transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+    box-shadow: 0 4px 15px var(--color-primary-a30);
 }
 
 .time-segment.morning {
@@ -318,7 +355,7 @@ footer {
     height: 0;
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
-    border-top: 15px solid #ff6b9d;
+    border-top: 15px solid var(--color-primary);
     transition: left 0.5s ease;
 }
 
@@ -334,7 +371,7 @@ footer {
 }
 
 .stat-card {
-    background: white;
+    background: var(--color-surface);
     padding: 25px;
     border-radius: 15px;
     text-align: center;
@@ -344,12 +381,12 @@ footer {
 .stat-card .number {
     font-size: 2.5em;
     font-weight: bold;
-    color: #ff6b9d;
+    color: var(--color-primary);
     margin-bottom: 10px;
 }
 
 .stat-card .label {
-    color: #888;
+    color: var(--color-text-muted);
     font-size: 1.1em;
 }
 
@@ -361,23 +398,23 @@ footer {
             display: inline-block;
             margin: 5px;
             padding: 5px;
-            color: #555;
+            color: var(--color-text);
         }
 
         .star-selector select {
             padding: 5px 5px;
-            border: 2px solid #e9ecef;
+            border: 2px solid var(--color-border);
             border-radius: 5px;
             font-size: 0.9em;
-            background: white;
+            background: var(--color-surface);
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .star-selector select:focus {
             outline: none;
-            border-color: #ff6b9d;
-            box-shadow: 0 0 0 2px rgba(255, 107, 157, 0.1);
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 2px var(--color-primary-a10);
         }
 
         .price-cell {
@@ -390,7 +427,7 @@ footer {
    필터 섹션
 ======================================== */
 .filter-section {
-    background: white;
+    background: var(--color-surface);
     padding: 30px;
     border-radius: 20px;
     margin-bottom: 30px;
@@ -399,7 +436,7 @@ footer {
 
 .filter-section h2 {
     font-size: 1.8em;
-    color: #ff6b9d;
+    color: var(--color-primary);
     margin-bottom: 20px;
 }
 
@@ -411,7 +448,7 @@ footer {
 .search-box label {
     display: block;
     font-size: 1.2em;
-    color: #333;
+    color: var(--color-text-strong);
     margin-bottom: 10px;
     font-weight: 600;
 }
@@ -419,7 +456,7 @@ footer {
 .search-box input[type="text"] {
     width: 100%;
     padding: 15px;
-    border: 2px solid #e9ecef;
+    border: 2px solid var(--color-border);
     border-radius: 10px;
     font-size: 1.1em;
     transition: all 0.3s;
@@ -427,8 +464,8 @@ footer {
 
 .search-box input[type="text"]:focus {
     outline: none;
-    border-color: #ff6b9d;
-    box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-a10);
 }
 
 /* 필터 그룹 */
@@ -442,7 +479,7 @@ footer {
 
 .filter-group h3 {
     font-size: 1.2em;
-    color: #333;
+    color: var(--color-text-strong);
     margin-bottom: 15px;
 }
 
@@ -464,14 +501,14 @@ footer {
 }
 
 .checkbox-label:hover {
-    background: #f8f9fa;
+    background: var(--color-surface-light);
 }
 
 .checkbox-label input[type="checkbox"] {
     width: 20px;
     height: 20px;
     cursor: pointer;
-    accent-color: #ff6b9d;
+    accent-color: var(--color-primary);
 }
 
 /* 필터 버튼 */
@@ -494,29 +531,29 @@ footer {
 }
 
 .filter-btn {
-    background: #ff6b9d;
-    color: white;
+    background: var(--color-primary);
+    color: var(--color-surface);
 }
 
 .filter-btn:hover {
-    background: #ff5588;
+    background: var(--color-primary-dark);
     transform: translateY(-2px);
 }
 
 .filter-btn-reset {
-    background: #f8f9fa;
-    color: #666;
+    background: var(--color-surface-light);
+    color: var(--color-text-soft);
 }
 
 .filter-btn-reset:hover {
-    background: #e9ecef;
+    background: var(--color-border);
 }
 
 /* ========================================
    시즌 버튼
 ======================================== */
 
-.winter-season-btn {
+.season-ice-btn {
     background-color: #e3f2fd !important;
     color: #1565c0 !important;
 }
@@ -530,7 +567,7 @@ footer {
 }
 
 .habitat-group {
-    background: white;
+    background: var(--color-surface);
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -538,15 +575,15 @@ footer {
 }
 
 .habitat-header {
-    background: #f8f9fa;
-    color: #333;
+    background: var(--color-surface-light);
+    color: var(--color-text-strong);
     padding: 20px 30px;
     font-size: 1.5em;
     font-weight: 600;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #e9ecef;
+    border-bottom: 2px solid var(--color-border);
 }
 
 .habitat-icon {
@@ -554,8 +591,8 @@ footer {
 }
 
 .count-badge {
-    background: #ff6b9d;
-    color: white;
+    background: var(--color-primary);
+    color: var(--color-surface);
     padding: 8px 20px;
     border-radius: 20px;
     font-size: 0.8em;
@@ -574,24 +611,24 @@ footer {
 table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed; /* 또는 auto → fixed로 변경 */
+    table-layout: fixed;
 }
 
 /* 테이블 헤더 */
 th {
-    background: #f8f9fa;
+    background: var(--color-surface-light);
     padding: 15px;
     text-align: left;
     font-weight: 600;
-    color: #333;
-    border-bottom: 2px solid #e9ecef;
+    color: var(--color-text-strong);
+    border-bottom: 2px solid var(--color-border);
     cursor: pointer;
     user-select: none;
     transition: background 0.2s;
 }
 
 th:hover {
-    background: #e9ecef;
+    background: var(--color-border);
 }
 
 /* 정렬 아이콘 */
@@ -649,8 +686,8 @@ th.sort-desc::after {
 /* 테이블 바디 */
 td {
     padding: 15px;
-    border-bottom: 1px solid #f0f0f0;
-    color: #555;
+    border-bottom: 1px solid var(--color-surface-dim);
+    color: var(--color-text);
 }
 
 /* 이름 컬럼 최소 너비 확보 */
@@ -660,13 +697,13 @@ td.item-name, th:first-child {
 }
 
 tr:hover {
-    background: #f8f9fa;
+    background: var(--color-surface-light);
 }
 
 /* 테이블 셀 스타일 */
 .item-name {
     font-weight: 600;
-    color: #ff6b9d;
+    color: var(--color-primary);
     font-size: 1.1em;
 }
 
@@ -683,8 +720,8 @@ tr:hover {
 .time-badge,
 .weather-badge {
     display: inline-block;
-    background: #f8f9fa;
-    color: #666;
+    background: var(--color-surface-light);
+    color: var(--color-text-soft);
     padding: 4px 10px;
     border-radius: 12px;
     font-size: 0.85em;
@@ -701,7 +738,7 @@ tr:hover {
    입력 섹션
 ======================================== */
 .input-section {
-    background: white;
+    background: var(--color-surface);
     padding: 40px;
     border-radius: 20px;
     margin-bottom: 40px;
@@ -724,30 +761,30 @@ tr:hover {
 label {
     font-weight: 600;
     margin-bottom: 10px;
-    color: #ff6b9d;
+    color: var(--color-primary);
     font-size: 1.1em;
 }
 
 input,
 select {
     padding: 15px;
-    border: 2px solid #e9ecef;
+    border: 2px solid var(--color-border);
     border-radius: 8px;
     font-size: 16px;
     transition: all 0.3s;
-    background: white;
+    background: var(--color-surface);
 }
 
 input:focus,
 select:focus {
     outline: none;
-    border-color: #ff6b9d;
-    box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-a10);
 }
 
 button {
-    background: #ff6b9d;
-    color: white;
+    background: var(--color-primary);
+    color: var(--color-surface);
     border: none;
     padding: 18px 40px;
     border-radius: 8px;
@@ -758,9 +795,9 @@ button {
 }
 
 button:hover {
-    background: #ff5588;
+    background: var(--color-primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+    box-shadow: 0 4px 12px var(--color-primary-a30);
 }
 
 button:active {
@@ -778,11 +815,11 @@ button:active {
 .no-results,
 .loading,
 .error {
-    background: white;
+    background: var(--color-surface);
     text-align: center;
     padding: 60px 40px;
     border-radius: 20px;
-    color: #ff6b9d;
+    color: var(--color-primary);
     font-size: 1.3em;
     font-weight: 600;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -799,10 +836,10 @@ button:active {
     padding: 2px 7px;
     border-radius: 10px;
     font-size: 0.78em;
-    background: #f0f0f0;
-    color: #555;
+    background: var(--color-surface-dim);
+    color: var(--color-text);
     white-space: normal;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-soft);
     transition: background 0.15s, color 0.15s;
 }
 /* 현재 시간+날씨 조건과 일치할 때 하이라이트 */
@@ -814,7 +851,7 @@ button:active {
 }
 /* 조건 없음(-) 표시 */
 .motion-none {
-    color: #bbb;
+    color: var(--color-text-faint);
     font-size: 0.85em;
 }
 /* 모션 컬럼 셀 너비 최소값 */

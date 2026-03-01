@@ -1,0 +1,17 @@
+{
+  "gradeMultipliers": {
+    "1": 1.0,
+    "2": 1.33,
+    "3": 1.67,
+    "4": 2.0,
+    "5": 3.0
+  },
+  "items": [
+    {
+      "name": "무",
+      "seedPrice": 10,
+      "harvestMinutes": 15,
+      "sellPrice": 30
+    }
+  ]
+}

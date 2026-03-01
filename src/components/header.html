@@ -1,34 +1,42 @@
 <header>
     <div class="header-container">
-        <div class="logo" style="cursor:pointer" onclick="location.href='https://polaris6000.github.io/heartopia/index.html'">🏝️ 두근두근타운</div>
+        <div class="logo" style="cursor:pointer" onclick="location.href='{{BASE}}/index.html'">🏝️ 두근두근타운</div>
         <nav>
             <ul>
-                <li><a href="https://polaris6000.github.io/heartopia/index.html">홈</a></li>
+                <li><a href="{{BASE}}/index.html">홈</a></li>
 
-                <!-- 어류 도감: 호버 시 드롭다운 표시 -->
+                <!-- 작물 도감: 호버 시 드롭다운 표시 -->
                 <li class="nav-dropdown">
-                    <a href="https://polaris6000.github.io/heartopia/src/pages/fish/fish_list.html">어류 도감</a>
+                    <a href="{{BASE}}/src/pages/crops/crops_list.html">작물 도감</a>
                     <ul class="dropdown-menu">
-                        <li><a href="https://polaris6000.github.io/heartopia/src/pages/fish/fish_list.html">📋 도감 목록</a></li>
-                        <li><a href="https://polaris6000.github.io/heartopia/src/pages/fish/fish_finder.html">🔍 파인더</a></li>
+                        <li><a href="{{BASE}}/src/pages/crops/crops_list.html">📋 도감 목록</a></li>
                     </ul>
                 </li>
 
-                <!-- 곤충 도감: 호버 시 드롭다운 표시 -->
+                <!-- 낚시: 호버 시 드롭다운 표시 -->
                 <li class="nav-dropdown">
-                    <a href="https://polaris6000.github.io/heartopia/src/pages/bug/bug_list.html">곤충 도감</a>
+                    <a href="{{BASE}}/src/pages/fish/fish_list.html">낚시</a>
                     <ul class="dropdown-menu">
-                        <li><a href="https://polaris6000.github.io/heartopia/src/pages/bug/bug_list.html">📋 도감 목록</a></li>
-                        <li><a href="https://polaris6000.github.io/heartopia/src/pages/bug/bug_finder.html">🔍 파인더</a></li>
+                        <li><a href="{{BASE}}/src/pages/fish/fish_list.html">📋 도감 목록</a></li>
+                        <li><a href="{{BASE}}/src/pages/fish/fish_finder.html">🔍 파인더</a></li>
                     </ul>
                 </li>
 
-                <!-- 조류 도감: 호버 시 드롭다운 표시 -->
+                <!-- 곤충 채집: 호버 시 드롭다운 표시 -->
                 <li class="nav-dropdown">
-                    <a href="https://polaris6000.github.io/heartopia/src/pages/bird/bird_list.html">조류 도감</a>
+                    <a href="{{BASE}}/src/pages/bug/bug_list.html">곤충 채집</a>
                     <ul class="dropdown-menu">
-                        <li><a href="https://polaris6000.github.io/heartopia/src/pages/bird/bird_list.html">📋 도감 목록</a></li>
-                        <li><a href="https://polaris6000.github.io/heartopia/src/pages/bird/bird_finder.html">🔍 파인더</a></li>
+                        <li><a href="{{BASE}}/src/pages/bug/bug_list.html">📋 도감 목록</a></li>
+                        <li><a href="{{BASE}}/src/pages/bug/bug_finder.html">🔍 파인더</a></li>
+                    </ul>
+                </li>
+
+                <!-- 새 관찰: 호버 시 드롭다운 표시 -->
+                <li class="nav-dropdown">
+                    <a href="{{BASE}}/src/pages/bird/bird_list.html">새 관찰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{BASE}}/src/pages/bird/bird_list.html">📋 도감 목록</a></li>
+                        <li><a href="{{BASE}}/src/pages/bird/bird_finder.html">🔍 파인더</a></li>
                     </ul>
                 </li>
             </ul>

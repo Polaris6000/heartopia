@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>작물 도감 - 두근두근타운</title>
+    <link href="../../css/common.css" rel="stylesheet">
+    <style>
+        /* ── 작물 도감 전용 컬럼 너비 ── */
+        .col-seed    { width: 140px; min-width: 140px; }
+        .col-harvest { width: 120px; min-width: 140px; }
+        .col-profit  { width: 180px; min-width: 180px; }
+
+        /* 이윤 셀 컬러 */
+        .profit-positive { color: #4caf50; font-weight: 600; }
+        .profit-negative { color: #e53935; font-weight: 600; }
+
+        /* 빙설 시즌 작물 뱃지 */
+        .season-badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1565c0;
+            font-size: 0.78em;
+            padding: 2px 7px;
+            border-radius: 8px;
+            margin-left: 4px;
+            font-weight: 600;
+        }
+
+        /* 수확 시간 뱃지 */
+        .harvest-badge {
+            display: inline-block;
+            background: var(--color-surface-light);
+            color: var(--color-text-soft);
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        /* 필터 섹션: 검색창 + 버튼 수평 배치 */
+        .crops-filter-row {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        /* 검색창이 남은 공간 채우도록 */
+        .crops-filter-row .search-box {
+            flex: 1;
+            margin-bottom: 0;   /* 기본 margin-bottom 제거 */
+        }
+
+        /* 버튼 묶음은 세로 방향 유지, 너비 고정 */
+        .crops-filter-row .filter-actions {
+            flex-direction: column;
+            flex-shrink: 0;
+            min-width: 160px;
+        }
+
+        /* ── 작물 이미지 썸네일 ── */
+        .col-img { width: 60px; min-width: 60px; text-align: center; }
+
+        .crop-img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            image-rendering: pixelated; /* 픽셀 아트 스타일 선명하게 */
+            vertical-align: middle;
+        }
+
+        /* 이미지 없는 경우 빈 셀 자리 유지 */
+        .crop-img-placeholder {
+            display: inline-block;
+            width: 44px;
+            height: 44px;
+        }
+</style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<main>
+    <!-- ── 페이지 헤더 ── -->
+    <div class="page-header">
+        <h1>🌱 작물 도감</h1>
+        <p>두근두근타운의 모든 작물 정보를 확인하세요</p>
+    </div>
+
+    <!-- ── 통계 카드 ── -->
+    <div class="stats" id="stats">
+        <div class="stat-card">
+            <div class="number">-</div>
+            <div class="label">총 작물 종류</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">-</div>
+            <div class="label">최단 수확 시간</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">-</div>
+            <div class="label">최고 판매가 (1성)</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">-</div>
+            <div class="label">최대 이윤 (1성)</div>
+        </div>
+    </div>
+
+    <!-- ── 필터 섹션 ── -->
+    <div class="filter-section">
+        <h2>🔍 필터</h2>
+
+        <!-- 검색창 + 버튼 수평 배치 -->
+        <div class="crops-filter-row">
+
+            <!-- 이름 검색 -->
+            <div class="search-box">
+                <label for="cropSearch">🌿 작물 이름 검색</label>
+                <input id="cropSearch" oninput="applyFilters()" placeholder="예: 토마토, 밀, 딸기..." type="text">
+            </div>
+
+            <!-- 시즌 · 초기화 버튼 -->
+            <div class="filter-actions">
+                <button class="filter-btn season-ice-btn" onclick="loadSeasonData()">❄️ 빙설 시즌 추가</button>
+                <button class="filter-btn-reset season-ice-btn" onclick="removeSeasonData()">🗑️ 시즌 데이터 제거</button>
+                <button class="filter-btn-reset" onclick="resetFilters()">필터 초기화</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ── 테이블 영역 ── -->
+    <div class="habitat-section" id="content">
+        <div class="loading">🌱 작물 정보를 불러오는 중...</div>
+    </div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="../../js/common.js"></script>
+<script>
+    /* ========================================================
+       작물 이미지 매핑 (한글 이름 → 상대 경로)
+       페이지 위치: /src/pages/crops/  →  ../../../public/images/crop/
+    ======================================================== */
+    const CROP_IMAGES = {
+        '토마토':   '../../../public/images/crop/spr_ui_item_normal_p_cropaward_tomato_award.png',
+        '감자':     '../../../public/images/crop/spr_ui_item_normal_p_cropaward_potato_award.png',
+        '밀':       '../../../public/images/crop/spr_ui_item_normal_p_cropaward_wheat_award.png',
+        '양상추':   '../../../public/images/crop/spr_ui_item_normal_p_cropaward_lettuce_award.png',
+        '파인애플': '../../../public/images/crop/spr_ui_item_normal_p_cropaward_pineapple_award.png',
+        '당근':     '../../../public/images/crop/spr_ui_item_normal_p_cropaward_carrot_award.png',
+        '딸기':     '../../../public/images/crop/spr_ui_item_normal_p_cropaward_strawberry_award.png',
+        '옥수수':   '../../../public/images/crop/spr_ui_item_normal_p_cropaward_corn_award.png',
+        '포도':     '../../../public/images/crop/spr_ui_item_normal_p_cropaward_grape_award.png',
+        '가지':     '../../../public/images/crop/spr_ui_item_normal_p_cropaward_eggplant.png',
+        '무':       '../../../public/images/crop/spr_ui_item_normal_p_cropaward_whiteradish.png',
+    };
+
+    /* ========================================================
+       상태 변수
+    ======================================================== */
+    let cropsData   = [];       // 현재 화면에 표시 중인 데이터
+    let baseData    = [];       // 원본 데이터 (시즌 제거 시 복원용)
+    let gradeMultipliers = {};  // crops.json에서 읽어온 성급 배율
+    let iceLoaded   = false;    // 빙설 시즌 데이터 로드 여부
+    let currentSort = { column: 'sellPrice', order: 'desc' };
+
+
+    /* ========================================================
+       초기 데이터 로드
+    ======================================================== */
+    async function loadCropsData() {
+        try {
+            const response = await fetch('../../data/crops.json');
+            if (!response.ok) throw new Error('crops.json을 찾을 수 없습니다.');
+
+            const json = await response.json();
+            gradeMultipliers = json.gradeMultipliers; // 배율 저장
+            baseData   = json.items;
+            cropsData  = [...baseData];
+
+            displayStats();
+            displayAllCrops();
+        } catch (error) {
+            console.error('데이터 로드 오류:', error);
+            document.getElementById('content').innerHTML =
+                `<div class="error">❌ 데이터 파일을 불러올 수 없습니다.</div>`;
+        }
+    }
+
+
+    /* ========================================================
+       빙설 시즌 데이터 추가 / 제거
+    ======================================================== */
+    async function loadSeasonData() {
+        if (iceLoaded) { alert('이미 빙설 시즌 데이터가 추가되어 있습니다.'); return; }
+
+        try {
+            const response = await fetch('../../data/season_ice/season_ice_crops.json');
+            if (!response.ok) throw new Error('season_ice_crops.json을 찾을 수 없습니다.');
+
+            const json = await response.json();
+            const seasonItems = json.items.map(item => ({ ...item, isSeason: true })); // 시즌 플래그 추가
+
+            // 이름 기준 중복 제거 후 병합
+            const combined = [...cropsData, ...seasonItems];
+            cropsData = combined.filter((item, idx, self) =>
+                idx === self.findIndex(c => c.name === item.name)
+            );
+
+            iceLoaded = true;
+            alert(`❄️ 빙설 시즌 작물 ${seasonItems.length}종이 추가되었습니다. (총 ${cropsData.length}종)`);
+            displayStats();
+            displayAllCrops();
+        } catch (error) {
+            console.error('시즌 데이터 로드 오류:', error);
+            alert(`시즌 데이터를 불러오지 못했습니다.\n${error.message}`);
+        }
+    }
+
+    async function removeSeasonData() {
+        if (!iceLoaded) { alert('제거할 시즌 데이터가 없습니다.'); return; }
+
+        cropsData = [...baseData];
+        iceLoaded = false;
+        alert('빙설 시즌 데이터가 제거되었습니다.');
+        displayStats();
+        displayAllCrops();
+    }
+
+
+    /* ========================================================
+       필터 / 검색
+    ======================================================== */
+    function getSearchText() {
+        return document.getElementById('cropSearch')?.value.trim().toLowerCase() || '';
+    }
+
+    function applyFilters() { displayAllCrops(); }
+
+    function resetFilters() {
+        document.getElementById('cropSearch').value = '';
+        applyFilters();
+    }
+
+
+    /* ========================================================
+       정렬
+    ======================================================== */
+    function handleSort(column) {
+        if (currentSort.column === column) {
+            currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSort.column = column;
+            currentSort.order = 'asc';
+        }
+        displayAllCrops();
+    }
+
+    function sortCrops(list, column, order) {
+        return [...list].sort((a, b) => {
+            let va, vb;
+            if (column === 'name') {
+                return order === 'asc'
+                    ? a.name.localeCompare(b.name, 'ko')
+                    : b.name.localeCompare(a.name, 'ko');
+            }
+            if (column === 'profit') {
+                va = a.sellPrice - a.seedPrice;
+                vb = b.sellPrice - b.seedPrice;
+            } else if (column === 'profitPerHour') {
+                // 시간 대비 이윤: 이윤 ÷ 수확 시간(시간 단위)
+                va = (a.sellPrice - a.seedPrice) / (a.harvestMinutes / 60);
+                vb = (b.sellPrice - b.seedPrice) / (b.harvestMinutes / 60);
+            } else {
+                va = a[column];
+                vb = b[column];
+            }
+            return order === 'asc' ? va - vb : vb - va;
+        });
+    }
+
+
+    /* ========================================================
+       통계 카드 렌더링
+    ======================================================== */
+    function displayStats() {
+        const total    = cropsData.length;
+        const minTime  = Math.min(...cropsData.map(c => c.harvestMinutes));
+        const maxSell  = Math.max(...cropsData.map(c => c.sellPrice));
+        const maxProfit = Math.max(...cropsData.map(c => c.sellPrice - c.seedPrice));
+
+        document.getElementById('stats').innerHTML = `
+            <div class="stat-card">
+                <div class="number">${total}</div>
+                <div class="label">총 작물 종류</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">${formatMinutes(minTime)}</div>
+                <div class="label">최단 수확 시간</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">₩${maxSell.toLocaleString()}</div>
+                <div class="label">최고 판매가 (1성)</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">₩${maxProfit.toLocaleString()}</div>
+                <div class="label">최대 이윤 (1성)</div>
+            </div>
+        `;
+    }
+
+
+    /* ========================================================
+       테이블 렌더링
+    ======================================================== */
+    function displayAllCrops() {
+        const searchText = getSearchText();
+
+        // 검색 필터
+        let filtered = cropsData.filter(c =>
+            !searchText || c.name.toLowerCase().includes(searchText)
+        );
+
+        const sorted = sortCrops(filtered, currentSort.column, currentSort.order);
+
+        // 정렬 헤더 클래스 헬퍼
+        const sc = (col) =>
+            `sortable ${currentSort.column === col ? 'sort-' + currentSort.order : ''}`;
+
+        let html = `
+            <div class="habitat-group">
+                <div class="habitat-header">
+                    <span>🌱 전체 작물 목록</span>
+                    <span class="count-badge">${sorted.length}종</span>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-img"></th>
+                                <th class="${sc('name')}"             onclick="handleSort('name')">이름</th>
+                                <th class="${sc('seedPrice')} col-seed"    onclick="handleSort('seedPrice')">씨앗 가격</th>
+                                <th class="${sc('harvestMinutes')} col-harvest" onclick="handleSort('harvestMinutes')">수확 시간</th>
+                                <th class="${sc('sellPrice')}"        onclick="handleSort('sellPrice')">판매가</th>
+                                <th class="${sc('profit')} col-profit"     onclick="handleSort('profit')">이윤</th>
+                                <th class="${sc('profitPerHour')} col-profit" onclick="handleSort('profitPerHour')">시간 대비 이윤</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        `;
+
+        sorted.forEach(crop => {
+            const seasonTag = crop.isSeason
+                ? '<span class="season-badge">❄️ 빙설</span>'
+                : '';
+
+            // 1성 기준 이윤 · 시간 대비 이윤
+            const baseProfit      = crop.sellPrice - crop.seedPrice;
+            const profitClass     = baseProfit >= 0 ? 'profit-positive' : 'profit-negative';
+            const profitSign      = baseProfit >= 0 ? '+' : '';
+            const profitPerHour   = baseProfit / (crop.harvestMinutes / 60);
+            const pphSign         = profitPerHour >= 0 ? '+' : '';
+            const pphClass        = profitPerHour >= 0 ? 'profit-positive' : 'profit-negative';
+
+            // 이미지 태그 생성 (없으면 빈 placeholder)
+            const imgSrc = CROP_IMAGES[crop.name];
+            const imgTag = imgSrc
+                ? `<img class="crop-img" src="${imgSrc}" alt="${crop.name}">`
+                : `<span class="crop-img-placeholder"></span>`;
+
+            html += `
+            <tr>
+                <td class="col-img">${imgTag}</td>
+                <td class="item-name">${crop.name}${seasonTag}</td>
+                <td>₩${crop.seedPrice.toLocaleString()}</td>
+                <td><span class="harvest-badge">⏱ ${formatMinutes(crop.harvestMinutes)}</span></td>
+                <td>
+                    <div class="price-cell">
+                        <span>⭐</span>
+                        <select class="star-selector"
+                                onchange="updatePrice(${crop.sellPrice}, ${crop.seedPrice}, ${crop.harvestMinutes}, this)">
+                            ${[1,2,3,4,5].map(s =>
+                                `<option value="${s}">${s}성</option>`
+                            ).join('')}
+                        </select>
+                        <span class="price">₩${crop.sellPrice.toLocaleString()}</span>
+                    </div>
+                </td>
+                <td class="${profitClass}">${profitSign}₩${baseProfit.toLocaleString()}</td>
+                <td class="${pphClass}">${pphSign}₩${Math.round(profitPerHour).toLocaleString()}/시간</td>
+            </tr>`;
+        });
+
+        html += `
+                        </tbody>
+                    </table>
+                </div>
+            </div>`;
+
+        if (sorted.length === 0) {
+            html = `<div class="no-results">🌿 검색 결과가 없습니다.</div>`;
+        }
+
+        document.getElementById('content').innerHTML = html;
+    }
+
+
+    /* ========================================================
+       성급 선택 시 판매가·이윤 갱신
+    ======================================================== */
+    function updatePrice(baseSellPrice, seedPrice, harvestMinutes, selectEl) {
+        const star         = parseInt(selectEl.value);
+        const multiplier   = gradeMultipliers[star] ?? 1;
+        const adjusted     = Math.floor(baseSellPrice * multiplier);
+        const profit       = adjusted - seedPrice;
+        const profitSign   = profit >= 0 ? '+' : '';
+        const profitPerHour = profit / (harvestMinutes / 60);
+        const pphSign      = profitPerHour >= 0 ? '+' : '';
+
+        const row = selectEl.closest('tr');
+        const tds = row.querySelectorAll('td');
+
+        // 판매가 업데이트
+        row.querySelector('.price').textContent = `₩${adjusted.toLocaleString()}`;
+
+        // 이윤 셀 업데이트 (td[5]: 이미지 컬럼 추가로 1칸 밀림)
+        tds[5].textContent = `${profitSign}₩${profit.toLocaleString()}`;
+        tds[5].className   = profit >= 0 ? 'profit-positive' : 'profit-negative';
+
+        // 시간 대비 이윤 셀 업데이트 (td[6])
+        tds[6].textContent = `${pphSign}₩${Math.round(profitPerHour).toLocaleString()}/시간`;
+        tds[6].className   = profitPerHour >= 0 ? 'profit-positive' : 'profit-negative';
+    }
+
+
+    /* ========================================================
+       유틸 - 분 → 시간 표시 변환
+    ======================================================== */
+    function formatMinutes(minutes) {
+        if (minutes < 60) return `${minutes}분`;
+        const h = Math.floor(minutes / 60);
+        const m = minutes % 60;
+        return m === 0 ? `${h}시간` : `${h}시간 ${m}분`;
+    }
+
+
+    /* ========================================================
+       페이지 초기화
+    ======================================================== */
+    window.onload = loadCropsData;
+</script>
+</body>
+</html>
