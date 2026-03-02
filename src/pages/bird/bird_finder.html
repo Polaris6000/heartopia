@@ -423,14 +423,16 @@
                         <table>
                             <thead>
                                 <tr>
+                                    <!-- 새 이미지 컬럼 -->
+                                    <th class="col-fish-img">이미지</th>
                                     <th class="sortable ${currentSort.column === 'name' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('name')">이름</th>
                                     <th class="sortable col-habitat-bird ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('habitat')">서식지</th>
                                     <th class="sortable col-level ${currentSort.column === 'level' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('level')">레벨</th>
                                     <th class="sortable ${currentSort.column === 'price' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('price')">판매가 (등급별)</th>
                                     <th class="col-time">출현 시간</th>
                                     <th class="col-weather">날씨 조건</th>
-                                    <th title="현재 조건 일치 시 초록 하이라이트">3⭐ 깃털 다듬기</th>
-                                    <th title="현재 조건 일치 시 초록 하이라이트">4⭐ 날개 펼치기</th>
+                                    <th class="motion-cell" title="현재 조건 일치 시 초록 하이라이트">3⭐ 깃털 다듬기</th>
+                                    <th class="motion-cell" title="현재 조건 일치 시 초록 하이라이트">4⭐ 날개 펼치기</th>
                                 </tr>
                             </thead>
                             <tbody>`;
@@ -454,10 +456,20 @@
                 ? '<span class="weather-badge always">항상</span>'
                 : bird.weather.map(w => `<span class="weather-badge">${w}</span>`).join(' ');
 
+            // --- 이미지 표시 로직 ---
+            // image 필드가 있으면 썸네일, 없으면 새 이모지 자리표시자
+            const imgCell = bird.image
+                ? `<img class="fish-thumb"
+                        src="../../../public/images/bird_img/spr_ui_item_normal_p_bird_bird${bird.image}.png"
+                        alt="${bird.name}"
+                        onerror="handleBirdImgError(this)">`
+                : `<div class="fish-thumb-placeholder">🐦</div>`;
+
             html += `
                     <tr>
+                        <td class="col-fish-img">${imgCell}</td>
                         <td class="item-name">${getSpecialIcon(bird.special)}${bird.name}</td>
-                        <td>${getHabitatIcon(bird.habitat)}${bird.habitat}</td>
+                        <td class="col-habitat-bird">${getHabitatIcon(bird.habitat)}${bird.habitat}</td>
                         <td><span class="level-badge">Lv.${bird.level}</span></td>
                         <td>
                             <div class="price-cell">
@@ -483,6 +495,17 @@
 
         html += `</tbody></table></div></div>`;
         resultsDiv.innerHTML = html;
+    }
+
+    /**
+     * 새 이미지 로드 실패 시 이모지 자리표시자로 교체
+     * @param {HTMLImageElement} img
+     */
+    function handleBirdImgError(img) {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'fish-thumb-placeholder';
+        placeholder.textContent = '🐦';
+        img.parentNode.replaceChild(placeholder, img);
     }
 
     // 시간 선택을 먼저 하고 데이터를 로드하도록 변경
