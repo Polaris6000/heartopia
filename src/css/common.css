@@ -376,6 +376,7 @@ footer {
     border-radius: 15px;
     text-align: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    white-space: nowrap;
 }
 
 .stat-card .number {
@@ -667,7 +668,7 @@ th.sort-desc::after {
 }
 
 .col-time {
-    min-width: 70px;
+    min-width: 110px;
 }
 
 .col-weather {
