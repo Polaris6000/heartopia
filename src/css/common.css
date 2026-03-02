@@ -826,6 +826,44 @@ button:active {
 }
 
 /* ========================================
+   물고기 이미지 썸네일
+======================================== */
+
+/* 이미지 전용 컬럼 너비 */
+.col-fish-img {
+    width: 64px;
+    min-width: 64px;
+    max-width: 64px;
+    text-align: center;
+    padding: 8px 4px !important;
+}
+
+/* 물고기 썸네일 이미지 */
+.fish-thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    image-rendering: pixelated; /* 픽셀아트 계열 이미지 선명하게 */
+}
+
+/* 이미지 없을 때 자리 표시자 */
+.fish-thumb-placeholder {
+    width: 48px;
+    height: 48px;
+    background: var(--color-surface-dim);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 1.4em;
+    color: var(--color-text-faint);
+}
+
+
+/* ========================================
    조류 도감
 ======================================== */
 

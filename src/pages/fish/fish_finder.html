@@ -365,6 +365,8 @@
                         <table>
                             <thead>
                                 <tr>
+                                    <!-- 물고기 이미지 컬럼 -->
+                                    <th class="col-fish-img">이미지</th>
                                     <th class="sortable ${currentSort.column === 'name' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('name')">이름</th>
                                     <th class="sortable col-habitat-fish ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('habitat')">서식지</th>
                                     <th class="col-size">크기</th>
@@ -393,8 +395,18 @@
 
             const sizeDisplay = fish.size || '-';
 
+            // --- 이미지 표시 로직 ---
+            // image 필드가 있으면 썸네일, 없으면 물고기 이모지 자리표시자
+            const imgCell = fish.image
+                ? `<img class="fish-thumb"
+                        src="../../../public/images/fish_img/spr_ui_item_normal_p_fish_fish_${fish.image}.png"
+                        alt="${fish.name}"
+                        onerror="this.outerHTML='<div class=\\"fish-thumb-placeholder\\"></div>`
+                : `<div class="fish-thumb-placeholder">🐟</div>`;
+
             html += `
                     <tr>
+                        <td class="col-fish-img">${imgCell}</td>
                         <td class="item-name">${getSpecialIcon(fish.special)}${fish.name}</td>
                         <td>${getHabitatIcon(fish.habitat)}${fish.habitat}</td>
                         <td>${getSizeIcon(fish.size)}${sizeDisplay}</td>
