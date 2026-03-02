@@ -1,25 +1,8 @@
 [
   {
-    "category": "소형",
-    "habitat": "도심",
-    "image": 101,
-    "level": 1,
-    "motion_preening": {
-      "낮": [
-        "맑음"
-      ],
-      "아침": [
-        "맑음"
-      ]
-    },
-    "motion_wingspread": {
-      "아침": [
-        "비"
-      ]
-    },
     "name": "꼬까울새",
-    "price": 60,
-    "special": false,
+    "level": 1,
+    "habitat": "도심",
     "time": [
       "아침",
       "낮",
@@ -30,22 +13,52 @@
       "맑음",
       "비",
       "무지개"
-    ]
+    ],
+    "price": 60,
+    "special": false,
+    "category": "소형",
+    "motion_preening": {
+      "아침": [
+        "맑음"
+      ],
+      "낮": [
+        "맑음"
+      ]
+    },
+    "motion_wingspread": {
+      "아침": [
+        "비"
+      ]
+    },
+    "image": 101
   },
   {
-    "category": "소형",
-    "habitat": "온천산",
-    "image": 103,
+    "name": "노랑배박새",
     "level": 1,
+    "habitat": "온천산",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 60,
+    "special": false,
+    "category": "소형",
     "motion_preening": {
+      "아침": [
+        "비"
+      ],
       "낮": [
         "맑음"
       ],
       "새벽": [
         "맑음"
-      ],
-      "아침": [
-        "비"
       ]
     },
     "motion_wingspread": {
@@ -56,9 +69,12 @@
         "비"
       ]
     },
-    "name": "노랑배박새",
-    "price": 60,
-    "special": false,
+    "image": 103
+  },
+  {
+    "name": "굴뚝새",
+    "level": 1,
+    "habitat": "숲",
     "time": [
       "아침",
       "낮",
@@ -69,13 +85,10 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 60,
+    "special": false,
     "category": "소형",
-    "habitat": "숲",
-    "image": 105,
-    "level": 1,
     "motion_preening": {
       "낮": [
         "맑음",
@@ -90,38 +103,12 @@
         "비"
       ]
     },
-    "name": "굴뚝새",
-    "price": 60,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
+    "image": 105
   },
   {
-    "category": "소형",
-    "habitat": "도시 근교",
-    "image": 116,
-    "level": 1,
-    "motion_preening": {
-      "낮": [
-        "비"
-      ],
-      "아침": [
-        "맑음"
-      ]
-    },
-    "motion_wingspread": null,
     "name": "멋쟁이새",
-    "price": 60,
-    "special": false,
+    "level": 1,
+    "habitat": "도시 근교",
     "time": [
       "아침",
       "낮",
@@ -132,25 +119,25 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 60,
+    "special": false,
     "category": "소형",
-    "habitat": "꽃밭",
-    "image": 118,
-    "level": 1,
     "motion_preening": {
-      "낮": [
+      "아침": [
         "맑음"
       ],
-      "아침": [
+      "낮": [
         "비"
       ]
     },
     "motion_wingspread": null,
+    "image": 116
+  },
+  {
     "name": "푸른머리되새",
-    "price": 60,
-    "special": false,
+    "level": 1,
+    "habitat": "꽃밭",
     "time": [
       "아침",
       "낮",
@@ -161,13 +148,39 @@
       "맑음",
       "비",
       "무지개"
-    ]
+    ],
+    "price": 60,
+    "special": false,
+    "category": "소형",
+    "motion_preening": {
+      "아침": [
+        "비"
+      ],
+      "낮": [
+        "맑음"
+      ]
+    },
+    "motion_wingspread": null,
+    "image": 118
   },
   {
-    "category": "앵무",
-    "habitat": "새들의 복귀 사건",
-    "image": 222,
+    "name": "청금강앵무",
     "level": 1,
+    "habitat": "새들의 복귀 사건",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 60,
+    "special": false,
+    "category": "앵무",
     "motion_preening": {
       "낮": [
         "맑음"
@@ -181,9 +194,12 @@
         "비"
       ]
     },
-    "name": "청금강앵무",
-    "price": 60,
-    "special": false,
+    "image": 222
+  },
+  {
+    "name": "분홍가슴비둘기",
+    "level": 1,
+    "habitat": "도심",
     "time": [
       "아침",
       "낮",
@@ -194,13 +210,10 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 80,
+    "special": false,
     "category": "비둘기",
-    "habitat": "도심",
-    "image": 201,
-    "level": 1,
     "motion_preening": {
       "낮": [
         "맑음"
@@ -211,9 +224,12 @@
         "비"
       ]
     },
-    "name": "분홍가슴비둘기",
-    "price": 80,
-    "special": false,
+    "image": 201
+  },
+  {
+    "name": "염주비둘기",
+    "level": 1,
+    "habitat": "홈",
     "time": [
       "아침",
       "낮",
@@ -224,13 +240,10 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 80,
+    "special": false,
     "category": "비둘기",
-    "habitat": "홈",
-    "image": 202,
-    "level": 1,
     "motion_preening": {
       "낮": [
         "맑음"
@@ -241,9 +254,12 @@
         "무지개"
       ]
     },
-    "name": "염주비둘기",
-    "price": 80,
-    "special": false,
+    "image": 202
+  },
+  {
+    "name": "얼룩비둘기",
+    "level": 1,
+    "habitat": "어촌",
     "time": [
       "아침",
       "낮",
@@ -254,13 +270,10 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 80,
+    "special": false,
     "category": "비둘기",
-    "habitat": "어촌",
-    "image": 209,
-    "level": 1,
     "motion_preening": {
       "낮": [
         "맑음"
@@ -272,9 +285,12 @@
         "무지개"
       ]
     },
-    "name": "얼룩비둘기",
-    "price": 80,
-    "special": false,
+    "image": 209
+  },
+  {
+    "name": "큰홍학",
+    "level": 1,
+    "habitat": "물가",
     "time": [
       "아침",
       "낮",
@@ -285,23 +301,20 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 120,
+    "special": false,
     "category": "홍학",
-    "habitat": "물가",
-    "image": 301,
-    "level": 1,
     "motion_preening": {
       "낮": [
         "맑음"
+      ],
+      "저녁": [
+        "맑음",
+        "비"
       ],
       "새벽": [
         "맑음"
-      ],
-      "저녁": [
-        "맑음",
-        "비"
       ]
     },
     "motion_wingspread": {
@@ -312,9 +325,12 @@
         "비"
       ]
     },
-    "name": "큰홍학",
-    "price": 120,
-    "special": false,
+    "image": 301
+  },
+  {
+    "name": "청공작",
+    "level": 1,
+    "habitat": "새들의 복귀 사건",
     "time": [
       "아침",
       "낮",
@@ -325,26 +341,26 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "공작",
-    "habitat": "새들의 복귀 사건",
-    "image": 1501,
-    "level": 1,
-    "motion_preening": {
-      "낮": [
-        "맑음"
-      ]
-    },
-    "motion_wingspread": {
-      "저녁": [
-        "비"
-      ]
-    },
-    "name": "청공작",
+    ],
     "price": 80,
     "special": false,
+    "category": "공작",
+    "motion_preening": {
+      "낮": [
+        "맑음"
+      ]
+    },
+    "motion_wingspread": {
+      "저녁": [
+        "비"
+      ]
+    },
+    "image": 1501
+  },
+  {
+    "name": "청둥오리",
+    "level": 1,
+    "habitat": "호수",
     "time": [
       "아침",
       "낮",
@@ -355,26 +371,26 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "오리",
-    "habitat": "호수",
-    "image": 401,
-    "level": 1,
-    "motion_preening": {
-      "낮": [
-        "맑음"
-      ],
-      "저녁": [
-        "맑음",
-        "비"
-      ]
-    },
-    "motion_wingspread": null,
-    "name": "청둥오리",
+    ],
     "price": 100,
     "special": false,
+    "category": "오리",
+    "motion_preening": {
+      "낮": [
+        "맑음"
+      ],
+      "저녁": [
+        "맑음",
+        "비"
+      ]
+    },
+    "motion_wingspread": null,
+    "image": 401
+  },
+  {
+    "name": "오목눈이",
+    "level": 1,
+    "habitat": "블랑코 머리 위",
     "time": [
       "아침",
       "낮",
@@ -385,49 +401,18 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "블랑코 머리 위",
-    "image": 119,
-    "level": 1,
-    "motion_preening": null,
-    "motion_wingspread": null,
-    "name": "오목눈이",
+    ],
     "price": 16,
     "special": "특수",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
+    "category": "소형",
+    "motion_preening": null,
+    "motion_wingspread": null,
+    "image": 119
   },
   {
-    "category": "소형",
-    "habitat": "어촌",
-    "image": 109,
-    "level": 2,
-    "motion_preening": {
-      "낮": [
-        "맑음"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "비",
-        "무지개"
-      ]
-    },
     "name": "동고비",
-    "price": 80,
-    "special": false,
+    "level": 2,
+    "habitat": "어촌",
     "time": [
       "아침",
       "낮",
@@ -438,32 +423,27 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 80,
+    "special": false,
     "category": "소형",
-    "habitat": "온천산",
-    "image": 111,
-    "level": 2,
     "motion_preening": {
       "낮": [
         "맑음"
-      ],
-      "아침": [
-        "비"
       ]
     },
     "motion_wingspread": {
-      "아침": [
-        "비"
-      ],
-      "저녁": [
-        "비"
+      "낮": [
+        "비",
+        "무지개"
       ]
     },
+    "image": 109
+  },
+  {
     "name": "수염오목눈이",
-    "price": 80,
-    "special": false,
+    "level": 2,
+    "habitat": "온천산",
     "time": [
       "아침",
       "낮",
@@ -474,28 +454,32 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 80,
+    "special": false,
     "category": "소형",
-    "habitat": "도시 근교",
-    "image": 113,
-    "level": 2,
     "motion_preening": {
-      "낮": [
-        "맑음",
+      "아침": [
         "비"
+      ],
+      "낮": [
+        "맑음"
       ]
     },
     "motion_wingspread": {
-      "낮": [
-        "비",
-        "무지개"
+      "아침": [
+        "비"
+      ],
+      "저녁": [
+        "비"
       ]
     },
+    "image": 111
+  },
+  {
     "name": "빨간머리떼까치",
-    "price": 80,
-    "special": false,
+    "level": 2,
+    "habitat": "도시 근교",
     "time": [
       "아침",
       "낮",
@@ -506,26 +490,28 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "비둘기",
-    "habitat": "숲",
-    "image": 204,
-    "level": 2,
+    ],
+    "price": 80,
+    "special": false,
+    "category": "소형",
     "motion_preening": {
       "낮": [
-        "맑음"
-      ]
-    },
-    "motion_wingspread": {
-      "저녁": [
+        "맑음",
         "비"
       ]
     },
+    "motion_wingspread": {
+      "낮": [
+        "비",
+        "무지개"
+      ]
+    },
+    "image": 113
+  },
+  {
     "name": "웡가비둘기",
-    "price": 120,
-    "special": false,
+    "level": 2,
+    "habitat": "숲",
     "time": [
       "아침",
       "낮",
@@ -536,29 +522,26 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 120,
+    "special": false,
     "category": "비둘기",
-    "habitat": "꽃밭",
-    "image": 205,
-    "level": 2,
     "motion_preening": {
       "낮": [
         "맑음"
       ]
     },
     "motion_wingspread": {
-      "아침": [
-        "비"
-      ],
       "저녁": [
         "비"
       ]
     },
+    "image": 204
+  },
+  {
     "name": "분홍목녹색비둘기",
-    "price": 120,
-    "special": false,
+    "level": 2,
+    "habitat": "꽃밭",
     "time": [
       "아침",
       "낮",
@@ -569,513 +552,543 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "오리",
-    "habitat": "강",
-    "image": 402,
-    "level": 2,
+    ],
+    "price": 120,
+    "special": false,
+    "category": "비둘기",
     "motion_preening": {
       "낮": [
         "맑음"
       ]
     },
-    "motion_wingspread": null,
+    "motion_wingspread": {
+      "아침": [
+        "비"
+      ],
+      "저녁": [
+        "비"
+      ]
+    },
+    "image": 205
+  },
+  {
     "name": "홍머리오리",
-    "price": 140,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "갈매기",
-    "habitat": "해변",
-    "image": 501,
     "level": 2,
-    "motion_preening": {
-      "낮": [
-        "맑음"
-      ],
-      "저녁": [
-        "맑음",
-        "비"
-      ]
-    },
-    "motion_wingspread": {
-      "저녁": [
-        "비"
-      ]
-    },
-    "name": "바다갈매기",
-    "price": 140,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "홈",
-    "image": 106,
-    "level": 3,
-    "motion_preening": {
-      "낮": [
-        "맑음",
-        "비"
-      ],
-      "아침": [
-        "비"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ]
-    },
-    "name": "유럽꾀꼬리",
-    "price": 120,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "어촌-등대",
-    "image": 128,
-    "level": 3,
-    "motion_preening": {
-      "낮": [
-        "맑음",
-        "비"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "비",
-        "무지개"
-      ]
-    },
-    "name": "녹자작",
-    "price": 80,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "숲-점핑 플랫폼",
-    "image": 127,
-    "level": 3,
-    "motion_preening": {
-      "낮": [
-        "맑음"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "비",
-        "무지개"
-      ],
-      "저녁": [
-        "비"
-      ]
-    },
-    "name": "검은턱오목눈이",
-    "price": 80,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "앵무",
-    "habitat": "새들의 복귀 사건",
-    "image": 223,
-    "level": 3,
-    "motion_preening": {
-      "낮": [
-        "맑음"
-      ]
-    },
-    "motion_wingspread": {
-      "저녁": [
-        "비"
-      ]
-    },
-    "name": "홍금강앵무",
-    "price": 80,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "오리",
-    "habitat": "근교 호수",
-    "image": 406,
-    "level": 3,
-    "motion_preening": {
-      "저녁": [
-        "맑음",
-        "비"
-      ]
-    },
-    "motion_wingspread": null,
-    "name": "황오리",
-    "price": 140,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "오리",
     "habitat": "강",
-    "image": 407,
-    "level": 3,
-    "motion_preening": {
-      "낮": [
-        "맑음"
-      ],
-      "저녁": [
-        "맑음"
-      ]
-    },
-    "motion_wingspread": null,
-    "name": "호사북방오리",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
     "price": 140,
     "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "갈매기",
-    "habitat": "고래바다 해변",
-    "image": 504,
-    "level": 3,
-    "motion_preening": null,
-    "motion_wingspread": {
-      "저녁": [
-        "비"
-      ]
-    },
-    "name": "오두앵갈매기",
-    "price": 140,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "가마우지",
-    "habitat": "바다",
-    "image": 701,
-    "level": 3,
-    "motion_preening": {
-      "낮": [
-        "맑음"
-      ],
-      "저녁": [
-        "맑음"
-      ]
-    },
-    "motion_wingspread": {
-      "아침": [
-        "비"
-      ],
-      "저녁": [
-        "비"
-      ]
-    },
-    "name": "유럽가마우지",
-    "price": 140,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "꽃밭-보라빛 해변",
-    "image": 102,
-    "level": 4,
-    "motion_preening": {
-      "낮": [
-        "비"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ]
-    },
-    "name": "알락할미새",
-    "price": 120,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "어촌-어촌 광장",
-    "image": 110,
-    "level": 4,
-    "motion_preening": {
-      "낮": [
-        "맑음"
-      ]
-    },
-    "motion_wingspread": null,
-    "name": "회색머리붉은참새",
-    "price": 120,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "숲-숲속 섬",
-    "image": 114,
-    "level": 4,
-    "motion_preening": {
-      "낮": [
-        "맑음",
-        "비"
-      ],
-      "아침": [
-        "맑음"
-      ],
-      "저녁": [
-        "비"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ],
-      "저녁": [
-        "비"
-      ]
-    },
-    "name": "솔양진이",
-    "price": 120,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "숲-영혼의 참나무 숲",
-    "image": 120,
-    "level": 4,
-    "motion_preening": {
-      "낮": [
-        "맑음",
-        "비"
-      ],
-      "저녁": [
-        "비"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ],
-      "저녁": [
-        "비"
-      ]
-    },
-    "name": "노란머리바우어새",
-    "price": 120,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "비둘기",
-    "habitat": "꽃밭-풍차꽃밭",
-    "image": 219,
-    "level": 4,
-    "motion_preening": {
-      "낮": [
-        "맑음"
-      ]
-    },
-    "motion_wingspread": {
-      "저녁": [
-        "비"
-      ]
-    },
-    "name": "황금과일비둘기",
-    "price": 140,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "중형",
-    "habitat": "온천산-유적",
-    "image": 218,
-    "level": 4,
-    "motion_preening": {
-      "아침": [
-        "비"
-      ]
-    },
-    "motion_wingspread": {
-      "저녁": [
-        "비"
-      ]
-    },
-    "name": "은계",
-    "price": 140,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
     "category": "오리",
-    "habitat": "숲속 호수",
-    "image": 404,
+    "motion_preening": {
+      "낮": [
+        "맑음"
+      ]
+    },
+    "motion_wingspread": null,
+    "image": 402
+  },
+  {
+    "name": "바다갈매기",
+    "level": 2,
+    "habitat": "해변",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 140,
+    "special": false,
+    "category": "갈매기",
+    "motion_preening": {
+      "낮": [
+        "맑음"
+      ],
+      "저녁": [
+        "맑음",
+        "비"
+      ]
+    },
+    "motion_wingspread": {
+      "저녁": [
+        "비"
+      ]
+    },
+    "image": 501
+  },
+  {
+    "name": "유럽꾀꼬리",
+    "level": 3,
+    "habitat": "홈",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 120,
+    "special": false,
+    "category": "소형",
+    "motion_preening": {
+      "아침": [
+        "비"
+      ],
+      "낮": [
+        "맑음",
+        "비"
+      ]
+    },
+    "motion_wingspread": {
+      "낮": [
+        "무지개"
+      ]
+    },
+    "image": 106
+  },
+  {
+    "name": "녹자작",
+    "level": 3,
+    "habitat": "어촌-등대",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 80,
+    "special": false,
+    "category": "소형",
+    "motion_preening": {
+      "낮": [
+        "맑음",
+        "비"
+      ]
+    },
+    "motion_wingspread": {
+      "낮": [
+        "비",
+        "무지개"
+      ]
+    },
+    "image": 128
+  },
+  {
+    "name": "검은턱오목눈이",
+    "level": 3,
+    "habitat": "숲-점핑 플랫폼",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 80,
+    "special": false,
+    "category": "소형",
+    "motion_preening": {
+      "낮": [
+        "맑음"
+      ]
+    },
+    "motion_wingspread": {
+      "낮": [
+        "비",
+        "무지개"
+      ],
+      "저녁": [
+        "비"
+      ]
+    },
+    "image": 127
+  },
+  {
+    "name": "홍금강앵무",
+    "level": 3,
+    "habitat": "새들의 복귀 사건",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 80,
+    "special": false,
+    "category": "앵무",
+    "motion_preening": {
+      "낮": [
+        "맑음"
+      ]
+    },
+    "motion_wingspread": {
+      "저녁": [
+        "비"
+      ]
+    },
+    "image": 223
+  },
+  {
+    "name": "황오리",
+    "level": 3,
+    "habitat": "근교 호수",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 140,
+    "special": false,
+    "category": "오리",
+    "motion_preening": {
+      "저녁": [
+        "맑음",
+        "비"
+      ]
+    },
+    "motion_wingspread": null,
+    "image": 406
+  },
+  {
+    "name": "호사북방오리",
+    "level": 3,
+    "habitat": "강",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 140,
+    "special": false,
+    "category": "오리",
+    "motion_preening": {
+      "낮": [
+        "맑음"
+      ],
+      "저녁": [
+        "맑음"
+      ]
+    },
+    "motion_wingspread": null,
+    "image": 407
+  },
+  {
+    "name": "오두앵갈매기",
+    "level": 3,
+    "habitat": "고래바다 해변",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 140,
+    "special": false,
+    "category": "갈매기",
+    "motion_preening": null,
+    "motion_wingspread": {
+      "저녁": [
+        "비"
+      ]
+    },
+    "image": 504
+  },
+  {
+    "name": "유럽가마우지",
+    "level": 3,
+    "habitat": "바다",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 140,
+    "special": false,
+    "category": "가마우지",
+    "motion_preening": {
+      "낮": [
+        "맑음"
+      ],
+      "저녁": [
+        "맑음"
+      ]
+    },
+    "motion_wingspread": {
+      "아침": [
+        "비"
+      ],
+      "저녁": [
+        "비"
+      ]
+    },
+    "image": 701
+  },
+  {
+    "name": "알락할미새",
     "level": 4,
+    "habitat": "꽃밭-보라빛 해변",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 120,
+    "special": false,
+    "category": "소형",
+    "motion_preening": {
+      "낮": [
+        "비"
+      ]
+    },
+    "motion_wingspread": {
+      "낮": [
+        "무지개"
+      ]
+    },
+    "image": 102
+  },
+  {
+    "name": "회색머리붉은참새",
+    "level": 4,
+    "habitat": "어촌-어촌 광장",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
+    "price": 120,
+    "special": false,
+    "category": "소형",
+    "motion_preening": {
+      "낮": [
+        "맑음"
+      ]
+    },
+    "motion_wingspread": null,
+    "image": 110
+  },
+  {
+    "name": "솔양진이",
+    "level": 4,
+    "habitat": "숲-숲속 섬",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 120,
+    "special": false,
+    "category": "소형",
+    "motion_preening": {
+      "아침": [
+        "맑음"
+      ],
+      "낮": [
+        "맑음",
+        "비"
+      ],
+      "저녁": [
+        "비"
+      ]
+    },
+    "motion_wingspread": {
+      "낮": [
+        "무지개"
+      ],
+      "저녁": [
+        "비"
+      ]
+    },
+    "image": 114
+  },
+  {
+    "name": "노란머리바우어새",
+    "level": 4,
+    "habitat": "숲-영혼의 참나무 숲",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 120,
+    "special": false,
+    "category": "소형",
+    "motion_preening": {
+      "낮": [
+        "맑음",
+        "비"
+      ],
+      "저녁": [
+        "비"
+      ]
+    },
+    "motion_wingspread": {
+      "낮": [
+        "무지개"
+      ],
+      "저녁": [
+        "비"
+      ]
+    },
+    "image": 120
+  },
+  {
+    "name": "황금과일비둘기",
+    "level": 4,
+    "habitat": "꽃밭-풍차꽃밭",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 140,
+    "special": false,
+    "category": "비둘기",
+    "motion_preening": {
+      "낮": [
+        "맑음"
+      ]
+    },
+    "motion_wingspread": {
+      "저녁": [
+        "비"
+      ]
+    },
+    "image": 219
+  },
+  {
+    "name": "은계",
+    "level": 4,
+    "habitat": "온천산-유적",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 140,
+    "special": false,
+    "category": "중형",
+    "motion_preening": {
+      "아침": [
+        "비"
+      ]
+    },
+    "motion_wingspread": {
+      "저녁": [
+        "비"
+      ]
+    },
+    "image": 218
+  },
+  {
+    "name": "흰비오리",
+    "level": 4,
+    "habitat": "숲속 호수",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 180,
+    "special": false,
+    "category": "오리",
     "motion_preening": {
       "낮": [
         "비"
@@ -1089,9 +1102,12 @@
         "무지개"
       ]
     },
-    "name": "흰비오리",
-    "price": 180,
-    "special": false,
+    "image": 404
+  },
+  {
+    "name": "노랑배딱새",
+    "level": 5,
+    "habitat": "어촌-부두",
     "time": [
       "아침",
       "낮",
@@ -1102,26 +1118,58 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "어촌-부두",
-    "image": 104,
-    "level": 5,
-    "motion_preening": {
-      "낮": [
-        "비"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "비"
-      ]
-    },
-    "name": "노랑배딱새",
+    ],
     "price": 120,
     "special": false,
+    "category": "소형",
+    "motion_preening": {
+      "낮": [
+        "비"
+      ]
+    },
+    "motion_wingspread": {
+      "낮": [
+        "비"
+      ]
+    },
+    "image": 104
+  },
+  {
+    "name": "유럽벌잡이새",
+    "level": 5,
+    "habitat": "온천산 호숫가",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
+    "price": 180,
+    "special": false,
+    "category": "소형",
+    "motion_preening": {
+      "아침": [
+        "비"
+      ],
+      "낮": [
+        "무지개"
+      ]
+    },
+    "motion_wingspread": {
+      "낮": [
+        "무지개"
+      ]
+    },
+    "image": 123
+  },
+  {
+    "name": "초록금강앵무",
+    "level": 5,
+    "habitat": "새들의 복귀 사건",
     "time": [
       "아침",
       "낮",
@@ -1130,56 +1178,23 @@
     ],
     "weather": [
       "맑음",
-      "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "온천산 호숫가",
-    "image": 123,
-    "level": 5,
-    "motion_preening": {
-      "낮": [
-        "무지개"
-      ],
-      "아침": [
-        "비"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ]
-    },
-    "name": "유럽벌잡이새",
-    "price": 180,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
     ],
-    "weather": [
-      "비",
-      "무지개"
-    ]
-  },
-  {
+    "price": 120,
+    "special": false,
     "category": "앵무",
-    "habitat": "새들의 복귀 사건",
-    "image": 224,
-    "level": 5,
     "motion_preening": null,
     "motion_wingspread": {
       "낮": [
         "무지개"
       ]
     },
-    "name": "초록금강앵무",
-    "price": 120,
-    "special": false,
+    "image": 224
+  },
+  {
+    "name": "올리브비둘기",
+    "level": 5,
+    "habitat": "온천산-온천",
     "time": [
       "아침",
       "낮",
@@ -1188,21 +1203,19 @@
     ],
     "weather": [
       "맑음",
+      "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 220,
+    "special": false,
     "category": "비둘기",
-    "habitat": "온천산-온천",
-    "image": 207,
-    "level": 5,
     "motion_preening": {
-      "낮": [
-        "비"
-      ],
       "아침": [
         "비"
       ],
+      "낮": [
+        "비"
+      ],
       "저녁": [
         "비"
       ]
@@ -1215,9 +1228,12 @@
         "비"
       ]
     },
-    "name": "올리브비둘기",
-    "price": 220,
-    "special": false,
+    "image": 207
+  },
+  {
+    "name": "작은홍학",
+    "level": 5,
+    "habitat": "숲속 호숫가",
     "time": [
       "아침",
       "낮",
@@ -1225,16 +1241,12 @@
       "새벽"
     ],
     "weather": [
-      "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 220,
+    "special": false,
     "category": "홍학",
-    "habitat": "숲속 호숫가",
-    "image": 303,
-    "level": 5,
     "motion_preening": {
       "낮": [
         "비"
@@ -1248,9 +1260,12 @@
         "무지개"
       ]
     },
-    "name": "작은홍학",
-    "price": 220,
-    "special": false,
+    "image": 303
+  },
+  {
+    "name": "검정제비갈매기",
+    "level": 5,
+    "habitat": "구해 해변",
     "time": [
       "아침",
       "낮",
@@ -1258,15 +1273,13 @@
       "새벽"
     ],
     "weather": [
+      "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 180,
+    "special": false,
     "category": "갈매기",
-    "habitat": "구해 해변",
-    "image": 503,
-    "level": 5,
     "motion_preening": {
       "낮": [
         "맑음"
@@ -1280,9 +1293,12 @@
         "무지개"
       ]
     },
-    "name": "검정제비갈매기",
-    "price": 180,
-    "special": false,
+    "image": 503
+  },
+  {
+    "name": "콩새",
+    "level": 6,
+    "habitat": "온천산-화산 호수",
     "time": [
       "아침",
       "낮",
@@ -1293,18 +1309,18 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "온천산-화산 호수",
-    "image": 107,
-    "level": 6,
-    "motion_preening": null,
-    "motion_wingspread": null,
-    "name": "콩새",
+    ],
     "price": 120,
     "special": false,
+    "category": "소형",
+    "motion_preening": null,
+    "motion_wingspread": null,
+    "image": 107
+  },
+  {
+    "name": "황금가슴비둘기",
+    "level": 6,
+    "habitat": "어촌-어촌 동쪽 부두",
     "time": [
       "아침",
       "낮",
@@ -1315,83 +1331,10 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "비둘기",
-    "habitat": "어촌-어촌 동쪽 부두",
-    "image": 210,
-    "level": 6,
-    "motion_preening": {
-      "낮": [
-        "맑음",
-        "무지개"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ]
-    },
-    "name": "황금가슴비둘기",
+    ],
     "price": 220,
     "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "가마우지",
-    "habitat": "구해 고래바다",
-    "image": 702,
-    "level": 6,
-    "motion_preening": {
-      "아침": [
-        "비"
-      ],
-      "저녁": [
-        "비"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ],
-      "아침": [
-        "비"
-      ],
-      "저녁": [
-        "무지개"
-      ]
-    },
-    "name": "붉은뺨가마우지",
-    "price": 180,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "부엉이",
-    "habitat": "온천산-바위절벽",
-    "image": 901,
-    "level": 6,
+    "category": "비둘기",
     "motion_preening": {
       "낮": [
         "맑음",
@@ -1403,23 +1346,93 @@
         "무지개"
       ]
     },
+    "image": 210
+  },
+  {
+    "name": "붉은뺨가마우지",
+    "level": 6,
+    "habitat": "구해 고래바다",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 180,
+    "special": false,
+    "category": "가마우지",
+    "motion_preening": {
+      "아침": [
+        "비"
+      ],
+      "저녁": [
+        "비"
+      ]
+    },
+    "motion_wingspread": {
+      "아침": [
+        "비"
+      ],
+      "낮": [
+        "무지개"
+      ],
+      "저녁": [
+        "무지개"
+      ]
+    },
+    "image": 702
+  },
+  {
     "name": "칡부엉이",
+    "level": 6,
+    "habitat": "온천산-바위절벽",
+    "time": [
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
     "price": 380,
     "special": false,
+    "category": "부엉이",
+    "motion_preening": {
+      "낮": [
+        "맑음",
+        "무지개"
+      ]
+    },
+    "motion_wingspread": {
+      "낮": [
+        "무지개"
+      ]
+    },
+    "image": 901
+  },
+  {
+    "name": "푸른박새",
+    "level": 7,
+    "habitat": "꽃밭-풍차꽃밭",
     "time": [
+      "아침",
+      "낮",
       "저녁",
       "새벽"
     ],
     "weather": [
       "맑음",
+      "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 180,
+    "special": false,
     "category": "소형",
-    "habitat": "꽃밭-풍차꽃밭",
-    "image": 112,
-    "level": 7,
     "motion_preening": {
       "낮": [
         "맑음",
@@ -1431,9 +1444,33 @@
         "무지개"
       ]
     },
-    "name": "푸른박새",
+    "image": 112
+  },
+  {
+    "name": "히아신스금강앵무",
+    "level": 7,
+    "habitat": "새들의 복귀 사건",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
     "price": 180,
     "special": false,
+    "category": "앵무",
+    "motion_preening": null,
+    "motion_wingspread": null,
+    "image": 225
+  },
+  {
+    "name": "잠부과일비둘기",
+    "level": 7,
+    "habitat": "도시 근교",
     "time": [
       "아침",
       "낮",
@@ -1444,41 +1481,17 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "앵무",
-    "habitat": "새들의 복귀 사건",
-    "image": 225,
-    "level": 7,
-    "motion_preening": null,
-    "motion_wingspread": null,
-    "name": "히아신스금강앵무",
-    "price": 180,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
     ],
-    "weather": [
-      "비",
-      "무지개"
-    ]
-  },
-  {
+    "price": 220,
+    "special": false,
     "category": "비둘기",
-    "habitat": "도시 근교",
-    "image": 208,
-    "level": 7,
     "motion_preening": {
-      "낮": [
-        "비"
-      ],
       "아침": [
         "맑음"
       ],
+      "낮": [
+        "비"
+      ],
       "저녁": [
         "비"
       ]
@@ -1491,9 +1504,12 @@
         "비"
       ]
     },
-    "name": "잠부과일비둘기",
-    "price": 220,
-    "special": false,
+    "image": 208
+  },
+  {
+    "name": "제비갈매기",
+    "level": 7,
+    "habitat": "동해 해변",
     "time": [
       "아침",
       "낮",
@@ -1501,54 +1517,23 @@
       "새벽"
     ],
     "weather": [
-      "맑음",
-      "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "갈매기",
-    "habitat": "동해 해변",
-    "image": 502,
-    "level": 7,
-    "motion_preening": null,
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ]
-    },
-    "name": "제비갈매기",
+    ],
     "price": 280,
     "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "무지개"
-    ]
-  },
-  {
-    "category": "매",
-    "habitat": "숲-순록탑",
-    "image": 801,
-    "level": 7,
-    "motion_preening": {
-      "낮": [
-        "맑음",
-        "무지개"
-      ]
-    },
+    "category": "갈매기",
+    "motion_preening": null,
     "motion_wingspread": {
       "낮": [
         "무지개"
       ]
     },
+    "image": 502
+  },
+  {
     "name": "황조롱이",
-    "price": 380,
-    "special": false,
+    "level": 7,
+    "habitat": "숲-순록탑",
     "time": [
       "낮",
       "저녁"
@@ -1556,67 +1541,10 @@
     "weather": [
       "맑음",
       "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "도시 근교",
-    "image": 108,
-    "level": 8,
-    "motion_preening": null,
-    "motion_wingspread": null,
-    "name": "동부파랑새",
-    "price": 240,
-    "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
     ],
-    "weather": [
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "숲-영혼의 참나무 숲",
-    "image": 117,
-    "level": 8,
-    "motion_preening": {
-      "저녁": [
-        "비"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ],
-      "저녁": [
-        "비"
-      ]
-    },
-    "name": "홍방울새",
-    "price": 180,
+    "price": 380,
     "special": false,
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
-  },
-  {
-    "category": "비둘기",
-    "habitat": "꽃밭-고래산",
-    "image": 206,
-    "level": 8,
+    "category": "매",
     "motion_preening": {
       "낮": [
         "맑음",
@@ -1628,9 +1556,33 @@
         "무지개"
       ]
     },
-    "name": "분홍비둘기",
-    "price": 220,
+    "image": 801
+  },
+  {
+    "name": "동부파랑새",
+    "level": 8,
+    "habitat": "도시 근교",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
+    "price": 240,
     "special": false,
+    "category": "소형",
+    "motion_preening": null,
+    "motion_wingspread": null,
+    "image": 108
+  },
+  {
+    "name": "홍방울새",
+    "level": 8,
+    "habitat": "숲-영혼의 참나무 숲",
     "time": [
       "아침",
       "낮",
@@ -1641,35 +1593,60 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "매",
-    "habitat": "온천산-온천",
-    "image": 803,
-    "level": 8,
+    ],
+    "price": 180,
+    "special": false,
+    "category": "소형",
     "motion_preening": {
-      "낮": [
-        "무지개"
-      ],
-      "아침": [
-        "비"
-      ],
       "저녁": [
         "비"
       ]
     },
     "motion_wingspread": {
-      "아침": [
-        "비"
+      "낮": [
+        "무지개"
       ],
       "저녁": [
         "비"
       ]
     },
-    "name": "매",
-    "price": 520,
+    "image": 117
+  },
+  {
+    "name": "분홍비둘기",
+    "level": 8,
+    "habitat": "꽃밭-고래산",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 220,
     "special": false,
+    "category": "비둘기",
+    "motion_preening": {
+      "낮": [
+        "맑음",
+        "무지개"
+      ]
+    },
+    "motion_wingspread": {
+      "낮": [
+        "무지개"
+      ]
+    },
+    "image": 206
+  },
+  {
+    "name": "매",
+    "level": 8,
+    "habitat": "온천산-온천",
     "time": [
       "아침",
       "낮"
@@ -1677,39 +1654,45 @@
     "weather": [
       "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "도시 근교",
-    "image": 121,
-    "level": 9,
+    ],
+    "price": 520,
+    "special": false,
+    "category": "매",
     "motion_preening": {
+      "아침": [
+        "비"
+      ],
       "낮": [
         "무지개"
+      ],
+      "저녁": [
+        "비"
       ]
     },
     "motion_wingspread": {
-      "낮": [
-        "무지개"
+      "아침": [
+        "비"
+      ],
+      "저녁": [
+        "비"
       ]
     },
+    "image": 803
+  },
+  {
     "name": "극락풍금조",
+    "level": 9,
+    "habitat": "도시 근교",
+    "time": [
+      "낮",
+      "저녁"
+    ],
+    "weather": [
+      "무지개"
+    ],
     "price": 240,
     "special": false,
-    "time": [
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "무지개"
-    ]
-  },
-  {
-    "category": "홍학",
-    "habitat": "꽃밭-보라빛 해변",
-    "image": 302,
-    "level": 9,
+    "category": "소형",
     "motion_preening": {
       "낮": [
         "무지개"
@@ -1720,48 +1703,75 @@
         "무지개"
       ]
     },
+    "image": 121
+  },
+  {
     "name": "아메리카홍학",
-    "price": 440,
-    "special": false,
+    "level": 9,
+    "habitat": "꽃밭-보라빛 해변",
     "time": [
       "낮",
       "저녁"
     ],
     "weather": [
       "무지개"
-    ]
+    ],
+    "price": 440,
+    "special": false,
+    "category": "홍학",
+    "motion_preening": {
+      "낮": [
+        "무지개"
+      ]
+    },
+    "motion_wingspread": {
+      "낮": [
+        "무지개"
+      ]
+    },
+    "image": 302
   },
   {
-    "category": "공작",
-    "habitat": "새들의 복귀 사건",
-    "image": 1502,
+    "name": "녹공작",
     "level": 9,
+    "habitat": "새들의 복귀 사건",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 300,
+    "special": "보너스 스테이지",
+    "category": "공작",
     "motion_preening": {
       "낮": [
         "맑음"
       ]
     },
     "motion_wingspread": null,
-    "name": "녹공작",
-    "price": 300,
-    "special": "보너스 스테이지",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
+    "image": 1502
   },
   {
-    "category": "오리",
-    "habitat": "온천산 호수",
-    "image": 403,
+    "name": "흰머리오리",
     "level": 9,
+    "habitat": "온천산 호수",
+    "time": [
+      "낮",
+      "저녁"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
+    "price": 360,
+    "special": false,
+    "category": "오리",
     "motion_preening": {
       "낮": [
         "무지개"
@@ -1775,23 +1785,24 @@
         "무지개"
       ]
     },
-    "name": "흰머리오리",
-    "price": 360,
-    "special": false,
+    "image": 403
+  },
+  {
+    "name": "황제가마우지",
+    "level": 9,
+    "habitat": "동해 잔잔한 바다",
     "time": [
       "낮",
       "저녁"
     ],
     "weather": [
+      "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
+    ],
+    "price": 360,
+    "special": false,
     "category": "가마우지",
-    "habitat": "동해 잔잔한 바다",
-    "image": 703,
-    "level": 9,
     "motion_preening": {
       "저녁": [
         "비"
@@ -1802,9 +1813,68 @@
         "무지개"
       ]
     },
-    "name": "황제가마우지",
-    "price": 360,
-    "special": false,
+    "image": 703
+  },
+  {
+    "name": "아조레스멋쟁이새",
+    "level": 10,
+    "habitat": "어촌-등대",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 240,
+    "special": "희귀",
+    "category": "소형",
+    "motion_preening": {
+      "낮": [
+        "무지개"
+      ]
+    },
+    "motion_wingspread": {
+      "낮": [
+        "무지개"
+      ]
+    },
+    "image": 115
+  },
+  {
+    "name": "파랑딱새",
+    "level": 10,
+    "habitat": "숲-점프대",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 240,
+    "special": "희귀",
+    "category": "소형",
+    "motion_preening": {
+      "낮": [
+        "무지개"
+      ]
+    },
+    "motion_wingspread": {
+      "낮": [
+        "무지개"
+      ]
+    },
+    "image": 122
+  },
+  {
+    "name": "비둘기조롱이",
+    "level": 10,
+    "habitat": "온천산-유적",
     "time": [
       "낮",
       "저녁"
@@ -1813,79 +1883,20 @@
       "맑음",
       "비",
       "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "어촌-등대",
-    "image": 115,
-    "level": 10,
-    "motion_preening": {
-      "낮": [
-        "무지개"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ]
-    },
-    "name": "아조레스멋쟁이새",
-    "price": 240,
-    "special": "희귀",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
     ],
-    "weather": [
-      "무지개"
-    ]
-  },
-  {
-    "category": "소형",
-    "habitat": "숲-점프대",
-    "image": 122,
-    "level": 10,
-    "motion_preening": {
-      "낮": [
-        "무지개"
-      ]
-    },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ]
-    },
-    "name": "파랑딱새",
-    "price": 240,
-    "special": "희귀",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "무지개"
-    ]
-  },
-  {
+    "price": 520,
+    "special": false,
     "category": "매",
-    "habitat": "온천산-유적",
-    "image": 802,
-    "level": 10,
     "motion_preening": {
       "낮": [
         "비",
         "무지개"
       ],
-      "새벽": [
-        "맑음"
-      ],
       "저녁": [
         "비"
+      ],
+      "새벽": [
+        "맑음"
       ]
     },
     "motion_wingspread": {
@@ -1893,24 +1904,23 @@
         "비"
       ]
     },
-    "name": "비둘기조롱이",
-    "price": 520,
-    "special": false,
-    "time": [
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ]
+    "image": 802
   },
   {
-    "category": "부엉이",
-    "habitat": "숲-사슴탑",
-    "image": 903,
+    "name": "수리부엉이",
     "level": 10,
+    "habitat": "숲-사슴탑",
+    "time": [
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
+    "price": 520,
+    "special": false,
+    "category": "부엉이",
     "motion_preening": {
       "낮": [
         "무지개"
@@ -1921,16 +1931,6 @@
         "무지개"
       ]
     },
-    "name": "수리부엉이",
-    "price": 520,
-    "special": false,
-    "time": [
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "비",
-      "무지개"
-    ]
+    "image": 903
   }
 ]

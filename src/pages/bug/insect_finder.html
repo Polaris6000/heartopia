@@ -13,7 +13,7 @@
     <div class="datetime-section">
         <nav>
             <ul>
-                <li><a href="bug_list.html">곤충 도감</a></li>
+                <li><a href="insect_list.html">곤충 도감</a></li>
             </ul>
         </nav>
         <h1>🔍 곤충 찾기</h1>
@@ -48,8 +48,8 @@
     <div class="input-section">
         <div class="input-group">
             <div class="input-item">
-                <label for="bugName">🦋 곤충 이름</label>
-                <input id="bugName" oninput="filterbug()" placeholder="예: 나비, 메뚜기, 사마귀..." type="text">
+                <label for="insectName">🦋 곤충 이름</label>
+                <input id="insectName" oninput="filterinsect()" placeholder="예: 나비, 메뚜기, 사마귀..." type="text">
             </div>
 
             <div class="input-item">
@@ -78,8 +78,8 @@
         </div>
 
         <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
-            <button onclick="filterbug()">🔍 곤충 찾기</button>
-            <button class="filter-btn season-ice-btn" onclick="loadSeasonData('season_ice_bug.json')">❄️ 빙설 시즌 추가
+            <button onclick="filterinsect()">🔍 곤충 찾기</button>
+            <button class="filter-btn season-ice-btn" onclick="loadSeasonData('season_ice_insect.json')">❄️ 빙설 시즌 추가
             </button>
             <button class="filter-btn-reset season-ice-btn" onclick="removeSeasonData()">🗑️ 시즌 데이터 제거</button>
         </div>
@@ -92,7 +92,7 @@
 
 <script src="../../js/common.js"></script>
 <script>
-    let bugData = [];
+    let insectData = [];
     let currentSort = {column: 'price', order: 'desc'};
     let loadedSeasons = new Set();
 
@@ -174,21 +174,21 @@
         }
     }
 
-    async function loadbugData() {
+    async function loadinsectData() {
         try {
-            let response = await fetch('../../data/bug_data.json');
+            let response = await fetch('../../data/insect_data.json');
 
             if (!response.ok) {
-                response = await fetch('./bug_data.json');
+                response = await fetch('./insect_data.json');
             }
 
             if (!response.ok) {
-                throw new Error('bug_data.json 파일을 찾을 수 없습니다.');
+                throw new Error('insect_data.json 파일을 찾을 수 없습니다.');
             }
 
-            bugData = await response.json();
-            console.log('곤충 데이터 로드 성공:', bugData.length + '종');
-            filterbug();
+            insectData = await response.json();
+            console.log('곤충 데이터 로드 성공:', insectData.length + '종');
+            filterinsect();
         } catch (error) {
             console.error('데이터 로드 에러:', error);
             document.getElementById('results').innerHTML =
@@ -216,15 +216,15 @@
             const seasonData = await response.json();
 
             // 이름 기준 중복 제거하며 병합
-            const combined = [...bugData, ...seasonData];
-            bugData = combined.filter((bug, index, self) =>
-                index === self.findIndex((f) => f.name === bug.name)
+            const combined = [...insectData, ...seasonData];
+            insectData = combined.filter((insect, index, self) =>
+                index === self.findIndex((f) => f.name === insect.name)
             );
 
             loadedSeasons.add(filename);
 
-            alert(`${seasonData.length}종의 시즌 데이터가 병합되었습니다.\n(총 ${bugData.length}종)`);
-            filterbug();
+            alert(`${seasonData.length}종의 시즌 데이터가 병합되었습니다.\n(총 ${insectData.length}종)`);
+            filterinsect();
         } catch (error) {
             console.error('시즌 데이터 로드 에러:', error);
             alert(`시즌 데이터를 불러오지 못했습니다.\n${error.message}`);
@@ -238,50 +238,50 @@
         }
 
         try {
-            let response = await fetch('../../data/bug_data.json');
+            let response = await fetch('../../data/insect_data.json');
             if (!response.ok) {
-                response = await fetch('./bug_data.json');
+                response = await fetch('./insect_data.json');
             }
 
             if (!response.ok) {
-                throw new Error('bug_data.json 파일을 찾을 수 없습니다.');
+                throw new Error('insect_data.json 파일을 찾을 수 없습니다.');
             }
 
-            bugData = await response.json();
+            insectData = await response.json();
             loadedSeasons.clear();
 
             alert('모든 시즌 데이터가 제거되었습니다.\n기본 데이터만 표시됩니다.');
-            filterbug();
+            filterinsect();
         } catch (error) {
             console.error('데이터 초기화 에러:', error);
             alert('데이터를 초기화하지 못했습니다.');
         }
     }
 
-    function filterbug() {
-        if (bugData.length === 0) {
+    function filterinsect() {
+        if (insectData.length === 0) {
             document.getElementById('results').innerHTML = '<div class="loading">⏳ 데이터를 불러오는 중...</div>';
             return;
         }
 
-        const bugName = document.getElementById('bugName').value.trim().toLowerCase();
+        const insectName = document.getElementById('insectName').value.trim().toLowerCase();
         const level = parseInt(document.getElementById('level').value);
         const time = document.getElementById('time').value;
         const weather = document.getElementById('weather').value;
 
-        const filtered = bugData.filter(bug => {
-            if (bugName && !bug.name.toLowerCase().includes(bugName)) return false;
-            if (bug.level > level) return false;
-            const timeOk = bug.time && bug.time.includes(time);
-            const weatherOk = bug.weather && bug.weather.includes(weather);
+        const filtered = insectData.filter(insect => {
+            if (insectName && !insect.name.toLowerCase().includes(insectName)) return false;
+            if (insect.level > level) return false;
+            const timeOk = insect.time && insect.time.includes(time);
+            const weatherOk = insect.weather && insect.weather.includes(weather);
             return timeOk && weatherOk;
         });
 
         displayResults(filtered);
     }
 
-    function sortbug(buges, column, order) {
-        return [...buges].sort((a, b) => {
+    function sortinsect(insectes, column, order) {
+        return [...insectes].sort((a, b) => {
             let valueA, valueB;
             if (column === 'name' || column === 'habitat') {
                 valueA = column === 'name' ? a.name : a.habitat;
@@ -305,16 +305,24 @@
             currentSort.column = column;
             currentSort.order = 'asc';
         }
-        filterbug();
+        filterinsect();
     }
 
-    function updatePrice(bugName, basePrice, selectElement) {
+    function updatePrice(insectName, basePrice, selectElement) {
         const star = parseInt(selectElement.value);
         const multiplier = starMultipliers[star];
         const calculatedPrice = Math.floor(basePrice * multiplier);
 
         const priceSpan = selectElement.parentElement.querySelector('.price');
         priceSpan.textContent = `₩${calculatedPrice}`;
+    }
+
+    /* 곤충 이미지 로드 실패 시 자리 표시자로 교체 */
+    function handleInsectImgError(img) {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'fish-thumb-placeholder';
+        placeholder.textContent = '🦋';
+        img.parentNode.replaceChild(placeholder, img);
     }
 
     function getSpecialIcon(special) {
@@ -333,26 +341,27 @@
         return icons[habitat] || '';
     }
 
-    function displayResults(buges) {
+    function displayResults(insectes) {
         const resultsDiv = document.getElementById('results');
 
-        if (buges.length === 0) {
+        if (insectes.length === 0) {
             resultsDiv.innerHTML = '<div class="no-results">⚠️ 현재 조건에서 잡을 수 있는 곤충가 없어요!</div>';
             return;
         }
 
-        const sortedbuges = sortbug(buges, currentSort.column, currentSort.order);
+        const sortedinsectes = sortinsect(insectes, currentSort.column, currentSort.order);
 
         let html = `
                 <div class="habitat-group">
                     <div class="habitat-header">
                         <span>검색 결과</span>
-                        <span class="count-badge">${sortedbuges.length} 종</span>
+                        <span class="count-badge">${sortedinsectes.length} 종</span>
                     </div>
                     <div class="table-container">
                         <table>
                             <thead>
                                 <tr>
+                                    <th class="col-fish-img">이미지</th>
                                     <th class="sortable ${currentSort.column === 'name' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('name')">이름</th>
                                     <th class="sortable ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('habitat')">서식지</th>
                                     <th class="sortable ${currentSort.column === 'level' ? 'sort-' + currentSort.order : ''}" onclick="handleSort('level')">레벨</th>
@@ -363,37 +372,40 @@
                             </thead>
                             <tbody>`;
 
-        sortedbuges.forEach(bug => {
+        sortedinsectes.forEach(insect => {
             // --- 시간 표시 로직 ---
             const allTimes = ['아침', '낮', '저녁', '새벽'];
-            const isAlwaysTime = bug.timeAll || (bug.time && allTimes.every(t => bug.time.includes(t)));
+            const isAlwaysTime = insect.timeAll || (insect.time && allTimes.every(t => insect.time.includes(t)));
             const timeDisplay = isAlwaysTime
                 ? '<span class="time-badge always">하루 종일</span>'
-                : bug.time.map(t => `<span class="time-badge">${t}</span>`).join(' ');
+                : insect.time.map(t => `<span class="time-badge">${t}</span>`).join(' ');
 
             // --- 날씨 표시 로직 ---
             const allWeathers = ['맑음', '비', '무지개'];
-            const isAlwaysWeather = bug.weatherAll || (bug.weather && allWeathers.every(w => bug.weather.includes(w)));
+            const isAlwaysWeather = insect.weatherAll || (insect.weather && allWeathers.every(w => insect.weather.includes(w)));
             const weatherDisplay = isAlwaysWeather
                 ? '<span class="weather-badge always">항상</span>'
-                : bug.weather.map(w => `<span class="weather-badge">${w}</span>`).join(' ');
+                : insect.weather.map(w => `<span class="weather-badge">${w}</span>`).join(' ');
 
             html += `
                     <tr>
-                        <td class="item-name">${getSpecialIcon(bug.special)}${bug.name}</td>
-                        <td>${getHabitatIcon(bug.habitat)}${bug.habitat}</td>
-                        <td><span class="level-badge">Lv.${bug.level}</span></td>
+                        <td class="col-fish-img">${insect.image
+                            ? `<img class="fish-thumb" src="../../../public/images/insect_img/spr_ui_item_normal_p_insect_insect${insect.image}.png" alt="${insect.name}" onerror="handleInsectImgError(this)">`
+                            : `<div class="fish-thumb-placeholder">🦋</div>`}</td>
+                        <td class="item-name">${getSpecialIcon(insect.special)}${insect.name}</td>
+                        <td class="col-habitat-bird">${getHabitatIcon(insect.habitat)}${insect.habitat}</td>
+                        <td><span class="level-badge">Lv.${insect.level}</span></td>
                         <td>
                             <div class="price-cell">
                                 <span>⭐</span>
-                                <select class="star-selector" onchange="updatePrice('${bug.name}', ${bug.price}, this)">
+                                <select class="star-selector" onchange="updatePrice('${insect.name}', ${insect.price}, this)">
                                     <option value="1">1성</option>
                                     <option value="2">2성</option>
                                     <option value="3">3성</option>
                                     <option value="4">4성</option>
                                     <option value="5">5성</option>
                                 </select>
-                                <span class="price">₩${bug.price}</span>
+                                <span class="price">₩${insect.price}</span>
                             </div>
                         </td>
                         <td>${timeDisplay}</td>
@@ -408,7 +420,7 @@
     // 시간 선택을 먼저 하고 데이터를 로드하도록 변경
     window.onload = async function () {
         setInitialTimeOption();
-        await loadbugData();
+        await loadinsectData();
     };
 </script>
 </body>
