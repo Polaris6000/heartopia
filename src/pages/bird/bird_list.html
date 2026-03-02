@@ -169,10 +169,10 @@
         }
 
         try {
-            let response = await fetch(`../../data/${filename}`);
+            let response = await fetch(`../../data/season_ice/${filename}`);
 
             if (!response.ok) {
-                response = await fetch(`./${filename}`);
+                response = await fetch(`../../data/${filename}`);
             }
 
             if (!response.ok) {

@@ -1293,7 +1293,7 @@
     ],
     "price": 250,
     "special": false,
-    "image": null
+    "image": 103
   },
   {
     "name": "금붕어",
@@ -1311,7 +1311,7 @@
     ],
     "price": 250,
     "special": false,
-    "image": null
+    "image": 216
   },
   {
     "name": "북유럽파란가재",
@@ -1329,7 +1329,7 @@
     ],
     "price": 250,
     "special": false,
-    "image": null
+    "image": 208
   },
   {
     "name": "해덕대구",
@@ -1347,7 +1347,7 @@
     ],
     "price": 230,
     "special": false,
-    "image": null
+    "image": 341
   },
   {
     "name": "킹크랩",
@@ -1364,7 +1364,7 @@
     ],
     "price": 535,
     "special": false,
-    "image": null
+    "image": 319
   },
   {
     "name": "황금킹크랩",
@@ -1400,7 +1400,7 @@
     ],
     "price": 380,
     "special": false,
-    "image": null
+    "image": 135
   },
   {
     "name": "강꼬치고기",
@@ -1418,7 +1418,7 @@
     ],
     "price": 610,
     "special": false,
-    "image": null
+    "image": 102
   },
   {
     "name": "펌프킨시드",
@@ -1436,7 +1436,7 @@
     ],
     "price": 250,
     "special": false,
-    "image": null
+    "image": 123
   },
   {
     "name": "개복치",
@@ -1470,7 +1470,7 @@
     ],
     "price": 850,
     "special": false,
-    "image": null
+    "image": 306
   },
   {
     "name": "붉은개복치",
@@ -1490,7 +1490,7 @@
     ],
     "price": 850,
     "special": false,
-    "image": null
+    "image": 339
   },
   {
     "name": "유럽메기",
@@ -1507,7 +1507,7 @@
     ],
     "price": 610,
     "special": false,
-    "image": null
+    "image": 3
   },
   {
     "name": "블루길",
@@ -1525,7 +1525,7 @@
     ],
     "price": 395,
     "special": false,
-    "image": null
+    "image": 124
   },
   {
     "name": "북극곤들매기",
@@ -1542,10 +1542,10 @@
     ],
     "price": 610,
     "special": false,
-    "image": null
+    "image": 131
   },
   {
-    "name": "귀상어",
+    "name": "망치머리상어",
     "level": 10,
     "habitat": "구해",
     "size": "큼",
@@ -1558,7 +1558,7 @@
     ],
     "price": 850,
     "special": false,
-    "image": null
+    "image": 367
   },
   {
     "name": "황새치",
@@ -1590,7 +1590,7 @@
     ],
     "price": 850,
     "special": false,
-    "image": null
+    "image": 332
   },
   {
     "name": "금룡어",

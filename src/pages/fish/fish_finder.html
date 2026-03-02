@@ -54,7 +54,7 @@
 
             <div class="input-item">
                 <label for="level">🎣 취미 레벨</label>
-                <input id="level" max="20" min="1" type="number" value="7">
+                <input id="level" max="10" min="1" type="number" value="7">
             </div>
 
             <div class="input-item">
@@ -187,6 +187,7 @@
             }
 
             fishData = await response.json();
+            fishData = fishData.filter(f => f.level <= 10); // 인게임 해금 레벨 제한
             console.log('물고기 데이터 로드 성공:', fishData.length + '종');
             filterFish();
         } catch (error) {
@@ -203,10 +204,10 @@
         }
 
         try {
-            let response = await fetch(`../../data/${filename}`);
+            let response = await fetch(`../../data/season_ice/${filename}`);
 
             if (!response.ok) {
-                response = await fetch(`./${filename}`);
+                response = await fetch(`../../data/${filename}`);
             }
 
             if (!response.ok) {
@@ -248,6 +249,7 @@
             }
 
             fishData = await response.json();
+            fishData = fishData.filter(f => f.level <= 10); // 인게임 해금 레벨 제한
             loadedSeasons.clear();
 
             alert('모든 시즌 데이터가 제거되었습니다.\n기본 데이터만 표시됩니다.');

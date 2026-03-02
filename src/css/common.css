@@ -53,7 +53,7 @@ body {
 
 main {
     flex: 1;
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 40px auto;
     padding: 0 20px;
     width: 100%;
@@ -420,7 +420,8 @@ footer {
         .price-cell {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 5px;
+            white-space: nowrap;
         }
 
 /* ========================================
@@ -607,17 +608,18 @@ footer {
     overflow-x: auto;
 }
 
-/* 테이블이 내용 넘쳐도 강제로 맞추려 하지 않도록 */
+/* 브라우저가 내용 기반으로 열 너비를 자동 계산 */
 table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
+    table-layout: auto;
+    font-size: 0.92em;
 }
 
 /* 테이블 헤더 */
 th {
     background: var(--color-surface-light);
-    padding: 15px;
+    padding: 12px 8px;
     text-align: left;
     font-weight: 600;
     color: var(--color-text-strong);
@@ -648,47 +650,38 @@ th.sort-desc::after {
     opacity: 1;
 }
 
+/* table-layout: auto 이므로 min-width만 힌트로 제공, 브라우저가 자동 조정 */
 .col-habitat-fish {
-    min-width: 130px;
-    max-width: 130px;
-    width: 130px;
+    min-width: 100px;
+    white-space: nowrap;
 }
 
-/* 서식지 컬럼 (새): 픽셀 고정 없이 줄바꿈만 방지 */
 .col-habitat-bird {
-    min-width: 150px;
-    max-width: 150px;
-    width: 130px;
+    min-width: 110px;
     white-space: nowrap;
 }
 
 .col-level {
-    min-width: 90px;
-    max-width: 90px;
-    width: 90px;
+    min-width: 60px;
+    white-space: nowrap;
 }
 
 .col-time {
-    min-width: 110px;
-    max-width: 110px;
-    width: 110px;
+    min-width: 70px;
 }
 
 .col-weather {
-    min-width: 100px;
-    max-width: 100px;
-    width: 100px;
+    min-width: 70px;
 }
 
 .col-size {
-    min-width: 100px;
-    max-width: 100px;
-    width: 100px;
+    min-width: 60px;
+    white-space: nowrap;
 }
 
 /* 테이블 바디 */
 td {
-    padding: 15px;
+    padding: 10px 8px;
     border-bottom: 1px solid var(--color-surface-dim);
     color: var(--color-text);
 }
@@ -725,10 +718,11 @@ tr:hover {
     display: inline-block;
     background: var(--color-surface-light);
     color: var(--color-text-soft);
-    padding: 4px 10px;
+    padding: 3px 7px;
     border-radius: 12px;
-    font-size: 0.85em;
-    margin: 2px;
+    font-size: 0.82em;
+    margin: 1px;
+    white-space: nowrap;
 }
 
 .price {
@@ -897,8 +891,8 @@ button:active {
 }
 /* 모션 컬럼 (th/td 공통) 너비 */
 .motion-cell {
-    min-width: 170px;
-    word-break: break-all;
+    min-width: 120px;
+    word-break: keep-all;
 }
 
 /* 모션 컬럼 헤더는 한 줄로 */
@@ -982,8 +976,8 @@ th.motion-cell {
 
     /* 테이블 */
     th, td {
-        padding: 10px;
-        font-size: 0.9em;
+        padding: 8px 6px;
+        font-size: 0.85em;
     }
 }
 
