@@ -247,6 +247,49 @@
             width: 10px; height: 10px; border-radius: 50%;
         }
 
+        /* ── 음식 이미지 ── */
+        .food-img-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: var(--color-surface-light);
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .food-img {
+            width: 56px;
+            height: 56px;
+            object-fit: contain;
+            image-rendering: pixelated; /* 픽셀 아트 이미지 선명하게 */
+        }
+        /* 카드 헤더에 이미지 포함 시 레이아웃 */
+        .recipe-card-header {
+            gap: 10px;
+        }
+        .recipe-card-header-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+            min-width: 0;
+        }
+        /* 테이블 내 소형 이미지 */
+        .food-img-sm {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            image-rendering: pixelated;
+            border-radius: 6px;
+            background: var(--color-surface-light);
+            border: 1px solid var(--color-border);
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
         /* 빈 상태 */
         .empty-state {
             text-align: center; padding: 60px 20px;
@@ -578,11 +621,24 @@ function renderCard(r, maxROI, maxGPS) {
         return `<span class="ingredient-tag ${typeCls}">${label}</span>`;
     }).join('');
 
+    // 음식 이미지 경로 생성 (이미지 키가 있을 때만)
+    const imgHTML = r.image
+        ? `<div class="food-img-wrap">
+               <img class="food-img"
+                    src="../../../public/images/food_img/spr_ui_item_normal_p_food_${r.image}.png"
+                    alt="${r.name}"
+                    onerror="this.parentElement.style.display='none'">
+           </div>`
+        : '';
+
     return `
     <div class="recipe-card">
         <div class="recipe-card-header">
-            <span class="recipe-name">🍽️ ${r.name}</span>
-            <span class="recipe-efficiency-badge ${badge.cls}">${badge.label}</span>
+            ${imgHTML}
+            <div class="recipe-card-header-info">
+                <span class="recipe-name">${r.name}</span>
+                <span class="recipe-efficiency-badge ${badge.cls}">${badge.label}</span>
+            </div>
         </div>
         <div class="ingredients-list">${ingHTML}</div>
         <div class="metrics-grid">
@@ -630,9 +686,18 @@ function renderTable(list, area) {
         const badge    = getEfficiencyBadge(r.roi);
         const profitCls = r.profit >= 0 ? 'pos' : 'neg';
         const ingStr = r.ingDetails.map(i => i.count > 1 ? `${i.name}×${i.count}` : i.name).join(', ');
+
+        // 테이블용 소형 이미지 (이미지 키가 있을 때만)
+        const imgSmHTML = r.image
+            ? `<img class="food-img-sm"
+                    src="../../../public/images/food_img/spr_ui_item_normal_p_food_${r.image}.png"
+                    alt="${r.name}"
+                    onerror="this.style.display='none'">`
+            : '';
+
         return `
         <tr>
-            <td>${r.name}</td>
+            <td>${imgSmHTML}${r.name}</td>
             <td style="font-size:0.8rem;color:var(--color-text-soft)">${ingStr}</td>
             <td style="font-weight:700;color:var(--color-primary)">${r.price.toLocaleString()} G</td>
             <td>${r.baseCost.toLocaleString()} G</td>
