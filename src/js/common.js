@@ -48,7 +48,7 @@ function initScrollTopBtn() {
     const btn = document.createElement('button');
     btn.id = 'scroll-top-btn';
     btn.setAttribute('aria-label', '맨 위로');
-    btn.textContent = '▲';
+    btn.textContent = 'Top▲';
     document.body.appendChild(btn);
 
     // 300px 이상 스크롤하면 버튼 표시, 그 전엔 숨김
