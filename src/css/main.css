@@ -1,12 +1,15 @@
-/* 메인 페이지 전용 스타일 */
+/* ========================================
+   메인 페이지 전용 스타일
+   ─ main.html에서만 사용
+======================================== */
 
-/* 히어로 섹션 */
+/* ── 히어로 섹션 ── */
 .hero {
-    background: white;
+    background: var(--color-surface);
     border-radius: 30px;
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(255, 154, 158, 0.2);
-    margin-bottom: 40px;
+    box-shadow: 0 10px 40px var(--color-primary-a20);   /* 기존 하드코딩 → 변수화 */
+    margin-bottom: 24px;   /* 기존 40px → 24px */
 }
 
 .hero-image {
@@ -16,35 +19,35 @@
 }
 
 .hero-content {
-    padding: 40px;
+    padding: 24px;   /* 기존 40px → 24px */
     text-align: center;
 }
 
 .hero-content h1 {
     font-size: 2em;
-    color: #ff6b9d;
-    margin-bottom: 15px;
-    text-shadow: 2px 2px 4px rgba(255, 107, 157, 0.1);
+    color: var(--color-primary);   /* 기존 #ff6b9d → 변수 */
+    margin-bottom: 8px;            /* 기존 15px → 8px */
+    text-shadow: 2px 2px 4px var(--color-primary-a10);   /* 기존 하드코딩 → 변수화 */
 }
 
 .hero-content p {
-    font-size: 1.3em;
-    color: #666;
+    font-size: 1.2em;
+    color: var(--color-text-soft);   /* 기존 #666 → 변수 */
     line-height: 1.6;
 }
 
-/* 카드 그리드 */
+/* ── 카드 그리드 ── */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
+    gap: 20px;        /* 기존 30px → 20px */
+    margin-top: 24px; /* 기존 40px → 24px */
 }
 
 .card {
-    background: white;
+    background: var(--color-surface);   /* 기존 white → 변수 */
     border-radius: 20px;
-    padding: 30px;
+    padding: 20px;   /* 기존 30px → 20px */
     text-align: center;
     cursor: pointer;
     transition: all 0.3s;
@@ -54,30 +57,30 @@
 
 .card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(255, 107, 157, 0.3);
-    border-color: #ff9a9e;
+    box-shadow: 0 15px 40px var(--color-primary-a30);   /* 기존 하드코딩 → 변수화 */
+    border-color: var(--color-primary-light);            /* 기존 #ff9a9e → 변수 */
 }
 
 .card-icon {
     font-size: 4em;
-    margin-bottom: 15px;
+    margin-bottom: 8px;   /* 기존 15px → 8px */
 }
 
 .card h3 {
     font-size: 1.5em;
-    color: #ff6b9d;
-    margin-bottom: 10px;
+    color: var(--color-primary);   /* 기존 #ff6b9d → 변수 */
+    margin-bottom: 6px;            /* 기존 10px → 6px */
 }
 
 .card p {
-    color: #888;
+    color: var(--color-text-muted);   /* 기존 #888 → 변수 */
     line-height: 1.6;
 }
 
 .card-badge {
     display: inline-block;
     background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-    color: #ff6b9d;
+    color: var(--color-primary);   /* 기존 #ff6b9d → 변수 */
     padding: 5px 15px;
     border-radius: 15px;
     font-size: 0.85em;
@@ -85,17 +88,30 @@
     margin-top: 10px;
 }
 
-/* 반응형 */
+/* ── 반응형 ── */
 @media (max-width: 768px) {
-    .hero-content h1 {
-        font-size: 2em;
+    .hero-image {
+        height: 200px;   /* 기존 250px → 200px: 모바일에서 이미지 높이 추가 축소 */
     }
 
-    .hero-image {
-        height: 250px;
+    .hero-content {
+        padding: 16px;   /* 기존 미설정 → 16px: 모바일 콘텐츠 패딩 명시 */
+    }
+
+    .hero-content h1 {
+        font-size: 1.6em;   /* 기존 2em → 1.6em */
+    }
+
+    .hero-content p {
+        font-size: 1em;
     }
 
     .cards-grid {
         grid-template-columns: 1fr;
+        gap: 14px;   /* 모바일 카드 간격 축소 */
+    }
+
+    .card {
+        padding: 16px;   /* 모바일 카드 패딩 축소 */
     }
 }
