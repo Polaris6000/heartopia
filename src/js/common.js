@@ -30,9 +30,38 @@ async function loadComponent(elementId, fileName) {
 
 
 // ============================================================
-// DOMContentLoaded: 헤더·푸터 주입
+// DOMContentLoaded: 헤더·푸터 주입 + 스크롤 탑 버튼
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
     loadComponent('header-placeholder', 'header.html');
     loadComponent('footer-placeholder', 'footer.html');
+    initScrollTopBtn();
 });
+
+
+// ============================================================
+// 스크롤 탑 버튼
+// ─ JS로 버튼을 직접 생성하므로 HTML 파일을 수정할 필요 없음
+// ============================================================
+function initScrollTopBtn() {
+    // 버튼 요소 생성
+    const btn = document.createElement('button');
+    btn.id = 'scroll-top-btn';
+    btn.setAttribute('aria-label', '맨 위로');
+    btn.textContent = '▲';
+    document.body.appendChild(btn);
+
+    // 300px 이상 스크롤하면 버튼 표시, 그 전엔 숨김
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            btn.classList.add('visible');
+        } else {
+            btn.classList.remove('visible');
+        }
+    }, { passive: true }); // passive: true → 스크롤 성능 최적화
+
+    // 클릭 시 부드럽게 최상단으로 이동
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}

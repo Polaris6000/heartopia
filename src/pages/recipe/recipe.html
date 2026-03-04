@@ -379,7 +379,7 @@
             </ul>
         </nav>
         <h1>🍳 요리 레시피</h1>
-        <p>재료비, 수익, 스태미나 효율을 한눈에 비교해보세요</p>
+        <p>재료비, 수익, 체력 효율을 한눈에 비교해보세요</p>
     </div>
 
     <!-- 통계 -->
@@ -387,7 +387,7 @@
         <div class="stat-card"><div class="number" id="statTotal">-</div><div class="label">총 레시피 수</div></div>
         <div class="stat-card"><div class="number" id="statBestProfit">-</div><div class="label">최고 순이익 레시피</div></div>
         <div class="stat-card"><div class="number" id="statBestROI">-</div><div class="label">최고 수익률 레시피</div></div>
-        <div class="stat-card"><div class="number" id="statBestStam">-</div><div class="label">최고 스태미나 효율</div></div>
+        <div class="stat-card"><div class="number" id="statBestStam">-</div><div class="label">최고 체력 효율</div></div>
         <div class="stat-card"><div class="number" id="statGradePrice">-</div><div class="label">선택 등급 최고가</div></div>
     </div>
 
@@ -403,8 +403,8 @@
                 <option value="profit-desc">순이익 높은순</option>
                 <option value="roi-desc">수익률 높은순</option>
                 <option value="price-desc">판매가 높은순</option>
-                <option value="stamGold-desc">골드/스태미나 높은순</option>
-                <option value="stamina-desc">스태미나 높은순</option>
+                <option value="stamGold-desc">골드/체력 높은순</option>
+                <option value="stamina-desc">체력 높은순</option>
                 <option value="name-asc">이름순</option>
                 <option value="profit-asc">순이익 낮은순</option>
             </select>
@@ -712,7 +712,7 @@ function renderCard(r, maxROI, maxGPS) {
                 <div class="metric-value ${profitCls}">${r.profit >= 0 ? '+' : ''}${r.profit.toLocaleString()} G</div>
             </div>
             <div class="metric">
-                <div class="metric-label">⚡ 스태미나</div>
+                <div class="metric-label">⚡ 체력</div>
                 <div class="metric-value">${r.stamina}</div>
             </div>
         </div>
@@ -727,7 +727,7 @@ function renderCard(r, maxROI, maxGPS) {
         </div>
         <div class="metric-bar-wrap" style="margin-top:6px">
             <div class="metric-bar-label">
-                <span>골드/스태미나</span>
+                <span>골드/체력</span>
                 <span>${r.goldPerStam.toFixed(1)}</span>
             </div>
             <div class="metric-bar">
@@ -780,8 +780,8 @@ function renderTable(list, area) {
                     <th onclick="setSort('baseCost')">재료비</th>
                     <th onclick="setSort('profit')">순이익</th>
                     <th onclick="setSort('roi')">수익률 ROI</th>
-                    <th onclick="setSort('stamina')">스태미나</th>
-                    <th onclick="setSort('stamGold')">골드/스태미나</th>
+                    <th onclick="setSort('stamina')">체력</th>
+                    <th onclick="setSort('stamGold')">골드/체력</th>
                     <th>효율 등급</th>
                 </tr>
             </thead>

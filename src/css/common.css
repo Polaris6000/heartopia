@@ -867,6 +867,64 @@ th.motion-cell {
 
 
 /* ========================================
+   스크롤 탑 버튼
+   ─ common.js에서 동적으로 생성됨
+======================================== */
+#scroll-top-btn {
+    /* 위치: 우측 하단 고정 */
+    position: fixed;
+    bottom: 32px;
+    right: 28px;
+    z-index: 999;
+
+    /* 크기 & 모양 */
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+
+    /* 색상: 사이트 메인 핑크 */
+    background: var(--color-primary);
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    /* 그림자 */
+    box-shadow: 0 4px 14px var(--color-primary-a30);
+
+    /* 기본은 숨김 상태 (JS로 .visible 클래스 토글) */
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s;
+}
+
+/* 300px 이상 스크롤 시 JS가 이 클래스를 붙임 */
+#scroll-top-btn.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+#scroll-top-btn:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-3px);
+}
+
+/* 모바일에서는 조금 더 작게, 엄지가 닿기 좋은 위치로 */
+@media (max-width: 768px) {
+    #scroll-top-btn {
+        bottom: 20px;
+        right: 16px;
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+}
+
+
+/* ========================================
    반응형 디자인 - 모바일 (768px 이하)
 ======================================== */
 @media (max-width: 768px) {
