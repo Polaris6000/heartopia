@@ -6,7 +6,8 @@
 /* BMJUA: 타이틀 전용 (h1·h2·h3·로고·대형 표시 텍스트) */
 @font-face {
     font-family: 'BMJUA';
-    src: url('../../../public/font/BMJUA_ttf.ttf') format('truetype');
+    src: url('../../../public/font/BMJUA.woff2') format('woff'); /* 1순위 */
+            url('../../../public/font/BMJUA.woff') format('woff'); /* 2순위 */
     font-weight: 100 900; /* 단일 파일이 전체 굵기 범위를 담당 → 브라우저 합성 굵기 방지 */
     font-style: normal;
     font-display: swap;
@@ -37,10 +38,10 @@
 ======================================== */
 :root {
     /* ── 주요색 (핑크 계열) ──────────────────────────── */
-    --color-primary:         #ff6b9d;   /* 메인 핑크: 로고, 제목, 버튼 등 */
-    --color-primary-dark:    #ff5588;   /* 진한 핑크: 호버 상태 */
-    --color-primary-light:   #ff9a9e;   /* 연한 핑크: 서브 강조 */
-    --color-primary-surface: #fff0f5;   /* 가장 연한 핑크: 드롭다운 호버 배경 */
+    --color-primary: #ff6b9d; /* 메인 핑크: 로고, 제목, 버튼 등 */
+    --color-primary-dark: #ff5588; /* 진한 핑크: 호버 상태 */
+    --color-primary-light: #ff9a9e; /* 연한 핑크: 서브 강조 */
+    --color-primary-surface: #fff0f5; /* 가장 연한 핑크: 드롭다운 호버 배경 */
 
     /* rgba 투명도 변형 (그림자·활성 배경 등에 사용) */
     --color-primary-a10: rgba(255, 107, 157, 0.1);
@@ -48,22 +49,22 @@
     --color-primary-a30: rgba(255, 107, 157, 0.3);
 
     /* ── 텍스트 계열 ──────────────────────────────────── */
-    --color-text-strong: #333;   /* 제목, 테이블 헤더 */
-    --color-text:        #555;   /* 본문, 일반 텍스트 */
-    --color-text-soft:   #666;   /* 보조 텍스트 */
-    --color-text-muted:  #888;   /* 설명, 힌트 */
-    --color-text-faint:  #bbb;   /* 비활성, 없음 표시 */
+    --color-text-strong: #333; /* 제목, 테이블 헤더 */
+    --color-text: #555; /* 본문, 일반 텍스트 */
+    --color-text-soft: #666; /* 보조 텍스트 */
+    --color-text-muted: #888; /* 설명, 힌트 */
+    --color-text-faint: #bbb; /* 비활성, 없음 표시 */
 
     /* ── 배경 / 서피스 계열 ──────────────────────────── */
-    --color-surface:       white;    /* 카드, 헤더, 푸터 배경 */
+    --color-surface: white; /* 카드, 헤더, 푸터 배경 */
     --color-surface-light: #f8f9fa; /* 테이블 헤더, nav 버튼, tr 호버 */
-    --color-surface-dim:   #f0f0f0; /* 테이블 구분선, 뱃지 배경 */
-    --color-border:        #e9ecef; /* 입력창 테두리, 구분선 */
-    --color-border-soft:   #ddd;    /* 뱃지 등 소프트 테두리 */
+    --color-surface-dim: #f0f0f0; /* 테이블 구분선, 뱃지 배경 */
+    --color-border: #e9ecef; /* 입력창 테두리, 구분선 */
+    --color-border-soft: #ddd; /* 뱃지 등 소프트 테두리 */
 
     /* ── 바디 배경 그라데이션 ────────────────────────── */
     --color-bg-from: #a8edea;
-    --color-bg-to:   #fed6e3;
+    --color-bg-to: #fed6e3;
 }
 
 
@@ -98,7 +99,7 @@ h1, h2, h3,
 main {
     flex: 1;
     max-width: 1440px;
-    margin: 20px auto;   /* 기존 40px → 20px: 상하 여백 절반으로 */
+    margin: 20px auto; /* 기존 40px → 20px: 상하 여백 절반으로 */
     padding: 0 20px;
     width: 100%;
 }
@@ -109,7 +110,7 @@ main {
 ======================================== */
 header {
     background: var(--color-surface);
-    padding: 14px 0;   /* 기존 20px → 14px */
+    padding: 14px 0; /* 기존 20px → 14px */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     position: sticky;
     top: 0;
@@ -126,7 +127,7 @@ header {
 }
 
 .logo {
-    font-size: 1.6em;   /* 기존 2em → 1.6em */
+    font-size: 1.6em; /* 기존 2em → 1.6em */
     font-weight: 400; /* 기존 bold → 400 */
     color: var(--color-primary);
     cursor: pointer;
@@ -136,14 +137,14 @@ header {
 nav ul {
     list-style: none;
     display: flex;
-    gap: 16px;   /* 기존 20px → 16px */
+    gap: 16px; /* 기존 20px → 16px */
 }
 
 nav a {
     text-decoration: none;
     color: var(--color-text);
     font-weight: 400; /* 기존 600 → 400 */
-    padding: 8px 14px;   /* 기존 10px 20px → 8px 14px */
+    padding: 8px 14px; /* 기존 10px 20px → 8px 14px */
     border-radius: 8px;
     transition: all 0.3s;
     background: var(--color-surface-light);
@@ -164,16 +165,16 @@ nav a:hover {
 
 /* 드롭다운 목록: 기본적으로 숨김 */
 .dropdown-menu {
-    display: none;               /* 기본 숨김 */
+    display: none; /* 기본 숨김 */
     position: absolute;
-    top: calc(100% + 6px);       /* 부모 버튼 바로 아래에 띄움 */
+    top: calc(100% + 6px); /* 부모 버튼 바로 아래에 띄움 */
     left: 0;
     background: var(--color-surface);
     border-radius: 10px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     min-width: 150px;
     z-index: 200;
-    padding: 4px 0;   /* 기존 6px → 4px */
+    padding: 4px 0; /* 기존 6px → 4px */
     list-style: none;
 
     /* 부드러운 등장을 위한 애니메이션 준비 */
@@ -192,11 +193,11 @@ nav a:hover {
 /* 드롭다운 내부 항목 스타일 */
 .dropdown-menu li a {
     display: block;
-    padding: 8px 14px;   /* 기존 10px 18px → 8px 14px */
+    padding: 8px 14px; /* 기존 10px 18px → 8px 14px */
     color: var(--color-text);
     font-weight: 400; /* 기존 600 → 400 */
     font-size: 0.95em;
-    background: transparent;      /* 부모 nav a 스타일 초기화 */
+    background: transparent; /* 부모 nav a 스타일 초기화 */
     border-radius: 0;
     transform: none;
     transition: background 0.2s, color 0.2s;
@@ -206,7 +207,7 @@ nav a:hover {
 .dropdown-menu li a:hover {
     background: var(--color-primary-surface);
     color: var(--color-primary);
-    transform: none;              /* 부모 호버 translateY 효과 제거 */
+    transform: none; /* 부모 호버 translateY 효과 제거 */
 }
 
 
@@ -215,8 +216,8 @@ nav a:hover {
 ======================================== */
 footer {
     background: var(--color-surface);
-    padding: 20px 0;     /* 기존 30px → 20px */
-    margin-top: 32px;    /* 기존 60px → 32px */
+    padding: 20px 0; /* 기존 30px → 20px */
+    margin-top: 32px; /* 기존 60px → 32px */
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
 }
 
@@ -230,17 +231,17 @@ footer {
 .footer-container p {
     color: var(--color-text-soft);
     font-size: 1em;
-    margin-bottom: 8px;   /* 기존 10px → 8px */
+    margin-bottom: 8px; /* 기존 10px → 8px */
 }
 
 .footer-links {
-    margin-top: 10px;   /* 기존 15px → 10px */
+    margin-top: 10px; /* 기존 15px → 10px */
 }
 
 .footer-links a {
     color: var(--color-primary);
     text-decoration: none;
-    margin: 0 12px;   /* 기존 15px → 12px */
+    margin: 0 12px; /* 기존 15px → 12px */
     font-weight: 400; /* 기존 600 → 400 */
     transition: color 0.3s;
 }
@@ -255,10 +256,10 @@ footer {
 ======================================== */
 .page-header {
     background: var(--color-surface);
-    padding: 28px;           /* 기존 40px → 28px */
+    padding: 28px; /* 기존 40px → 28px */
     border-radius: 20px;
     text-align: center;
-    margin-bottom: 24px;     /* 기존 40px → 24px */
+    margin-bottom: 24px; /* 기존 40px → 24px */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     position: relative;
 }
@@ -266,18 +267,18 @@ footer {
 /* 우측 상단 페이지 전환 nav */
 .page-header nav {
     position: absolute;
-    top: 40px;    /* 기존 50px → 40px */
-    right: 30px;  /* 기존 50px → 30px */
+    top: 40px; /* 기존 50px → 40px */
+    right: 30px; /* 기존 50px → 30px */
 }
 
 .page-header h1 {
-    font-size: 2.2em;    /* 기존 3em → 2.2em */
+    font-size: 2.2em; /* 기존 3em → 2.2em */
     color: var(--color-primary);
-    margin-bottom: 8px;  /* 기존 15px → 8px */
+    margin-bottom: 8px; /* 기존 15px → 8px */
 }
 
 .page-header p {
-    font-size: 1em;   /* 기존 1.2em → 1em */
+    font-size: 1em; /* 기존 1.2em → 1em */
     color: var(--color-text-muted);
 }
 
@@ -287,9 +288,9 @@ footer {
 ======================================== */
 .datetime-section {
     background: var(--color-surface);
-    padding: 28px;        /* 기존 40px → 28px */
+    padding: 28px; /* 기존 40px → 28px */
     border-radius: 20px;
-    margin-bottom: 20px;  /* 기존 30px → 20px */
+    margin-bottom: 20px; /* 기존 30px → 20px */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     position: relative;
 }
@@ -297,44 +298,44 @@ footer {
 /* nav를 우측 상단으로 절대 배치 */
 .datetime-section nav {
     position: absolute;
-    top: 40px;    /* 기존 50px → 40px */
-    right: 30px;  /* 기존 50px → 30px */
+    top: 40px; /* 기존 50px → 40px */
+    right: 30px; /* 기존 50px → 30px */
 }
 
 .datetime-section h1 {
-    font-size: 2.2em;    /* 기존 3em → 2.2em */
+    font-size: 2.2em; /* 기존 3em → 2.2em */
     color: var(--color-primary);
-    margin-bottom: 6px;  /* 기존 10px → 6px */
+    margin-bottom: 6px; /* 기존 10px → 6px */
     text-align: center;
 }
 
 .datetime-section > p {
-    font-size: 1em;        /* 기존 1.2em → 1em */
+    font-size: 1em; /* 기존 1.2em → 1em */
     color: var(--color-text-muted);
     text-align: center;
-    margin-bottom: 16px;   /* 기존 30px → 16px */
+    margin-bottom: 16px; /* 기존 30px → 16px */
 }
 
 /* 날짜/시간 표시 */
 .datetime-display {
     text-align: center;
-    margin-bottom: 16px;   /* 기존 25px → 16px */
+    margin-bottom: 16px; /* 기존 25px → 16px */
 }
 
 .date-info {
     display: flex;
     flex-direction: column;
-    gap: 6px;   /* 기존 10px → 6px */
+    gap: 6px; /* 기존 10px → 6px */
 }
 
 .current-date {
-    font-size: 1.4em;   /* 기존 1.8em → 1.4em */
+    font-size: 1.4em; /* 기존 1.8em → 1.4em */
     font-weight: 400; /* 기존 700 → 400 */
     color: var(--color-primary);
 }
 
 .current-time {
-    font-size: 2em;   /* 기존 2.5em → 2em */
+    font-size: 2em; /* 기존 2.5em → 2em */
     font-weight: 400; /* 기존 800 → 400 */
     color: var(--color-text-strong);
     font-family: 'Courier New', monospace;
@@ -344,13 +345,13 @@ footer {
 .time-bar {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;         /* 기존 10px → 8px */
+    gap: 8px; /* 기존 10px → 8px */
     position: relative;
     margin-top: 12px; /* 기존 20px → 12px */
 }
 
 .time-segment {
-    padding: 14px 10px;   /* 기존 20px 15px → 14px 10px */
+    padding: 14px 10px; /* 기존 20px 15px → 14px 10px */
     border-radius: 12px;
     text-align: center;
     transition: all 0.3s;
@@ -364,20 +365,31 @@ footer {
     box-shadow: 0 4px 15px var(--color-primary-a30);
 }
 
-.time-segment.morning   { background: linear-gradient(135deg, #fff5e6, #ffe4cc); }
-.time-segment.afternoon { background: linear-gradient(135deg, #e8f4fd, #d4ebf7); }
-.time-segment.evening   { background: linear-gradient(135deg, #ffe4ed, #ffd4e0); }
-.time-segment.night     { background: linear-gradient(135deg, #e8e4f3, #d9d4f0); }
+.time-segment.morning {
+    background: linear-gradient(135deg, #fff5e6, #ffe4cc);
+}
+
+.time-segment.afternoon {
+    background: linear-gradient(135deg, #e8f4fd, #d4ebf7);
+}
+
+.time-segment.evening {
+    background: linear-gradient(135deg, #ffe4ed, #ffd4e0);
+}
+
+.time-segment.night {
+    background: linear-gradient(135deg, #e8e4f3, #d9d4f0);
+}
 
 .segment-label {
-    font-size: 1.1em;    /* 기존 1.3em → 1.1em */
+    font-size: 1.1em; /* 기존 1.3em → 1.1em */
     font-weight: 400; /* 기존 700 → 400 */
-    margin-bottom: 4px;  /* 기존 8px → 4px */
+    margin-bottom: 4px; /* 기존 8px → 4px */
     color: #2d3436;
 }
 
 .segment-time {
-    font-size: 0.9em;   /* 기존 0.95em → 0.9em */
+    font-size: 0.9em; /* 기존 0.95em → 0.9em */
     color: #636e72;
     font-weight: 400; /* 기존 600 → 400 */
 }
@@ -400,28 +412,28 @@ footer {
 .stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 14px;           /* 기존 20px → 14px */
+    gap: 14px; /* 기존 20px → 14px */
     margin-bottom: 20px; /* 기존 40px → 20px */
 }
 
 .stat-card {
     background: var(--color-surface);
-    padding: 16px;       /* 기존 25px → 16px */
+    padding: 16px; /* 기존 25px → 16px */
     border-radius: 15px;
     text-align: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .stat-card .number {
-    font-size: 2em;      /* 기존 2.5em → 2em */
+    font-size: 2em; /* 기존 2.5em → 2em */
     font-weight: 400; /* 기존 bold → 400 */
     color: var(--color-primary);
-    margin-bottom: 6px;  /* 기존 10px → 6px */
+    margin-bottom: 6px; /* 기존 10px → 6px */
 }
 
 .stat-card .label {
     color: var(--color-text-muted);
-    font-size: 1em;   /* 기존 1.1em → 1em */
+    font-size: 1em; /* 기존 1.1em → 1em */
 }
 
 
@@ -464,37 +476,37 @@ footer {
 ======================================== */
 .filter-section {
     background: var(--color-surface);
-    padding: 20px;        /* 기존 30px → 20px */
+    padding: 20px; /* 기존 30px → 20px */
     border-radius: 20px;
-    margin-bottom: 20px;  /* 기존 30px → 20px */
+    margin-bottom: 20px; /* 기존 30px → 20px */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .filter-section h2 {
-    font-size: 1.4em;    /* 기존 1.8em → 1.4em */
+    font-size: 1.4em; /* 기존 1.8em → 1.4em */
     color: var(--color-primary);
     margin-bottom: 14px; /* 기존 20px → 14px */
 }
 
 /* 검색창 */
 .search-box {
-    margin-bottom: 16px;  /* 기존 25px → 16px */
+    margin-bottom: 16px; /* 기존 25px → 16px */
 }
 
 .search-box label {
     display: block;
-    font-size: 1em;      /* 기존 1.2em → 1em */
+    font-size: 1em; /* 기존 1.2em → 1em */
     color: var(--color-text-strong);
-    margin-bottom: 6px;  /* 기존 10px → 6px */
+    margin-bottom: 6px; /* 기존 10px → 6px */
     font-weight: 400; /* 기존 600 → 400 */
 }
 
 .search-box input[type="text"] {
     width: 100%;
-    padding: 10px 12px;   /* 기존 15px → 10px 12px */
+    padding: 10px 12px; /* 기존 15px → 10px 12px */
     border: 2px solid var(--color-border);
     border-radius: 10px;
-    font-size: 1em;       /* 기존 1.1em → 1em */
+    font-size: 1em; /* 기존 1.1em → 1em */
     transition: all 0.3s;
 }
 
@@ -508,32 +520,32 @@ footer {
 .filter-groups {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    gap: 14px;     /* 기존 20px → 14px */
+    gap: 14px; /* 기존 20px → 14px */
     align-items: start;
-    padding: 8px;  /* 기존 15px → 8px */
+    padding: 8px; /* 기존 15px → 8px */
 }
 
 .filter-group h3 {
-    font-size: 1em;       /* 기존 1.2em → 1em */
+    font-size: 1em; /* 기존 1.2em → 1em */
     color: var(--color-text-strong);
-    margin-bottom: 10px;  /* 기존 15px → 10px */
+    margin-bottom: 10px; /* 기존 15px → 10px */
 }
 
 .checkbox-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;   /* 기존 10px → 8px */
+    gap: 8px; /* 기존 10px → 8px */
 }
 
 .checkbox-label {
     display: flex;
     align-items: center;
-    gap: 8px;           /* 기존 10px → 8px */
+    gap: 8px; /* 기존 10px → 8px */
     cursor: pointer;
-    padding: 6px 10px;  /* 기존 8px 12px → 6px 10px */
+    padding: 6px 10px; /* 기존 8px 12px → 6px 10px */
     border-radius: 8px;
     transition: background 0.2s;
-    font-size: 1em;     /* 기존 1.1em → 1em */
+    font-size: 1em; /* 기존 1.1em → 1em */
 }
 
 .checkbox-label:hover {
@@ -541,7 +553,7 @@ footer {
 }
 
 .checkbox-label input[type="checkbox"] {
-    width: 18px;    /* 기존 20px → 18px */
+    width: 18px; /* 기존 20px → 18px */
     height: 18px;
     cursor: pointer;
     accent-color: var(--color-primary);
@@ -551,12 +563,12 @@ footer {
 .filter-actions {
     display: flex;
     flex-direction: column;
-    gap: 8px;   /* 기존 10px → 8px */
+    gap: 8px; /* 기존 10px → 8px */
 }
 
 .filter-btn,
 .filter-btn-reset {
-    padding: 9px 18px;   /* 기존 10px 20px → 9px 18px */
+    padding: 9px 18px; /* 기존 10px 20px → 9px 18px */
     border: none;
     border-radius: 8px;
     font-size: 0.9em;
@@ -599,7 +611,7 @@ footer {
    서식지 그룹
 ======================================== */
 .habitat-section {
-    margin-bottom: 24px;  /* 기존 40px → 24px */
+    margin-bottom: 24px; /* 기존 40px → 24px */
 }
 
 .habitat-group {
@@ -607,14 +619,14 @@ footer {
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    margin-bottom: 16px;  /* 기존 30px → 16px */
+    margin-bottom: 16px; /* 기존 30px → 16px */
 }
 
 .habitat-header {
     background: var(--color-surface-light);
     color: var(--color-text-strong);
-    padding: 14px 20px;   /* 기존 20px 30px → 14px 20px */
-    font-size: 1.3em;     /* 기존 1.5em → 1.3em */
+    padding: 14px 20px; /* 기존 20px 30px → 14px 20px */
+    font-size: 1.3em; /* 기존 1.5em → 1.3em */
     font-weight: 400; /* 기존 600 → 400 */
     display: flex;
     justify-content: space-between;
@@ -623,13 +635,13 @@ footer {
 }
 
 .habitat-icon {
-    font-size: 1.2em;   /* 기존 1.3em → 1.2em */
+    font-size: 1.2em; /* 기존 1.3em → 1.2em */
 }
 
 .count-badge {
     background: var(--color-primary);
     color: var(--color-surface);
-    padding: 5px 14px;   /* 기존 8px 20px → 5px 14px */
+    padding: 5px 14px; /* 기존 8px 20px → 5px 14px */
     border-radius: 20px;
     font-size: 0.8em;
     font-weight: 400; /* 기존 600 → 400 */
@@ -670,17 +682,49 @@ th:hover {
 }
 
 /* 정렬 아이콘 */
-th.sortable::after { content: ' ⇅'; opacity: 0.3; }
-th.sort-asc::after  { content: ' ↑'; opacity: 1; }
-th.sort-desc::after { content: ' ↓'; opacity: 1; }
+th.sortable::after {
+    content: ' ⇅';
+    opacity: 0.3;
+}
+
+th.sort-asc::after {
+    content: ' ↑';
+    opacity: 1;
+}
+
+th.sort-desc::after {
+    content: ' ↓';
+    opacity: 1;
+}
 
 /* table-layout: auto 이므로 min-width만 힌트로 제공, 브라우저가 자동 조정 */
-.col-habitat-fish { min-width: 100px; white-space: nowrap; }
-.col-habitat-bird { min-width: 110px; white-space: nowrap; }
-.col-level        { min-width: 60px;  white-space: nowrap; }
-.col-time         { min-width: 110px; }
-.col-weather      { min-width: 70px; }
-.col-size         { min-width: 60px;  white-space: nowrap; }
+.col-habitat-fish {
+    min-width: 100px;
+    white-space: nowrap;
+}
+
+.col-habitat-bird {
+    min-width: 110px;
+    white-space: nowrap;
+}
+
+.col-level {
+    min-width: 60px;
+    white-space: nowrap;
+}
+
+.col-time {
+    min-width: 110px;
+}
+
+.col-weather {
+    min-width: 70px;
+}
+
+.col-size {
+    min-width: 60px;
+    white-space: nowrap;
+}
 
 /* 테이블 바디 */
 td {
@@ -710,7 +754,7 @@ tr:hover {
     display: inline-block;
     background: #e3f2fd;
     color: #1976d2;
-    padding: 4px 10px;   /* 기존 5px 12px → 4px 10px */
+    padding: 4px 10px; /* 기존 5px 12px → 4px 10px */
     border-radius: 15px;
     font-weight: 400; /* 기존 600 → 400 */
     font-size: 0.9em;
@@ -739,16 +783,16 @@ tr:hover {
 ======================================== */
 .input-section {
     background: var(--color-surface);
-    padding: 24px;        /* 기존 40px → 24px */
+    padding: 24px; /* 기존 40px → 24px */
     border-radius: 20px;
-    margin-bottom: 24px;  /* 기존 40px → 24px */
+    margin-bottom: 24px; /* 기존 40px → 24px */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .input-group {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 16px;           /* 기존 25px → 16px */
+    gap: 16px; /* 기존 25px → 16px */
     margin-bottom: 20px; /* 기존 30px → 20px */
 }
 
@@ -760,14 +804,14 @@ tr:hover {
 /* 입력 폼 요소 */
 label {
     font-weight: 400; /* 기존 600 → 400 */
-    margin-bottom: 6px;   /* 기존 10px → 6px */
+    margin-bottom: 6px; /* 기존 10px → 6px */
     color: var(--color-primary);
-    font-size: 1em;       /* 기존 1.1em → 1em */
+    font-size: 1em; /* 기존 1.1em → 1em */
 }
 
 input,
 select {
-    padding: 10px 12px;   /* 기존 15px → 10px 12px */
+    padding: 10px 12px; /* 기존 15px → 10px 12px */
     border: 2px solid var(--color-border);
     border-radius: 8px;
     font-size: 16px;
@@ -786,9 +830,9 @@ button {
     background: var(--color-primary);
     color: var(--color-surface);
     border: none;
-    padding: 12px 28px;   /* 기존 18px 40px → 12px 28px */
+    padding: 12px 28px; /* 기존 18px 40px → 12px 28px */
     border-radius: 8px;
-    font-size: 1.1em;     /* 기존 1.3em → 1.1em */
+    font-size: 1.1em; /* 기존 1.3em → 1.1em */
     font-weight: 400; /* 기존 600 → 400 */
     cursor: pointer;
     transition: all 0.3s;
@@ -809,7 +853,7 @@ button:active {
    결과 섹션
 ======================================== */
 .results {
-    margin-top: 20px;  /* 기존 40px → 20px */
+    margin-top: 20px; /* 기존 40px → 20px */
 }
 
 .no-results,
@@ -817,10 +861,10 @@ button:active {
 .error {
     background: var(--color-surface);
     text-align: center;
-    padding: 36px 24px;   /* 기존 60px 40px → 36px 24px */
+    padding: 36px 24px; /* 기존 60px 40px → 36px 24px */
     border-radius: 20px;
     color: var(--color-primary);
-    font-size: 1.1em;     /* 기존 1.3em → 1.1em */
+    font-size: 1.1em; /* 기존 1.3em → 1.1em */
     font-weight: 400; /* 기존 600 → 400 */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
