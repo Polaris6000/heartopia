@@ -7,7 +7,7 @@
 @font-face {
     font-family: 'BMJUA';
     src: url('../../../public/font/BMJUA.woff2') format('woff2'), /* 1순위 */
-            url('../../../public/font/BMJUA.woff') format('woff'); /* 2순위 */
+         url('../../../public/font/BMJUA.woff') format('woff'); /* 2순위 */
     font-weight: 100 900; /* 단일 파일이 전체 굵기 범위를 담당 → 브라우저 합성 굵기 방지 */
     font-style: normal;
     font-display: swap;
