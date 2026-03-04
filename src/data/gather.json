@@ -8,5 +8,9 @@
 
   { "name": "물고기(50)",  "sellPrice": 50 },
   { "name": "물고기(75)",  "sellPrice": 75 },
-  { "name": "랍스터",  "sellPrice": 100 }
+  { "name": "물고기(100)",  "sellPrice": 100 },
+  { "name": "가재",  "sellPrice": 230 },
+  { "name": "북유럽파란가재",  "sellPrice": 250 },
+  { "name": "킹크랩",  "sellPrice": 535 },
+  { "name": "황금킹크랩",  "sellPrice": 850 }
 ]

@@ -1,0 +1,135 @@
+{
+  "gradeMultipliers": {
+    "1": 1.0,
+    "2": 1.5,
+    "3": 2,
+    "4": 4,
+    "5": 8
+  },
+  "staminaMultipliers": {
+    "1": 1.0,
+    "2": 1.2,
+    "3": 1.4,
+    "4": 1.6,
+    "5": 2.0
+  },
+  "items": [
+    {
+      "name": "얼음컵 커피",
+      "price": 280,
+      "stamina": 20,
+      "ingredients": [
+        "슈가파우더",
+        "커피 원두",
+        "커피 원두",
+        "커피 원두"
+      ],
+      "image": "icecoffee",
+      "season": "빙설 시즌"
+    },
+    {
+      "name": "얼음컵 라떼",
+      "price": 280,
+      "stamina": 20,
+      "ingredients": [
+        "슈가파우더",
+        "커피 원두",
+        "우유",
+        "우유"
+      ],
+      "image": "icelatte",
+      "season": "빙설 시즌"
+    },
+    {
+      "name": "갈은 무와 스테이크",
+      "price": 630,
+      "stamina": 40,
+      "ingredients": [
+        "고기",
+        "고기",
+        "버터",
+        "무"
+      ],
+      "image": "adishmeat",
+      "season": "빙설 시즌"
+    },
+    {
+      "name": "무 크림 수프",
+      "price": 340,
+      "stamina": 25,
+      "ingredients": [
+        "우유",
+        "버터",
+        "무",
+        "무"
+      ],
+      "image": "radishcreamsoup",
+      "season": "빙설 시즌"
+    },
+    {
+      "name": "블루베리 슈가파우더 팬케이크",
+      "price": 330,
+      "stamina": 25,
+      "ingredients": [
+        "달걀",
+        "우유",
+        "슈가파우더",
+        "블루베리"
+      ],
+      "image": null,
+      "season": "빙설 시즌"
+    },
+    {
+      "name": "라즈베리 슈가파우더 팬케이크",
+      "price": 350,
+      "stamina": 25,
+      "ingredients": [
+        "달걀",
+        "우유",
+        "슈가파우더",
+        "라즈베리"
+      ],
+      "image": null,
+      "season": "빙설 시즌"
+    },
+    {
+      "name": "사과 슈가파우더 팬케이크",
+      "price": 360,
+      "stamina": 25,
+      "ingredients": [
+        "달걀",
+        "우유",
+        "슈가파우더",
+        "사과"
+      ],
+      "image": null,
+      "season": "빙설 시즌"
+    },
+    {
+      "name": "오렌지 슈가파우더 팬케이크",
+      "price": 360,
+      "stamina": 25,
+      "ingredients": [
+        "달걀",
+        "우유",
+        "슈가파우더",
+        "오렌지"
+      ],
+      "image": null,
+      "season": "빙설 시즌"
+    },
+    {
+      "name": "오로라 만찬",
+      "price": 1630,
+      "stamina": 40,
+      "ingredients": [
+        "갈은 무와 스테이크",
+        "무 크림 수프",
+        "얼음컵 커피",
+        "사과 슈가파우더 팬케이크"
+      ],
+      "image": null,
+      "season": "빙설 시즌"
+    }
+  ]
+}

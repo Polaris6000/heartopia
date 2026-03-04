@@ -102,6 +102,49 @@
         }
         .view-btn.active { border-color: var(--color-primary); background: var(--color-primary); color: white; }
 
+        /* 시즌 버튼 */
+        .season-btn {
+            padding: 7px 14px;
+            border: 1.5px solid #80c8f0;
+            border-radius: 8px;
+            background: #e8f6ff;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1a6fa0;
+            transition: all 0.2s;
+        }
+        .season-btn:hover { background: #cce8f8; border-color: #4aa8e0; }
+        .season-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .season-btn-remove {
+            padding: 7px 14px;
+            border: 1.5px solid #f0a0a0;
+            border-radius: 8px;
+            background: #fff0f0;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #aa2020;
+            transition: all 0.2s;
+        }
+        .season-btn-remove:hover { background: #fddede; border-color: #e06060; }
+        .season-btn-remove:disabled { opacity: 0.45; cursor: not-allowed; }
+
+        /* 시즌 아이템 배지 (카드/테이블) */
+        .season-tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 1px 7px;
+            border-radius: 10px;
+            background: #ddf0ff;
+            color: #1a6fa0;
+            border: 1px solid #90ccf0;
+            margin-left: 5px;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
         /* ── 카드 그리드 뷰 ── */
         .recipes-grid {
             display: grid;
@@ -383,6 +426,13 @@
                 <button class="view-btn" id="btnTable" onclick="setView('table')">테이블</button>
             </div>
         </div>
+        <div class="control-group">
+            <label>❄️ 빙설 시즌</label>
+            <div style="display:flex; gap:6px;">
+                <button class="season-btn"        id="btnSeasonAdd"    onclick="loadSeasonData()">❄️ 시즌 추가</button>
+                <button class="season-btn-remove" id="btnSeasonRemove" onclick="removeSeasonData()" disabled>🗑️ 시즌 제거</button>
+            </div>
+        </div>
     </div>
 
     <!-- 안내 -->
@@ -411,6 +461,8 @@
 // ── 전역 상태 ──
 let recipeData   = null;
 let allProcessed = [];    // 계산 완료된 레시피 목록
+let baseProcessed = [];   // 시즌 추가 전 원본 레시피 목록 (제거 시 복원용)
+let iceLoaded    = false; // 빙설 시즌 데이터 로드 여부
 let currentGrade = 1;
 let currentView  = 'card';
 let sortKey      = 'profit-desc';
@@ -437,11 +489,11 @@ async function loadAll() {
 
     // 상점 (shopPrice)
     for (const s of shop) {
-        // 이름 정규화
+        // 이름 정규화: 별칭이 필요하면 배열에 추가
         const names = [s.name];
-        if (s.name === '커피원두') names.push('커피 원두');
-        if (s.name === '사탕(150)') names.push('사탕150');
-        if (s.name === '사탕(200)') names.push('사탕200');
+        // if (s.name === '커피원두') names.push('커피 원두');
+        // if (s.name === '사탕(150)') names.push('사탕150');
+        // if (s.name === '사탕(200)') names.push('사탕200');
         for (const n of names) {
             costMap[n] = { cost: s.shopPrice, type: 'shop' };
         }
@@ -449,9 +501,10 @@ async function loadAll() {
 
     // 채집 (기회비용 = sellPrice)
     for (const g of gather) {
+        // 이름 정규화: 별칭이 필요하면 배열에 추가
         const names = [g.name];
-        if (g.name === '물고기(50)') names.push('물고기50');
-        if (g.name === '물고기(75)') names.push('물고기75');
+        // if (g.name === '물고기(50)') names.push('물고기50');
+        // if (g.name === '물고기(75)') names.push('물고기75');
         for (const n of names) {
             costMap[n] = { cost: g.sellPrice, type: 'gather' };
         }
@@ -464,6 +517,7 @@ async function loadAll() {
 
     // 레시피 처리
     allProcessed = recipes.items.map(item => processRecipe(item, recipes));
+    baseProcessed = [...allProcessed]; // 원본 백업 (시즌 제거 시 복원용)
     updateStats();
     applyFilters();
 }
@@ -631,12 +685,15 @@ function renderCard(r, maxROI, maxGPS) {
            </div>`
         : '';
 
+    // 시즌 배지 (빙설 시즌 전용 레시피에만 표시)
+    const seasonTag = r.season ? `<span class="season-tag">❄️ ${r.season}</span>` : '';
+
     return `
     <div class="recipe-card">
         <div class="recipe-card-header">
             ${imgHTML}
             <div class="recipe-card-header-info">
-                <span class="recipe-name">${r.name}</span>
+                <span class="recipe-name">${r.name}${seasonTag}</span>
                 <span class="recipe-efficiency-badge ${badge.cls}">${badge.label}</span>
             </div>
         </div>
@@ -695,9 +752,12 @@ function renderTable(list, area) {
                     onerror="this.style.display='none'">`
             : '';
 
+        // 시즌 배지
+        const seasonTagTbl = r.season ? `<span class="season-tag">❄️ ${r.season}</span>` : '';
+
         return `
         <tr>
-            <td>${imgSmHTML}${r.name}</td>
+            <td>${imgSmHTML}${r.name}${seasonTagTbl}</td>
             <td style="font-size:0.8rem;color:var(--color-text-soft)">${ingStr}</td>
             <td style="font-weight:700;color:var(--color-primary)">${r.price.toLocaleString()} G</td>
             <td>${r.baseCost.toLocaleString()} G</td>
@@ -728,6 +788,66 @@ function renderTable(list, area) {
             <tbody>${rows}</tbody>
         </table>
     </div>`;
+}
+
+// ── 빙설 시즌 데이터 추가 ──
+async function loadSeasonData() {
+    if (iceLoaded) { alert('이미 빙설 시즌 데이터가 추가되어 있습니다.'); return; }
+
+    try {
+        const res = await fetch('../../data/season_ice/season_ice_recipes.json');
+        if (!res.ok) throw new Error('season_ice_recipes.json을 찾을 수 없습니다.');
+
+        const json = await res.json();
+
+        // 시즌 레시피를 costMap에 먼저 등록 (다른 시즌 레시피가 재료로 쓰일 때 대비)
+        for (const item of json.items) {
+            costMap[item.name] = { cost: item.price * json.gradeMultipliers['1'], type: 'recipe' };
+        }
+
+        // 시즌 아이템 처리 후 기존 목록과 병합 (이름 중복 제거)
+        const seasonProcessed = json.items.map(item => processRecipe(item, json));
+        const combined = [...allProcessed, ...seasonProcessed];
+        allProcessed = combined.filter((item, idx, self) =>
+            idx === self.findIndex(r => r.name === item.name)
+        );
+
+        iceLoaded = true;
+        // 버튼 상태 업데이트
+        document.getElementById('btnSeasonAdd').disabled    = true;
+        document.getElementById('btnSeasonRemove').disabled = false;
+
+        updateStats();
+        applyFilters();
+        alert(`❄️ 빙설 시즌 레시피 ${seasonProcessed.length}종이 추가되었습니다. (총 ${allProcessed.length}종)`);
+    } catch (err) {
+        console.error('시즌 데이터 로드 오류:', err);
+        alert(`시즌 데이터를 불러오지 못했습니다.\n${err.message}`);
+    }
+}
+
+// ── 빙설 시즌 데이터 제거 ──
+function removeSeasonData() {
+    if (!iceLoaded) { alert('제거할 시즌 데이터가 없습니다.'); return; }
+
+    // costMap에서 시즌 레시피 항목 제거 (원본 레시피만 남기기)
+    const baseNames = new Set(baseProcessed.map(r => r.name));
+    for (const key of Object.keys(costMap)) {
+        if (!baseNames.has(key)) {
+            // 시즌 레시피로 등록된 costMap 항목 삭제
+            // (기존 비시즌 항목에는 영향 없음 - 이름 겹칠 일 없음)
+        }
+    }
+
+    allProcessed = [...baseProcessed]; // 원본 복원
+    iceLoaded = false;
+    // 버튼 상태 업데이트
+    document.getElementById('btnSeasonAdd').disabled    = false;
+    document.getElementById('btnSeasonRemove').disabled = true;
+
+    updateStats();
+    applyFilters();
+    alert('빙설 시즌 데이터가 제거되었습니다.');
 }
 
 function setSort(field) {
