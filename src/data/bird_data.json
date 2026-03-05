@@ -52,6 +52,7 @@
     "category": "소형",
     "motion_preening": {
       "아침": [
+        "맑음",
         "비"
       ],
       "낮": [
@@ -90,6 +91,9 @@
     "special": false,
     "category": "소형",
     "motion_preening": {
+      "아침": [
+        "맑음"
+      ],
       "낮": [
         "맑음",
         "비"
@@ -125,7 +129,8 @@
     "category": "소형",
     "motion_preening": {
       "아침": [
-        "맑음"
+        "맑음",
+        "비"
       ],
       "낮": [
         "비"
@@ -183,6 +188,9 @@
     "category": "앵무",
     "motion_preening": {
       "낮": [
+        "맑음"
+      ],
+      "새벽": [
         "맑음"
       ]
     },
@@ -318,6 +326,9 @@
       ]
     },
     "motion_wingspread": {
+      "아침": [
+        "비"
+      ],
       "낮": [
         "비"
       ],
@@ -347,6 +358,9 @@
     "category": "공작",
     "motion_preening": {
       "낮": [
+        "맑음"
+      ],
+      "새벽": [
         "맑음"
       ]
     },
@@ -428,6 +442,9 @@
     "special": false,
     "category": "소형",
     "motion_preening": {
+      "아침": [
+        "맑음"
+      ],
       "낮": [
         "맑음"
       ]
@@ -460,6 +477,7 @@
     "category": "소형",
     "motion_preening": {
       "아침": [
+        "맑음",
         "비"
       ],
       "낮": [
@@ -495,6 +513,9 @@
     "special": false,
     "category": "소형",
     "motion_preening": {
+      "아침": [
+        "비"
+      ],
       "낮": [
         "맑음",
         "비"
@@ -527,6 +548,10 @@
     "special": false,
     "category": "비둘기",
     "motion_preening": {
+      "아침": [
+        "맑음",
+        "비"
+      ],
       "낮": [
         "맑음"
       ]
@@ -557,6 +582,9 @@
     "special": false,
     "category": "비둘기",
     "motion_preening": {
+      "아침": [
+        "맑음"
+      ],
       "낮": [
         "맑음"
       ]
@@ -684,6 +712,9 @@
     "special": false,
     "category": "소형",
     "motion_preening": {
+      "아침": [
+        "맑음"
+      ],
       "낮": [
         "맑음",
         "비"
@@ -898,6 +929,9 @@
     "special": false,
     "category": "소형",
     "motion_preening": {
+      "아침": [
+        "맑음"
+      ],
       "낮": [
         "비"
       ]
@@ -931,7 +965,11 @@
         "맑음"
       ]
     },
-    "motion_wingspread": null,
+    "motion_wingspread": {
+      "낮": [
+        "무지개"
+      ]
+    },
     "image": 110
   },
   {
@@ -959,17 +997,11 @@
       "낮": [
         "맑음",
         "비"
-      ],
-      "저녁": [
-        "비"
       ]
     },
     "motion_wingspread": {
       "낮": [
         "무지개"
-      ],
-      "저녁": [
-        "비"
       ]
     },
     "image": 114
@@ -996,17 +1028,11 @@
       "낮": [
         "맑음",
         "비"
-      ],
-      "저녁": [
-        "비"
       ]
     },
     "motion_wingspread": {
       "낮": [
         "무지개"
-      ],
-      "저녁": [
-        "비"
       ]
     },
     "image": 120
@@ -1030,6 +1056,9 @@
     "special": false,
     "category": "비둘기",
     "motion_preening": {
+      "아침": [
+        "맑음"
+      ],
       "낮": [
         "맑음"
       ]
@@ -1061,6 +1090,7 @@
     "category": "중형",
     "motion_preening": {
       "아침": [
+        "맑음",
         "비"
       ]
     },
@@ -1129,7 +1159,7 @@
     },
     "motion_wingspread": {
       "낮": [
-        "비"
+        "무지개"
       ]
     },
     "image": 104
@@ -1183,7 +1213,11 @@
     "price": 120,
     "special": false,
     "category": "앵무",
-    "motion_preening": null,
+    "motion_preening": {
+      "새벽": [
+        "맑음"
+      ]
+    },
     "motion_wingspread": {
       "낮": [
         "무지개"
@@ -1211,21 +1245,16 @@
     "category": "비둘기",
     "motion_preening": {
       "아침": [
+        "맑음",
         "비"
       ],
       "낮": [
-        "비"
-      ],
-      "저녁": [
         "비"
       ]
     },
     "motion_wingspread": {
       "낮": [
         "무지개"
-      ],
-      "저녁": [
-        "비"
       ]
     },
     "image": 207
@@ -1314,7 +1343,11 @@
     "special": false,
     "category": "소형",
     "motion_preening": null,
-    "motion_wingspread": null,
+    "motion_wingspread": {
+      "낮": [
+        "무지개"
+      ]
+    },
     "image": 107
   },
   {
@@ -1337,7 +1370,8 @@
     "category": "비둘기",
     "motion_preening": {
       "낮": [
-        "맑음"
+        "맑음",
+        "무지개"
       ]
     },
     "motion_wingspread": {
@@ -1366,21 +1400,12 @@
     "special": false,
     "category": "가마우지",
     "motion_preening": {
-      "아침": [
-        "비"
-      ],
       "저녁": [
         "비"
       ]
     },
     "motion_wingspread": {
-      "아침": [
-        "비"
-      ],
       "낮": [
-        "무지개"
-      ],
-      "저녁": [
         "무지개"
       ]
     },
@@ -1405,14 +1430,12 @@
     "category": "부엉이",
     "motion_preening": {
       "낮": [
-        "맑음"
-      ],
-      "저녁": [
-        "맑음"
+        "맑음",
+        "무지개"
       ]
     },
     "motion_wingspread": {
-      "낮": [
+      "저녁": [
         "무지개"
       ]
     },
@@ -1494,17 +1517,11 @@
       ],
       "낮": [
         "비"
-      ],
-      "저녁": [
-        "비"
       ]
     },
     "motion_wingspread": {
       "낮": [
         "무지개"
-      ],
-      "저녁": [
-        "비"
       ]
     },
     "image": 208
@@ -1552,7 +1569,8 @@
     "category": "매",
     "motion_preening": {
       "낮": [
-        "맑음"
+        "맑음",
+        "무지개"
       ]
     },
     "motion_wingspread": {
@@ -1579,7 +1597,11 @@
     "price": 240,
     "special": false,
     "category": "소형",
-    "motion_preening": null,
+    "motion_preening": {
+      "아침": [
+        "비"
+      ]
+    },
     "motion_wingspread": null,
     "image": 108
   },
@@ -1602,16 +1624,13 @@
     "special": false,
     "category": "소형",
     "motion_preening": {
-      "저녁": [
-        "비"
+      "낮": [
+        "맑음"
       ]
     },
     "motion_wingspread": {
       "낮": [
         "무지개"
-      ],
-      "저녁": [
-        "비"
       ]
     },
     "image": 117
@@ -1635,8 +1654,12 @@
     "special": false,
     "category": "비둘기",
     "motion_preening": {
-      "낮": [
+      "아침": [
         "맑음"
+      ],
+      "낮": [
+        "맑음",
+        "무지개"
       ]
     },
     "motion_wingspread": {
@@ -1669,19 +1692,9 @@
       ],
       "낮": [
         "무지개"
-      ],
-      "저녁": [
-        "비"
       ]
     },
-    "motion_wingspread": {
-      "아침": [
-        "비"
-      ],
-      "저녁": [
-        "비"
-      ]
-    },
+    "motion_wingspread": null,
     "image": 803
   },
   {
@@ -1705,11 +1718,7 @@
         "무지개"
       ]
     },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ]
-    },
+    "motion_wingspread": null,
     "image": 121
   },
   {
@@ -1818,6 +1827,7 @@
     "category": "가마우지",
     "motion_preening": {
       "저녁": [
+        "맑음",
         "비"
       ]
     },
@@ -1849,11 +1859,7 @@
         "무지개"
       ]
     },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ]
-    },
+    "motion_wingspread": null,
     "image": 115
   },
   {
@@ -1877,11 +1883,7 @@
         "무지개"
       ]
     },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ]
-    },
+    "motion_wingspread": null,
     "image": 122
   },
   {
@@ -1903,21 +1905,19 @@
     "special": false,
     "category": "매",
     "motion_preening": {
-      "낮": [
+      "아침": [
+        "맑음",
         "비"
       ],
-      "저녁": [
-        "비"
+      "낮": [
+        "비",
+        "무지개"
       ],
       "새벽": [
         "맑음"
       ]
     },
-    "motion_wingspread": {
-      "저녁": [
-        "비"
-      ]
-    },
+    "motion_wingspread": null,
     "image": 802
   },
   {
@@ -1942,11 +1942,7 @@
         "무지개"
       ]
     },
-    "motion_wingspread": {
-      "낮": [
-        "무지개"
-      ]
-    },
+    "motion_wingspread": null,
     "image": 903
   }
 ]
