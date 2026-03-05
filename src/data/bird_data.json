@@ -1337,8 +1337,7 @@
     "category": "비둘기",
     "motion_preening": {
       "낮": [
-        "맑음",
-        "무지개"
+        "맑음"
       ]
     },
     "motion_wingspread": {
@@ -1406,8 +1405,10 @@
     "category": "부엉이",
     "motion_preening": {
       "낮": [
-        "맑음",
-        "무지개"
+        "맑음"
+      ],
+      "저녁": [
+        "맑음"
       ]
     },
     "motion_wingspread": {
@@ -1551,8 +1552,7 @@
     "category": "매",
     "motion_preening": {
       "낮": [
-        "맑음",
-        "무지개"
+        "맑음"
       ]
     },
     "motion_wingspread": {
@@ -1636,8 +1636,7 @@
     "category": "비둘기",
     "motion_preening": {
       "낮": [
-        "맑음",
-        "무지개"
+        "맑음"
       ]
     },
     "motion_wingspread": {
@@ -1905,8 +1904,7 @@
     "category": "매",
     "motion_preening": {
       "낮": [
-        "비",
-        "무지개"
+        "비"
       ],
       "저녁": [
         "비"
