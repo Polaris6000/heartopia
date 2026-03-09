@@ -357,14 +357,21 @@
     "special": false,
     "category": "공작",
     "motion_preening": {
+      "아침": [
+        "무지개"
+      ],
       "낮": [
         "맑음"
       ],
       "새벽": [
-        "맑음", "비"
+        "맑음",
+        "비"
       ]
     },
     "motion_wingspread": {
+      "아침": [
+        "무지개"
+      ],
       "저녁": [
         "비"
       ],
@@ -1127,7 +1134,8 @@
     "category": "오리",
     "motion_preening": {
       "낮": [
-        "맑음","비"
+        "맑음",
+        "비"
       ],
       "저녁": [
         "비"
@@ -1164,6 +1172,9 @@
       ]
     },
     "motion_wingspread": {
+      "아침": [
+        "무지개"
+      ],
       "낮": [
         "무지개"
       ]
@@ -1498,7 +1509,11 @@
     "price": 180,
     "special": false,
     "category": "앵무",
-    "motion_preening": null,
+    "motion_preening": {
+      "아침": [
+        "무지개"
+      ]
+    },
     "motion_wingspread": null,
     "image": 225
   },
@@ -1777,6 +1792,9 @@
     "special": "보너스 스테이지",
     "category": "공작",
     "motion_preening": {
+      "아침": [
+        "무지개"
+      ],
       "낮": [
         "맑음"
       ]

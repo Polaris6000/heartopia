@@ -1,0 +1,18 @@
+{
+  "site": {
+    "title": "Heartopia Data Hub",
+    "welcome": "Welcome to Heartopia Data Hub!",
+    "loading": "Loading page..."
+  },
+  "nav": {
+    "fish": "Fish Guide",
+    "insect": "Insect Guide",
+    "bird": "Bird Guide",
+    "crop": "Crop Guide",
+    "findFish": "Find Fish",
+    "findInsect": "Find Insect",
+    "findBird": "Find Bird",
+    "recipe": "Cooking Recipes",
+    "comingSoon": "Coming Soon"
+  }
+}

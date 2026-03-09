@@ -1,0 +1,18 @@
+{
+  "site": {
+    "title": "두근두근타운 데이터 허브",
+    "welcome": "두근두근타운 데이터 허브에 오신 것을 환영합니다!",
+    "loading": "페이지를 로드하는 중..."
+  },
+  "nav": {
+    "fish": "어류 도감",
+    "insect": "곤충 도감",
+    "bird": "조류 도감",
+    "crop": "작물 도감",
+    "findFish": "물고기 찾기",
+    "findInsect": "벌레 찾기",
+    "findBird": "새 찾기",
+    "recipe": "요리 레시피",
+    "comingSoon": "준비중"
+  }
+}
