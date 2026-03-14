@@ -1054,6 +1054,67 @@
     "image": 603
   },
   {
+    "name": "푸른목수벌",
+    "level": 9,
+    "habitat": "어촌-어촌 광장",
+    "time": [
+      "낮",
+      "새벽"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": null,
+    "special": false,
+    "image": 701
+  },
+  {
+    "name": "헬레나몰포나비",
+    "level": 10,
+    "habitat": "꽃밭 - 보랏빛 해변",
+    "time": [
+      "아침",
+      "낮"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 240,
+    "special": false,
+    "image": 111
+  },
+  {
+    "name": "헤쿠바몰포나비",
+    "level": 10,
+    "habitat": "숲-순록탑",
+    "time": [
+      "아침",
+      "낮"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 240,
+    "special": false,
+    "image": 114
+  },
+  {
+    "name": "헤라클레스풍뎅이",
+    "level": 10,
+    "habitat": "온천산-화산 호수",
+    "time": [
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
+    "price": 440,
+    "special": false,
+    "image": 214
+  },
+  {
     "name": "나선주머니나방",
     "level": 10,
     "habitat": "숲-순록탑",
