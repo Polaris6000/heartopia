@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>곤충 도감 - 두근두근타운</title>
+    <title>어류 도감 - 두근두근타운</title>
     <link href="../../css/common.css" rel="stylesheet">
 </head>
 <body>
@@ -13,17 +13,17 @@
     <div class="page-header">
         <nav>
             <ul>
-                <li><a href="insect_finder.html">곤충 찾기</a></li>
+                <li><a href="fish-finder.html">물고기 찾기</a></li>
             </ul>
         </nav>
-        <h1>🦋 곤충 도감</h1>
-        <p>두근두근타운의 모든 곤충 정보를 확인하세요</p>
+        <h1>🎣 어류 도감</h1>
+        <p>두근두근타운의 모든 물고기 정보를 확인하세요</p>
     </div>
 
     <div class="stats" id="stats">
         <div class="stat-card">
             <div class="number">-</div>
-            <div class="label">총 곤충 종류</div>
+            <div class="label">총 물고기 종류</div>
         </div>
         <div class="stat-card">
             <div class="number">-</div>
@@ -39,8 +39,8 @@
         <h2>🔍 필터</h2>
 
         <div class="search-box">
-            <label for="insectSearch">🦋 곤충 이름 검색</label>
-            <input id="insectSearch" oninput="applyFilters()" placeholder="예: 나비, 메뚜기, 사마귀..." type="text">
+            <label for="fishSearch">🐟 물고기 이름 검색</label>
+            <input id="fishSearch" oninput="applyFilters()" placeholder="예: 연어, 배스, 붕어..." type="text">
         </div>
 
         <div class="filter-groups">
@@ -93,7 +93,8 @@
             </div>
 
             <div class="filter-actions">
-                <button class="filter-btn season-ice-btn" onclick="loadSeasonData('season_ice_insect.json')">❄️ 빙설 시즌 추가</button>
+                <button class="filter-btn season-ice-btn" onclick="loadSeasonData('season_ice_fish.json')">❄️ 빙설 시즌 추가
+                </button>
                 <button class="filter-btn-reset season-ice-btn" onclick="removeSeasonData()">🗑️ 시즌 데이터 제거</button>
                 <button class="filter-btn" onclick="selectAllTime()">시간 전체선택</button>
                 <button class="filter-btn" onclick="selectAllWeather()">날씨 전체선택</button>
@@ -103,7 +104,7 @@
     </div>
 
     <div class="habitat-section" id="content">
-        <div class="loading">🦋 곤충 정보를 불러오는 중...</div>
+        <div class="loading">🐟 물고기 정보를 불러오는 중...</div>
     </div>
 </main>
 
@@ -112,9 +113,9 @@
 <script src="../../js/common.js"></script>
 
 <script>
-    let insectData = [];
+    let fishData = [];
     let currentSort = {column: 'price', order: 'desc'};
-    let loadedSeasons = new Set();
+    let loadedSeasons = new Set(); // 이미 로드한 시즌 추적
 
     // 등급별 가격 배율
     const starMultipliers = {
@@ -125,22 +126,26 @@
         5: 8
     };
 
-    async function loadinsectData() {
+
+    async function loadFishData() {
         try {
-            let response = await fetch('../../data/insect_data.json');
+            // 여러 경로 시도
+            let response = await fetch('../../data/fish_data.json');
 
+            // 첫 번째 시도 실패 시 다른 경로 시도
             if (!response.ok) {
-                response = await fetch('./insect_data.json');
+                response = await fetch('./fish_data.json');
             }
 
             if (!response.ok) {
-                throw new Error('insect_data.json 파일을 찾을 수 없습니다.');
+                throw new Error('fish_data.json 파일을 찾을 수 없습니다.');
             }
 
-            insectData = await response.json();
-            console.log('곤충 데이터 로드 성공:', insectData.length + '종');
+            fishData = await response.json();
+            fishData = fishData.filter(f => f.level <= 10); // 인게임 해금 레벨 제한
+            console.log('물고기 데이터 로드 성공:', fishData.length + '종');
             displayStats();
-            displayAllinsects();
+            displayAllFish();
         } catch (error) {
             console.error('데이터 로드 에러:', error);
             document.getElementById('content').innerHTML =
@@ -148,13 +153,16 @@
         }
     }
 
+    // 매개변수를 제대로 받고 중복 확인
     async function loadSeasonData(filename) {
+        // 이미 로드한 시즌이면 중복 로드 방지
         if (loadedSeasons.has(filename)) {
             alert('이미 추가된 시즌입니다.');
             return;
         }
 
         try {
+            // 여러 경로 시도
             let response = await fetch(`../../data/season_ice/${filename}`);
 
             if (!response.ok) {
@@ -168,57 +176,62 @@
             const seasonData = await response.json();
 
             // 이름 기준 중복 제거하며 병합
-            const combined = [...insectData, ...seasonData];
-            insectData = combined.filter((insect, index, self) =>
-                index === self.findIndex((b) => b.name === insect.name)
+            const combined = [...fishData, ...seasonData];
+            fishData = combined.filter((fish, index, self) =>
+                index === self.findIndex((f) => f.name === fish.name)
             );
 
+            // 로드한 시즌 기록
             loadedSeasons.add(filename);
 
-            alert(`${seasonData.length}종의 시즌 데이터가 병합되었습니다.\n(총 ${insectData.length}종)`);
+            alert(`${seasonData.length}종의 시즌 데이터가 병합되었습니다.\n(총 ${fishData.length}종)`);
             displayStats();
-            displayAllinsects();
+            displayAllFish();
         } catch (error) {
             console.error('시즌 데이터 로드 에러:', error);
             alert(`시즌 데이터를 불러오지 못했습니다.\n${error.message}`);
         }
     }
 
+    // 시즌 데이터 제거 함수
     async function removeSeasonData() {
         if (loadedSeasons.size === 0) {
             alert('제거할 시즌 데이터가 없습니다.');
             return;
         }
 
+        // 원본 데이터를 다시 로드
         try {
-            let response = await fetch('../../data/insect_data.json');
+            let response = await fetch('../../data/fish_data.json');
             if (!response.ok) {
-                response = await fetch('./insect_data.json');
+                response = await fetch('./fish_data.json');
             }
 
             if (!response.ok) {
-                throw new Error('insect_data.json 파일을 찾을 수 없습니다.');
+                throw new Error('fish_data.json 파일을 찾을 수 없습니다.');
             }
 
-            insectData = await response.json();
-            loadedSeasons.clear();
+            fishData = await response.json();
+            fishData = fishData.filter(f => f.level <= 10); // 인게임 해금 레벨 제한
+            loadedSeasons.clear(); // 시즌 기록 초기화
 
             alert('모든 시즌 데이터가 제거되었습니다.\n기본 데이터만 표시됩니다.');
             displayStats();
-            displayAllinsects();
+            displayAllFish();
         } catch (error) {
             console.error('데이터 초기화 에러:', error);
             alert('데이터를 초기화하지 못했습니다.');
         }
     }
 
+
     function getSelectedFilters() {
         const timeCheckboxes = document.querySelectorAll('.filter-group:nth-child(1) input[type="checkbox"]:checked');
-        const weatherCheckboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]:checked');
+        const weatherCheckboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]:checked:not(#rainbowOnly):not(#sunnyOnly):not(#rainyOnly)');
         const rainbowOnly = document.getElementById('rainbowOnly')?.checked || false;
         const sunnyOnly = document.getElementById('sunnyOnly')?.checked || false;
         const rainyOnly = document.getElementById('rainyOnly')?.checked || false;
-        const searchText = document.getElementById('insectSearch')?.value.trim().toLowerCase() || '';
+        const searchText = document.getElementById('fishSearch')?.value.trim().toLowerCase() || '';
 
         return {
             times: Array.from(timeCheckboxes).map(cb => cb.value),
@@ -231,7 +244,7 @@
     }
 
     function applyFilters() {
-        displayAllinsects();
+        displayAllFish();
     }
 
     function selectAllTime() {
@@ -243,7 +256,7 @@
     function selectAllWeather() {
         const checkboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]');
         checkboxes.forEach(cb => {
-            if (!cb.id.includes('Only')) {
+            if (!cb.id.includes('Only')) { // Only 들어간 것만 빼고
                 cb.checked = true;
             }
         });
@@ -253,19 +266,18 @@
     function resetFilters() {
         const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
         allCheckboxes.forEach(cb => cb.checked = false);
-        document.getElementById('insectSearch').value = '';
+        document.getElementById('fishSearch').value = '';
         applyFilters();
     }
 
     function displayStats() {
-        const totalinsects = insectData.length;
-        const habitats = [...new Set(insectData.map(b => b.habitat))].length;
-        const maxPrice = Math.max(...insectData.map(b => b.price));
-
+        const totalFish = fishData.length;
+        const habitats = [...new Set(fishData.map(f => f.habitat))].length;
+        const maxPrice = Math.max(...fishData.map(f => f.price));
         const statsHTML = `
             <div class="stat-card">
-                <div class="number">${totalinsects}</div>
-                <div class="label">총 곤충 종류</div>
+                <div class="number">${totalFish}</div>
+                <div class="label">총 물고기 종류</div>
             </div>
             <div class="stat-card">
                 <div class="number">${habitats}</div>
@@ -279,8 +291,8 @@
         document.getElementById('stats').innerHTML = statsHTML;
     }
 
-    function sortinsects(insects, column, order) {
-        return [...insects].sort((a, b) => {
+    function sortFish(fishes, column, order) {
+        return [...fishes].sort((a, b) => {
             let valueA, valueB;
 
             if (column === 'name' || column === 'habitat') {
@@ -306,10 +318,10 @@
             currentSort.column = column;
             currentSort.order = 'asc';
         }
-        displayAllinsects();
+        displayAllFish();
     }
 
-    function updatePrice(insectName, basePrice, selectElement) {
+    function updatePrice(fishName, basePrice, selectElement) {
         const star = parseInt(selectElement.value);
         const multiplier = starMultipliers[star];
         const calculatedPrice = Math.floor(basePrice * multiplier);
@@ -318,66 +330,80 @@
         priceSpan.textContent = `₩${calculatedPrice}`;
     }
 
-    function displayAllinsects() {
+    function displayAllFish() {
         const filters = getSelectedFilters();
-        let filteredinsects = insectData;
+
+        // 필터 적용
+        let filteredFish = fishData;
 
         // 이름 검색 필터
         if (filters.searchText) {
-            filteredinsects = filteredinsects.filter(insect => {
-                return insect.name.toLowerCase().includes(filters.searchText);
+            filteredFish = filteredFish.filter(fish => {
+                return fish.name.toLowerCase().includes(filters.searchText);
             });
         }
 
-        // 시간 필터
+        // 시간 필터: 선택한 시간 중 하나라도 포함되면 표시 (OR 조건)
         if (filters.times.length > 0) {
-            filteredinsects = filteredinsects.filter(insect => {
-                if (!insect.time || insect.time.length === 0) return false;
-                return insect.time.some(t => filters.times.includes(t));
+            filteredFish = filteredFish.filter(fish => {
+                if (!fish.time || fish.time.length === 0) return false;
+                return fish.time.some(t => filters.times.includes(t));
             });
         }
 
         // 날씨 필터 로직
+        // "무지개에만 등장" 필터
         if (filters.rainbowOnly) {
-            filteredinsects = filteredinsects.filter(insect => {
-                if (!insect.weather || insect.weather.length === 0) return false;
-                return insect.weather.length === 1 && insect.weather[0] === "무지개";
+            filteredFish = filteredFish.filter(fish => {
+                if (!fish.weather || fish.weather.length === 0) return false;
+                // 날씨가 정확히 ["무지개"]만 있는 물고기
+                return fish.weather.length === 1 && fish.weather[0] === "무지개";
             });
-        } else if (filters.sunnyOnly) {
-            filteredinsects = filteredinsects.filter(insect => {
-                if (!insect.weather || insect.weather.length === 0) return false;
-                return insect.weather.includes("맑음") && !insect.weather.includes("비");
+        }
+        // "맑음에만 등장" 필터 (맑음 + 무지개는 OK, 비가 포함되면 안 됨)
+        else if (filters.sunnyOnly) {
+            filteredFish = filteredFish.filter(fish => {
+                if (!fish.weather || fish.weather.length === 0) return false;
+                // 맑음이 포함되어야 하고, 비가 포함되면 안 됨 (무지개는 상관없음)
+                return fish.weather.includes("맑음") && !fish.weather.includes("비");
             });
-        } else if (filters.rainyOnly) {
-            filteredinsects = filteredinsects.filter(insect => {
-                if (!insect.weather || insect.weather.length === 0) return false;
-                return insect.weather.includes("비") && !insect.weather.includes("맑음");
+        }
+        // "비에만 등장" 필터 (비 + 무지개는 OK, 맑음이 포함되면 안 됨)
+        else if (filters.rainyOnly) {
+            filteredFish = filteredFish.filter(fish => {
+                if (!fish.weather || fish.weather.length === 0) return false;
+                // 비가 포함되어야 하고, 맑음이 포함되면 안 됨 (무지개는 상관없음)
+                return fish.weather.includes("비") && !fish.weather.includes("맑음");
             });
-        } else if (filters.weathers.length > 0) {
-            filteredinsects = filteredinsects.filter(insect => {
-                if (!insect.weather || insect.weather.length === 0) return false;
-                return insect.weather.some(w => filters.weathers.includes(w));
+        }
+        // 일반 날씨 필터: 선택한 날씨 중 하나라도 포함되면 표시 (OR 조건)
+        else if (filters.weathers.length > 0) {
+            filteredFish = filteredFish.filter(fish => {
+                if (!fish.weather || fish.weather.length === 0) return false;
+                return fish.weather.some(w => filters.weathers.includes(w));
             });
         }
 
-        const sortedinsects = sortinsects(filteredinsects, currentSort.column, currentSort.order);
+        const sortedFish = sortFish(filteredFish, currentSort.column, currentSort.order);
 
         let html = `
             <div class="habitat-group">
                 <div class="habitat-header">
-                    <span>전체 곤충 목록</span>
-                    <span class="count-badge">${sortedinsects.length}종</span>
+                    <span>전체 물고기 목록</span>
+                    <span class="count-badge">${sortedFish.length}종</span>
                 </div>
                 <div class="table-container">
                     <table>
                         <thead>
                             <tr>
+                                <!-- 물고기 이미지 컬럼 -->
                                 <th class="col-fish-img">이미지</th>
                                 <th class="sortable ${currentSort.column === 'name' ? 'sort-' + currentSort.order : ''}"
                                     onclick="handleSort('name')">이름</th>
-                                <th class="sortable ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}"
+                                <th class="sortable col-habitat-fish ${currentSort.column === 'habitat' ? 'sort-' + currentSort.order : ''}"
                                     onclick="handleSort('habitat')">서식지</th>
-                                <th class="sortable ${currentSort.column === 'level' ? 'sort-' + currentSort.order : ''}"
+                                <th class="col-size">크기</th>
+                                <th class="sortable col-level ${currentSort.column === 'level' ? 'sort-' + currentSort.order : ''}"
                                     onclick="handleSort('level')">레벨</th>
                                 <th class="sortable ${currentSort.column === 'price' ? 'sort-' + currentSort.order : ''}"
                                     onclick="handleSort('price')">판매가</th>
@@ -388,39 +414,47 @@
                         <tbody>
         `;
 
-        sortedinsects.forEach(insect => {
-            // 시간 표시 로직
+        sortedFish.forEach(fish => {
+            // --- 시간 표시 로직 ---
             const allTimes = ['아침', '낮', '저녁', '새벽'];
-            const isAlwaysTime = insect.timeAll || (insect.time && allTimes.every(t => insect.time.includes(t)));
+            const isAlwaysTime = fish.timeAll || (fish.time && allTimes.every(t => fish.time.includes(t)));
             const timeDisplay = isAlwaysTime
                 ? '<span class="time-badge always">하루 종일</span>'
-                : insect.time.map(t => `<span class="time-badge">${t}</span>`).join(' ');
+                : fish.time.map(t => `<span class="time-badge">${t}</span>`).join(' ');
 
-            // 날씨 표시 로직
+            // --- 날씨 표시 로직 ---
             const allWeathers = ['맑음', '비', '무지개'];
-            const isAlwaysWeather = insect.weatherAll || (insect.weather && allWeathers.every(w => insect.weather.includes(w)));
+            const isAlwaysWeather = fish.weatherAll || (fish.weather && allWeathers.every(w => fish.weather.includes(w)));
             const weatherDisplay = isAlwaysWeather
                 ? '<span class="weather-badge always">항상</span>'
-                : insect.weather.map(w => `<span class="weather-badge">${w}</span>`).join(' ');
+                : fish.weather.map(w => `<span class="weather-badge">${w}</span>`).join(' ');
+
+            // --- 이미지 표시 로직 ---
+            // image 필드가 있으면 썸네일, 없으면 물고기 이모지 자리표시자
+            const imgCell = fish.image
+                ? `<img class="fish-thumb"
+                        src="../../../public/images/fish_img/spr_ui_item_normal_p_fish_fish_${fish.image}.png"
+                        alt="${fish.name}"
+                        onerror="this.outerHTML='<div class=\\" fish-thumb-placeholder\\ "></div>`
+                : `<div class="fish-thumb-placeholder">🐟</div>`;
 
             html += `
             <tr>
-                <td class="col-fish-img">${insect.image
-                    ? `<img class="fish-thumb" src="../../../public/images/insect_img/spr_ui_item_normal_p_insect_insect${insect.image}.png" alt="${insect.name}" onerror="handleInsectImgError(this)">`
-                    : `<div class="fish-thumb-placeholder">🦋</div>`}</td>
-                <td class="item-name">${getSpecialIcon(insect.special)}${insect.name}</td>
-                <td class="col-habitat-bird">${getHabitatIcon(insect.habitat)} ${insect.habitat}</td>
-                <td><span class="level-badge">Lv.${insect.level}</span></td>
+                <td class="col-fish-img">${imgCell}</td>
+                <td class="item-name">${getSpecialIcon(fish.special)}${fish.name}</td>
+                <td>${getHabitatIcon(fish.habitat)} ${fish.habitat}</td>
+                <td>${getSizeIcon(fish.size)}${fish.size}</td>
+                <td><span class="level-badge">Lv.${fish.level}</span></td>
                 <td><div class="price-cell">
                                 <span>⭐</span>
-                                <select class="star-selector" onchange="updatePrice('${insect.name}', ${insect.price}, this)">
+                                <select class="star-selector" onchange="updatePrice('${fish.name}', ${fish.price}, this)">
                                     <option value="1">1성</option>
                                     <option value="2">2성</option>
                                     <option value="3">3성</option>
                                     <option value="4">4성</option>
                                     <option value="5">5성</option>
                                 </select>
-                                <span class="price">₩${insect.price}</span>
+                                <span class="price">₩${fish.price}</span>
                             </div></td>
                 <td>${timeDisplay}</td>
                 <td>${weatherDisplay}</td>
@@ -438,31 +472,35 @@
         document.getElementById('content').innerHTML = html;
     }
 
-    /* 곤충 이미지 로드 실패 시 자리 표시자로 교체 */
-    function handleInsectImgError(img) {
-        const placeholder = document.createElement('div');
-        placeholder.className = 'fish-thumb-placeholder';
-        placeholder.textContent = '🦋';
-        img.parentNode.replaceChild(placeholder, img);
-    }
-
     function getSpecialIcon(special) {
         const icons = {
-            '빙설 시즌': '❄️'
+            '빙설 시즌': '❄️',
+            '집어기': '💎',
+            '황금': '✨',
         }
         return icons[special] || '';
     }
 
     function getHabitatIcon(habitat) {
         const icons = {
-            '곤충 유인 사건': '🎯',
-            '곤충 유인기': '📡',
-            '얼음 결정 나비 사건': '❄️',
-        }
+            '모든 강': '🌊',
+            '모든 호수': '🏞️',
+            '모든 바다': '🌅',
+            '바다낚시': '⚓',
+            '얼음 결정 물고기 사건': '❄️',
+        };
         return icons[habitat] || '';
     }
 
-    window.onload = loadinsectData;
+    function getSizeIcon(size) {
+        const icons = {
+            '푸른색': '🐟',
+            '황금': '✨',
+        }
+        return icons[size] || '';
+    }
+
+    window.onload = loadFishData;
 </script>
 </body>
 </html>

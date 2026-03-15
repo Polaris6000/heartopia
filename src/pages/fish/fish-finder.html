@@ -13,7 +13,7 @@
     <div class="datetime-section">
         <nav>
             <ul>
-                <li><a href="fish_list.html">어류 도감</a></li>
+                <li><a href="fish-list.html">어류 도감</a></li>
             </ul>
         </nav>
         <h1>🔍 물고기 찾기</h1>
@@ -54,7 +54,7 @@
 
             <div class="input-item">
                 <label for="level">🎣 취미 레벨</label>
-                <input id="level" max="10" min="1" type="number" value="7">
+                <input id="level" max="10" min="1" type="number" value="9">
             </div>
 
             <div class="input-item">
@@ -75,6 +75,29 @@
                     <option value="무지개">무지개</option>
                 </select>
             </div>
+        </div>
+
+        <!-- 크기 필터 체크박스: 체크 시 해당 size의 물고기를 결과에서 숨김 -->
+        <div class="size-filter-group" style="margin-top: 16px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+            <span style="font-weight: bold; font-size: 0.95em;">🚫 크기 제외 필터</span>
+            <label class="size-filter-label" style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input
+                    type="checkbox"
+                    id="excludeBlue"
+                    onchange="filterFish()"
+                >
+                <!-- 푸른색 사이즈 물고기 숨기기 -->
+                🐟 푸른색 숨기기
+            </label>
+            <label class="size-filter-label" style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input
+                    type="checkbox"
+                    id="excludeGolden"
+                    onchange="filterFish()"
+                >
+                <!-- 황금 사이즈 물고기 숨기기 -->
+                ✨ 황금 숨기기
+            </label>
         </div>
 
         <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
@@ -271,9 +294,20 @@
         const time = document.getElementById('time').value;
         const weather = document.getElementById('weather').value;
 
+        // 체크박스 상태 읽기: 체크되면 해당 size의 물고기를 결과에서 제외
+        const excludeBlue   = document.getElementById('excludeBlue').checked;   // '푸른색' 제외 여부
+        const excludeGolden = document.getElementById('excludeGolden').checked; // '황금' 제외 여부
+
         const filtered = fishData.filter(fish => {
             if (fishName && !fish.name.toLowerCase().includes(fishName)) return false;
             if (fish.level > level) return false;
+
+            // 푸른색 체크박스가 체크된 경우 size가 '푸른색'인 물고기 제외
+            if (excludeBlue && fish.size === '푸른색') return false;
+
+            // 황금 체크박스가 체크된 경우 size가 '황금'인 물고기 제외
+            if (excludeGolden && fish.size === '황금') return false;
+
             const timeOk = fish.time && fish.time.includes(time);
             const weatherOk = fish.weather && fish.weather.includes(weather);
             return timeOk && weatherOk;
