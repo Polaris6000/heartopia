@@ -129,6 +129,10 @@
                 <button class="filter-btn season-ice-btn" onclick="loadSeasonData()">❄️ 빙설 시즌 추가</button>
                 <button class="filter-btn-reset season-ice-btn" onclick="removeSeasonData()">🗑️ 시즌 데이터 제거</button>
                 <button class="filter-btn-reset" onclick="resetFilters()">필터 초기화</button>
+                <!-- 수집 완료 항목 숨기기/보이기 토글 버튼 -->
+                <button class="filter-btn" id="hideCollectedBtn" onclick="toggleHideCollected()">수집 완료 숨기기</button>
+                <!-- 수집 체크 전체 초기화 버튼 -->
+                <button class="filter-btn-reset" onclick="resetCollected()">🗑️ 수집 초기화</button>
             </div>
 
         </div>
@@ -167,6 +171,37 @@
     ======================================================== */
     let cropsData   = [];       // 현재 화면에 표시 중인 데이터
     let baseData    = [];       // 원본 데이터 (시즌 제거 시 복원용)
+
+    // ============================================================
+    // 도감 수집 체크 관련
+    // ============================================================
+    const CROPS_COLLECTED_KEY = 'collected_crops';
+    let collectedCrops = new Set(JSON.parse(localStorage.getItem(CROPS_COLLECTED_KEY) || '[]'));
+    let hideCollected = false;
+
+    function toggleCollected(name) {
+        if (collectedCrops.has(name)) {
+            collectedCrops.delete(name);
+        } else {
+            collectedCrops.add(name);
+        }
+        localStorage.setItem(CROPS_COLLECTED_KEY, JSON.stringify([...collectedCrops]));
+        displayAllCrops();
+    }
+
+    function toggleHideCollected() {
+        hideCollected = !hideCollected;
+        const btn = document.getElementById('hideCollectedBtn');
+        btn.textContent = hideCollected ? '수집 완료 보이기' : '수집 완료 숨기기';
+        displayAllCrops();
+    }
+
+    function resetCollected() {
+        if (!confirm('수집 체크를 모두 초기화할까요?')) return;
+        collectedCrops.clear();
+        localStorage.removeItem(CROPS_COLLECTED_KEY);
+        displayAllCrops();
+    }
     let gradeMultipliers = {};  // crops.json에서 읽어온 성급 배율
     let iceLoaded   = false;    // 빙설 시즌 데이터 로드 여부
     let currentSort = { column: 'sellPrice', order: 'desc' };
@@ -313,6 +348,10 @@
                 <div class="number">₩${maxProfit.toLocaleString()}</div>
                 <div class="label">최대 이윤 (1성)</div>
             </div>
+            <div class="stat-card">
+                <div class="number">${collectedCrops.size} / ${total}</div>
+                <div class="label">수집 완료</div>
+            </div>
         `;
     }
 
@@ -327,6 +366,11 @@
         let filtered = cropsData.filter(c =>
             !searchText || c.name.toLowerCase().includes(searchText)
         );
+
+        // 수집 완료 숨기기 필터
+        if (hideCollected) {
+            filtered = filtered.filter(c => !collectedCrops.has(c.name));
+        }
 
         const sorted = sortCrops(filtered, currentSort.column, currentSort.order);
 
@@ -344,6 +388,8 @@
                     <table>
                         <thead>
                             <tr>
+                                <!-- 수집 체크 컬럼 -->
+                                <th class="col-collect">수집</th>
                                 <th class="col-img"></th>
                                 <th class="${sc('name')}"             onclick="handleSort('name')">이름</th>
                                 <th class="${sc('seedPrice')} col-seed"    onclick="handleSort('seedPrice')">씨앗 가격</th>
@@ -375,8 +421,16 @@
                 ? `<img class="crop-img" src="${imgSrc}" alt="${crop.name}">`
                 : `<span class="crop-img-placeholder"></span>`;
 
+            // 수집 완료 여부
+            const isCollected = collectedCrops.has(crop.name);
+
             html += `
-            <tr>
+            <tr class="${isCollected ? 'collected-row' : ''}">
+                <td class="col-collect">
+                    <input type="checkbox"
+                           ${isCollected ? 'checked' : ''}
+                           onchange="toggleCollected('${crop.name.replace(/'/g, "\\'")}')">
+                </td>
                 <td class="col-img">${imgTag}</td>
                 <td class="item-name">${crop.name}${seasonTag}</td>
                 <td>₩${crop.seedPrice.toLocaleString()}</td>
@@ -430,13 +484,13 @@
         // 판매가 업데이트
         row.querySelector('.price').textContent = `₩${adjusted.toLocaleString()}`;
 
-        // 이윤 셀 업데이트 (td[5]: 이미지 컬럼 추가로 1칸 밀림)
-        tds[5].textContent = `${profitSign}₩${profit.toLocaleString()}`;
-        tds[5].className   = profit >= 0 ? 'profit-positive' : 'profit-negative';
+        // 이윤 셀 업데이트 (td[6]: 수집 체크 컬럼 추가로 1칸 더 밀림)
+        tds[6].textContent = `${profitSign}₩${profit.toLocaleString()}`;
+        tds[6].className   = profit >= 0 ? 'profit-positive' : 'profit-negative';
 
-        // 시간 대비 이윤 셀 업데이트 (td[6])
-        tds[6].textContent = `${pphSign}₩${Math.round(profitPerHour).toLocaleString()}/시간`;
-        tds[6].className   = profitPerHour >= 0 ? 'profit-positive' : 'profit-negative';
+        // 시간 대비 이윤 셀 업데이트 (td[7])
+        tds[7].textContent = `${pphSign}₩${Math.round(profitPerHour).toLocaleString()}/시간`;
+        tds[7].className   = profitPerHour >= 0 ? 'profit-positive' : 'profit-negative';
     }
 
 

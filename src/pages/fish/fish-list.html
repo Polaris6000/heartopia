@@ -99,6 +99,10 @@
                 <button class="filter-btn" onclick="selectAllTime()">시간 전체선택</button>
                 <button class="filter-btn" onclick="selectAllWeather()">날씨 전체선택</button>
                 <button class="filter-btn-reset" onclick="resetFilters()">필터 초기화</button>
+                <!-- 수집 완료 항목 숨기기/보이기 토글 버튼 -->
+                <button class="filter-btn" id="hideCollectedBtn" onclick="toggleHideCollected()">수집 완료 숨기기</button>
+                <!-- 수집 체크 전체 초기화 버튼 -->
+                <button class="filter-btn-reset" onclick="resetCollected()">🗑️ 수집 초기화</button>
             </div>
         </div>
     </div>
@@ -116,6 +120,42 @@
     let fishData = [];
     let currentSort = {column: 'price', order: 'desc'};
     let loadedSeasons = new Set(); // 이미 로드한 시즌 추적
+
+    // ============================================================
+    // 도감 수집 체크 관련
+    // localStorage에 수집 완료 항목의 이름 목록을 저장/불러옴
+    // ============================================================
+    const FISH_COLLECTED_KEY = 'collected_fish'; // localStorage 키
+    let collectedFish = new Set(JSON.parse(localStorage.getItem(FISH_COLLECTED_KEY) || '[]'));
+    let hideCollected = false; // 수집 완료 항목 숨김 여부
+
+    // 수집 체크 토글: 체크 시 저장, 해제 시 제거
+    function toggleCollected(name) {
+        if (collectedFish.has(name)) {
+            collectedFish.delete(name);
+        } else {
+            collectedFish.add(name);
+        }
+        // 변경된 수집 목록을 localStorage에 저장
+        localStorage.setItem(FISH_COLLECTED_KEY, JSON.stringify([...collectedFish]));
+        displayAllFish();
+    }
+
+    // 수집 완료 항목 숨기기/보이기 토글
+    function toggleHideCollected() {
+        hideCollected = !hideCollected;
+        const btn = document.getElementById('hideCollectedBtn');
+        btn.textContent = hideCollected ? '수집 완료 보이기' : '수집 완료 숨기기';
+        displayAllFish();
+    }
+
+    // 수집 체크 전체 초기화
+    function resetCollected() {
+        if (!confirm('수집 체크를 모두 초기화할까요?')) return;
+        collectedFish.clear();
+        localStorage.removeItem(FISH_COLLECTED_KEY);
+        displayAllFish();
+    }
 
     // 등급별 가격 배율
     const starMultipliers = {
@@ -287,6 +327,11 @@
                 <div class="number">₩${maxPrice}</div>
                 <div class="label">최고 판매가</div>
             </div>
+            <!-- 수집 완료 현황 카드 -->
+            <div class="stat-card">
+                <div class="number">${collectedFish.size} / ${totalFish}</div>
+                <div class="label">수집 완료</div>
+            </div>
         `;
         document.getElementById('stats').innerHTML = statsHTML;
     }
@@ -343,6 +388,11 @@
             });
         }
 
+        // 수집 완료 숨기기 필터: hideCollected가 true이면 수집된 항목 제외
+        if (hideCollected) {
+            filteredFish = filteredFish.filter(fish => !collectedFish.has(fish.name));
+        }
+
         // 시간 필터: 선택한 시간 중 하나라도 포함되면 표시 (OR 조건)
         if (filters.times.length > 0) {
             filteredFish = filteredFish.filter(fish => {
@@ -396,6 +446,8 @@
                     <table>
                         <thead>
                             <tr>
+                                <!-- 수집 체크 컬럼 -->
+                                <th class="col-collect">수집</th>
                                 <!-- 물고기 이미지 컬럼 -->
                                 <th class="col-fish-img">이미지</th>
                                 <th class="sortable ${currentSort.column === 'name' ? 'sort-' + currentSort.order : ''}"
@@ -438,8 +490,17 @@
                         onerror="this.outerHTML='<div class=\\" fish-thumb-placeholder\\ "></div>`
                 : `<div class="fish-thumb-placeholder">🐟</div>`;
 
+            // 수집 완료 여부에 따라 행에 collected-row 클래스 부여 (흐리게 + 취소선 처리)
+            const isCollected = collectedFish.has(fish.name);
+
             html += `
-            <tr>
+            <tr class="${isCollected ? 'collected-row' : ''}">
+                <!-- 수집 체크박스: 체크 시 localStorage에 저장 -->
+                <td class="col-collect">
+                    <input type="checkbox"
+                           ${isCollected ? 'checked' : ''}
+                           onchange="toggleCollected('${fish.name.replace(/'/g, "\\'")}')">
+                </td>
                 <td class="col-fish-img">${imgCell}</td>
                 <td class="item-name">${getSpecialIcon(fish.special)}${fish.name}</td>
                 <td>${getHabitatIcon(fish.habitat)} ${fish.habitat}</td>

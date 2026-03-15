@@ -98,6 +98,10 @@
                 <button class="filter-btn" onclick="selectAllTime()">시간 전체선택</button>
                 <button class="filter-btn" onclick="selectAllWeather()">날씨 전체선택</button>
                 <button class="filter-btn-reset" onclick="resetFilters()">필터 초기화</button>
+                <!-- 수집 완료 항목 숨기기/보이기 토글 버튼 -->
+                <button class="filter-btn" id="hideCollectedBtn" onclick="toggleHideCollected()">수집 완료 숨기기</button>
+                <!-- 수집 체크 전체 초기화 버튼 -->
+                <button class="filter-btn-reset" onclick="resetCollected()">🗑️ 수집 초기화</button>
             </div>
         </div>
     </div>
@@ -114,6 +118,37 @@
 <script>
     /** @type {Array<Object>} 로드된 새 데이터 배열 */
     let birdData = [];
+
+    // ============================================================
+    // 도감 수집 체크 관련
+    // ============================================================
+    const BIRD_COLLECTED_KEY = 'collected_bird';
+    let collectedBird = new Set(JSON.parse(localStorage.getItem(BIRD_COLLECTED_KEY) || '[]'));
+    let hideCollected = false;
+
+    function toggleCollected(name) {
+        if (collectedBird.has(name)) {
+            collectedBird.delete(name);
+        } else {
+            collectedBird.add(name);
+        }
+        localStorage.setItem(BIRD_COLLECTED_KEY, JSON.stringify([...collectedBird]));
+        displayAllbirds();
+    }
+
+    function toggleHideCollected() {
+        hideCollected = !hideCollected;
+        const btn = document.getElementById('hideCollectedBtn');
+        btn.textContent = hideCollected ? '수집 완료 보이기' : '수집 완료 숨기기';
+        displayAllbirds();
+    }
+
+    function resetCollected() {
+        if (!confirm('수집 체크를 모두 초기화할까요?')) return;
+        collectedBird.clear();
+        localStorage.removeItem(BIRD_COLLECTED_KEY);
+        displayAllbirds();
+    }
 
     /** @type {{column: string, order: string}} 현재 정렬 기준 */
     let currentSort = {column: 'price', order: 'desc'};
@@ -289,6 +324,10 @@
                 <div class="number">₩${maxPrice}</div>
                 <div class="label">최고 판매가</div>
             </div>
+            <div class="stat-card">
+                <div class="number">${collectedBird.size} / ${totalbirds}</div>
+                <div class="label">수집 완료</div>
+            </div>
         `;
         document.getElementById('stats').innerHTML = statsHTML;
     }
@@ -354,6 +393,11 @@
             });
         }
 
+        // 수집 완료 숨기기 필터
+        if (hideCollected) {
+            filteredbirds = filteredbirds.filter(bird => !collectedBird.has(bird.name));
+        }
+
         // 시간 필터
         if (filters.times.length > 0) {
             filteredbirds = filteredbirds.filter(bird => {
@@ -397,6 +441,8 @@
                     <table>
                         <thead>
                             <tr>
+                                <!-- 수집 체크 컬럼 -->
+                                <th class="col-collect">수집</th>
                                 <!-- 새 이미지 컬럼 -->
                                 <th class="col-fish-img">이미지</th>
                                 <th class="sortable ${currentSort.column === 'name' ? 'sort-' + currentSort.order : ''}"
@@ -440,8 +486,16 @@
                         onerror="handleBirdImgError(this)">`
                 : `<div class="fish-thumb-placeholder">🐦</div>`;
 
+            // 수집 완료 여부
+            const isCollected = collectedBird.has(bird.name);
+
             html += `
-            <tr>
+            <tr class="${isCollected ? 'collected-row' : ''}">
+                <td class="col-collect">
+                    <input type="checkbox"
+                           ${isCollected ? 'checked' : ''}
+                           onchange="toggleCollected('${bird.name.replace(/'/g, "\\'")}')">
+                </td>
                 <td class="col-fish-img">${imgCell}</td>
                 <td class="item-name">${getSpecialIcon(bird.special)}${bird.name}</td>
                 <td class="col-habitat-bird">${getHabitatIcon(bird.habitat)} ${bird.habitat}</td>

@@ -726,6 +726,35 @@ th.sort-desc::after {
     white-space: nowrap;
 }
 
+/* ========================================
+   도감 수집 체크 관련 스타일
+======================================== */
+
+/* 수집 체크박스 컬럼 */
+.col-collect {
+    min-width: 44px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* 수집 체크박스 크기 */
+.col-collect input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--color-primary, #4caf50);
+}
+
+/* 수집 완료 행: 흐리게 처리 */
+tr.collected-row {
+    opacity: 0.4;
+}
+
+/* 수집 완료 행의 이름 셀: 취소선 */
+tr.collected-row .item-name {
+    text-decoration: line-through;
+}
+
 /* 테이블 바디 */
 td {
     padding: 10px 8px;
