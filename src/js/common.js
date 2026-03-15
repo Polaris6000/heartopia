@@ -12,7 +12,7 @@ const BASE = window.location.origin + '/heartopia';
 // ============================================================
 async function loadComponent(elementId, fileName) {
     try {
-        const response = await fetch(`../../components/${fileName}`);
+        const response = await fetch(`${BASE}/src/components/${fileName}`);
         if (!response.ok) return;
 
         let html = await response.text();
