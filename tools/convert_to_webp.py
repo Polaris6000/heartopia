@@ -15,25 +15,37 @@ heartopia/
 └── tools/
     └── convert_to_webp.py  ← 이 파일
 
-[사용법]
-    python tools/convert_to_webp.py
+[모드 — 변환과 삭제는 독립적으로 동작]
 
-[동작]
-    - public/images/ 하위의 모든 PNG, JPG, JPEG 파일을 WebP로 변환
-    - 변환된 파일은 원본과 같은 폴더에 .webp 확장자로 저장
-    - 원본 파일은 삭제하지 않음 (직접 확인 후 수동 삭제 권장)
-    - 이미 .webp 파일이 존재하면 스킵 (--force 옵션으로 강제 덮어쓰기 가능)
+  ① 변환만  (기본)
+      python tools/convert_to_webp.py
+      → PNG/JPG → WebP 변환. 원본은 건드리지 않음.
+
+  ② 삭제만  --delete-originals
+      python tools/convert_to_webp.py --delete-originals
+      → 변환 없이, 대응하는 .webp가 이미 있는 원본만 삭제.
+      → 변환이 아직 안 된 파일은 절대 삭제하지 않음.
+
+  ③ 변환 + 삭제  --convert-and-delete
+      python tools/convert_to_webp.py --convert-and-delete
+      → WebP로 변환한 뒤 원본도 삭제. 한 번에 처리.
 
 [옵션]
-    --quality  : WebP 변환 품질 (1~100, 기본값: 85)
-    --force    : 이미 변환된 파일도 강제로 덮어쓰기
-    --dry-run  : 실제 변환 없이 대상 파일 목록만 출력
+    --quality             : WebP 변환 품질 (1~100, 기본값: 85)
+    --force               : 이미 .webp가 있어도 덮어쓰기 (변환 모드에서만 유효)
+    --dry-run             : 실제 변환/삭제 없이 대상 목록만 출력
+    --delete-originals    : 삭제만 실행 (변환 없이)
+    --convert-and-delete  : 변환 후 원본도 삭제
 
 [예시]
-    python tools/convert_to_webp.py                  # 기본 실행 (품질 85)
-    python tools/convert_to_webp.py --quality 90     # 품질 90으로 변환
-    python tools/convert_to_webp.py --force          # 기존 webp도 덮어쓰기
-    python tools/convert_to_webp.py --dry-run        # 변환 없이 목록만 확인
+    터미널에 입력
+    python tools/convert_to_webp.py                             # 변환만
+    python tools/convert_to_webp.py --quality 90               # 품질 90으로 변환
+    python tools/convert_to_webp.py --force                    # 기존 webp 덮어쓰기
+    python tools/convert_to_webp.py --dry-run                  # 변환 대상 미리 확인
+    python tools/convert_to_webp.py --delete-originals         # 삭제만
+    python tools/convert_to_webp.py --dry-run --delete-originals   # 삭제 대상 미리 확인
+    python tools/convert_to_webp.py --convert-and-delete       # 변환 + 삭제 한 번에
 
 [의존성]
     pip install Pillow
@@ -104,6 +116,38 @@ def convert_image(src: Path, quality: int, force: bool, dry_run: bool) -> str:
         return "error"
 
 
+# ── 원본 삭제 함수 ───────────────────────────────────────────────
+
+def delete_original(src: Path, dry_run: bool) -> bool:
+    """
+    같은 이름의 .webp 파일이 존재하는 경우 원본 파일 삭제.
+
+    Args:
+        src     : 삭제 대상 원본 파일 경로
+        dry_run : True이면 실제 삭제 없이 로그만 출력
+
+    Returns:
+        삭제 성공 여부 (dry_run이면 항상 True)
+    """
+    dest = src.with_suffix(".webp")
+
+    # 대응되는 .webp 파일이 없으면 삭제하지 않음 (안전 장치)
+    if not dest.exists():
+        print(f"  ⚠️  webp 없음, 삭제 스킵: {src.name}")
+        return False
+
+    if dry_run:
+        print(f"  [DRY-RUN] 삭제 예정: {src.name}")
+        return True
+
+    try:
+        src.unlink()  # 파일 삭제
+        return True
+    except Exception as e:
+        print(f"  ❌ 삭제 실패: {src.name} → {e}")
+        return False
+
+
 # ── 메인 ────────────────────────────────────────────────────────
 
 def main():
@@ -113,17 +157,32 @@ def main():
     )
     parser.add_argument(
         "--quality", type=int, default=DEFAULT_QUALITY,
-        help=f"WebP 품질 (1~100, 기본값: {DEFAULT_QUALITY})"
+        help=f"WebP 변환 품질 (1~100, 기본값: {DEFAULT_QUALITY})"
     )
     parser.add_argument(
         "--force", action="store_true",
-        help="이미 변환된 .webp 파일도 덮어쓰기"
+        help="이미 .webp가 있어도 덮어쓰기 (변환 모드에서만 유효)"
     )
     parser.add_argument(
         "--dry-run", action="store_true",
-        help="실제 변환 없이 대상 파일 목록만 출력"
+        help="실제 변환/삭제 없이 대상 파일 목록만 출력"
+    )
+    parser.add_argument(
+        "--delete-originals", action="store_true",
+        help="변환 없이 삭제만 실행 (대응하는 .webp가 있는 원본만 삭제)"
+    )
+    parser.add_argument(
+        "--convert-and-delete", action="store_true",
+        help="WebP 변환 후 원본도 삭제 (한 번에 처리)"
     )
     args = parser.parse_args()
+
+    # --delete-originals 와 --convert-and-delete 동시 사용 방지
+    if args.delete_originals and args.convert_and_delete:
+        print("❌ --delete-originals 와 --convert-and-delete 는 동시에 쓸 수 없어.")
+        print("   삭제만         : --delete-originals")
+        print("   변환 + 삭제   : --convert-and-delete")
+        sys.exit(1)
 
     # 품질 범위 검증
     if not (1 <= args.quality <= 100):
@@ -136,66 +195,105 @@ def main():
         print("   스크립트를 heartopia/tools/ 폴더 안에서 실행하고 있는지 확인해.")
         sys.exit(1)
 
-    # 변환 대상 파일 수집 (서브폴더 포함 재귀 탐색)
+    # 대상 파일 수집 (서브폴더 포함 재귀 탐색)
     targets = [
         f for f in IMAGES_DIR.rglob("*")
         if f.is_file() and f.suffix.lower() in TARGET_EXTS
     ]
 
     if not targets:
-        print("변환할 이미지 파일이 없어.")
+        print("처리할 이미지 파일이 없어.")
         sys.exit(0)
 
+    # 실행 모드 결정
+    # delete_only : 변환 없이 삭제만 (--delete-originals)
+    # do_convert  : 변환 수행 여부
+    # do_delete   : 삭제 수행 여부
+    delete_only = args.delete_originals
+    do_convert  = not delete_only                              # 삭제 전용이 아니면 변환
+    do_delete   = args.delete_originals or args.convert_and_delete
+
     # 실행 정보 출력
-    mode_label = "[DRY-RUN] " if args.dry_run else ""
+    dry_label = "[DRY-RUN] " if args.dry_run else ""
+    mode_str  = "삭제만" if delete_only else ("변환 + 삭제" if args.convert_and_delete else "변환만")
     print(f"{'='*52}")
-    print(f"  {mode_label}WebP 변환 시작")
-    print(f"  대상 폴더  : {IMAGES_DIR}")
-    print(f"  파일 수    : {len(targets)}개")
-    print(f"  변환 품질  : {args.quality}")
-    print(f"  덮어쓰기   : {'ON' if args.force else 'OFF'}")
+    print(f"  {dry_label}실행 모드 : {mode_str}")
+    print(f"  대상 폴더 : {IMAGES_DIR}")
+    print(f"  파일 수   : {len(targets)}개")
+    if do_convert:
+        print(f"  변환 품질 : {args.quality}")
+        print(f"  덮어쓰기  : {'ON' if args.force else 'OFF'}")
     print(f"{'='*52}")
 
-    # 폴더별로 그룹핑해서 진행 상황 표시
+    # 카운터
     count_converted = 0
     count_skipped   = 0
     count_error     = 0
+    count_deleted   = 0
 
-    current_folder = None
+    current_folder  = None
 
-    for src in sorted(targets):
-        # 폴더가 바뀌면 구분선 출력
-        folder = src.parent.name
-        if folder != current_folder:
-            print(f"\n📁 {folder}/")
-            current_folder = folder
+    # ── 변환 단계 (--delete-originals 단독 시 완전히 스킵) ──────
+    if do_convert:
+        print(f"\n  {'[DRY-RUN] ' if args.dry_run else ''}🔄 WebP 변환 중...")
 
-        result = convert_image(src, args.quality, args.force, args.dry_run)
+        for src in sorted(targets):
+            folder = src.parent.name
+            if folder != current_folder:
+                print(f"\n📁 {folder}/")
+                current_folder = folder
 
-        if result == "converted":
-            count_converted += 1
-            if not args.dry_run:
-                # 원본 → 변환 후 용량 비교
-                dest      = src.with_suffix(".webp")
-                orig_kb   = src.stat().st_size / 1024
-                dest_kb   = dest.stat().st_size / 1024
-                saved_pct = (1 - dest_kb / orig_kb) * 100 if orig_kb > 0 else 0
-                print(f"  ✅ {src.name:50s} {orig_kb:6.1f}KB → {dest_kb:6.1f}KB  ({saved_pct:+.0f}%)")
-        elif result == "skipped":
-            count_skipped += 1
-            print(f"  ⏭️  {src.name} (이미 변환됨, 스킵)")
+            result = convert_image(src, args.quality, args.force, args.dry_run)
 
-    # 최종 요약
+            if result == "converted":
+                count_converted += 1
+                if not args.dry_run:
+                    # 원본 → 변환 후 용량 비교 출력
+                    dest      = src.with_suffix(".webp")
+                    orig_kb   = src.stat().st_size / 1024
+                    dest_kb   = dest.stat().st_size / 1024
+                    saved_pct = (1 - dest_kb / orig_kb) * 100 if orig_kb > 0 else 0
+                    print(f"  ✅ {src.name:50s} {orig_kb:6.1f}KB → {dest_kb:6.1f}KB  ({saved_pct:+.0f}%)")
+            elif result == "skipped":
+                count_skipped += 1
+                print(f"  ⏭️  {src.name} (이미 변환됨, 스킵)")
+            elif result == "error":
+                count_error += 1
+
+    # ── 삭제 단계 (--delete-originals 또는 --convert-and-delete) ─
+    if do_delete:
+        print(f"\n{'='*52}")
+        print(f"  {'[DRY-RUN] ' if args.dry_run else ''}🗑️  원본 파일 삭제 중...")
+        print(f"  (대응하는 .webp가 없는 파일은 삭제하지 않음)")
+        print(f"{'='*52}")
+
+        current_folder = None
+
+        for src in sorted(targets):
+            folder = src.parent.name
+            if folder != current_folder:
+                print(f"\n📁 {folder}/")
+                current_folder = folder
+
+            # .webp 존재 확인 후 삭제 (안전 장치)
+            if delete_original(src, args.dry_run):
+                count_deleted += 1
+
+    # ── 최종 요약 ────────────────────────────────────────────────
     print(f"\n{'='*52}")
     print(f"  완료!")
-    print(f"  변환 : {count_converted}개")
-    print(f"  스킵 : {count_skipped}개")
-    print(f"  오류 : {count_error}개")
+    if do_convert:
+        print(f"  변환  : {count_converted}개")
+        print(f"  스킵  : {count_skipped}개")
+        print(f"  오류  : {count_error}개")
+    if do_delete:
+        print(f"  삭제  : {count_deleted}개{'  (예정)' if args.dry_run else ''}")
 
-    if not args.dry_run and count_converted > 0:
+    # 변환만 하고 삭제 안 했을 때 안내
+    if do_convert and not do_delete and not args.dry_run and count_converted > 0:
         print(f"\n  💡 원본 파일은 삭제되지 않았어.")
-        print(f"     HTML/JS에서 이미지 경로를 .webp로 교체한 후")
-        print(f"     원본 파일을 직접 삭제하면 돼.")
+        print(f"     HTML/JS 경로를 .webp로 교체 확인 후")
+        print(f"     python tools/convert_to_webp.py --delete-originals")
     print(f"{'='*52}")
 
 
