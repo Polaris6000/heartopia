@@ -146,7 +146,8 @@ nav a {
     font-weight: 400; /* 기존 600 → 400 */
     padding: 8px 14px; /* 기존 10px 20px → 8px 14px */
     border-radius: 8px;
-    transition: all 0.3s;
+    /* hover 시 실제로 변하는 속성만 명시 → 불필요한 속성 감시 제거 */
+    transition: background 0.3s, color 0.3s, transform 0.3s;
     background: var(--color-surface-light);
 }
 
@@ -354,7 +355,8 @@ footer {
     padding: 14px 10px; /* 기존 20px 15px → 14px 10px */
     border-radius: 12px;
     text-align: center;
-    transition: all 0.3s;
+    /* active 시 변하는 속성: border-color, background, transform, box-shadow */
+    transition: border-color 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s;
     border: 2px solid transparent;
 }
 
@@ -454,7 +456,8 @@ footer {
     font-size: 0.9em;
     background: var(--color-surface);
     cursor: pointer;
-    transition: all 0.3s;
+    /* focus 시 변하는 속성: border-color, box-shadow */
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .star-selector select:focus {
@@ -507,7 +510,8 @@ footer {
     border: 2px solid var(--color-border);
     border-radius: 10px;
     font-size: 1em; /* 기존 1.1em → 1em */
-    transition: all 0.3s;
+    /* focus 시 변하는 속성: border-color, box-shadow */
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .search-box input[type="text"]:focus {
@@ -574,7 +578,8 @@ footer {
     font-size: 0.9em;
     font-weight: 400; /* 기존 600 → 400 */
     cursor: pointer;
-    transition: all 0.3s;
+    /* hover 시 변하는 속성: background, transform */
+    transition: background 0.3s, transform 0.3s;
     white-space: nowrap;
 }
 
@@ -844,7 +849,8 @@ select {
     border: 2px solid var(--color-border);
     border-radius: 8px;
     font-size: 16px;
-    transition: all 0.3s;
+    /* focus 시 변하는 속성: border-color, box-shadow */
+    transition: border-color 0.3s, box-shadow 0.3s;
     background: var(--color-surface);
 }
 
@@ -864,7 +870,8 @@ button {
     font-size: 1.1em; /* 기존 1.3em → 1.1em */
     font-weight: 400; /* 기존 600 → 400 */
     cursor: pointer;
-    transition: all 0.3s;
+    /* hover 시 변하는 속성: background, transform, box-shadow */
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 button:hover {

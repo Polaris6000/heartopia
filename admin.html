@@ -225,7 +225,8 @@
             font-family: inherit;
             font-size: 0.9em;
             cursor: pointer;
-            transition: all .2s;
+            /* hover 시 변하는 속성: background */
+            transition: background .2s;
         }
         .hdr-btn-logout {
             background: var(--color-surface-light);
@@ -350,7 +351,8 @@
             background: var(--color-surface);
             color: var(--color-text-soft);
             cursor: pointer;
-            transition: all .2s;
+            /* hover 시 변하는 속성: border-color, color, background */
+            transition: border-color .2s, color .2s, background .2s;
         }
         .period-tab.active {
             background: var(--color-primary);
@@ -431,7 +433,8 @@
             font-size: 0.85em;
             color: var(--color-text-soft);
             cursor: pointer;
-            transition: all .2s;
+            /* hover 시 변하는 속성: background, color, border-color */
+            transition: background .2s, color .2s, border-color .2s;
         }
         .export-btn:hover {
             background: var(--color-primary-surface);

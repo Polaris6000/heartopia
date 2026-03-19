@@ -50,7 +50,8 @@
     padding: 20px;   /* 기존 30px → 20px */
     text-align: center;
     cursor: pointer;
-    transition: all 0.3s;
+    /* hover 시 변하는 속성: transform, box-shadow, border-color */
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     border: 3px solid transparent;
 }
