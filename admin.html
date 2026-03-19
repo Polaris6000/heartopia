@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RXTDCP8G1V"></script>
+    <script>
+        // Google Analytics 4 초기화
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-RXTDCP8G1V');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자 대시보드 | 두근두근타운</title>
@@ -224,13 +233,7 @@
         }
         .hdr-btn-logout:hover { background: var(--color-border); }
 
-        .hdr-btn-reset {
-            background: #fdecea;
-            color: #c62828;
-        }
-        .hdr-btn-reset:hover { background: #f9a825; color: #fff; }
-
-        /* ── 메인 콘텐츠 영역 ── */
+/* ── 메인 콘텐츠 영역 ── */
         .admin-main {
             flex: 1;
             max-width: 1400px;
@@ -239,7 +242,7 @@
             width: 100%;
         }
 
-        /* ── 안내 배너 (localStorage 기반 설명) ── */
+        /* ── 안내 배너 ── */
         .info-banner {
             background: linear-gradient(90deg, #fff8dc, #fffef0);
             border: 1px solid #f0c040;
@@ -247,10 +250,48 @@
             padding: 12px 20px;
             font-size: 0.9em;
             color: #5d4037;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        /* ── GA 연동 배너 ── */
+        .ga-banner {
+            background: linear-gradient(90deg, #e8f5e9, #f1f8e9);
+            border: 1px solid #81c784;
+            border-radius: 12px;
+            padding: 14px 20px;
+            font-size: 0.9em;
+            color: #2e7d32;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        /* GA 콘솔 바로가기 버튼 */
+        .ga-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            background: #4285f4;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9em;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background .2s, transform .2s;
+        }
+        .ga-btn:hover {
+            background: #3367d6;
+            transform: translateY(-1px);
         }
 
         /* ── 요약 카드 4개 ── */
@@ -512,18 +553,25 @@
         </div>
         <div class="admin-header-right">
             <span class="admin-clock" id="admin-clock">--:--:--</span>
-            <button class="hdr-btn hdr-btn-reset" id="reset-btn" title="모든 방문 데이터 삭제">🗑 데이터 초기화</button>
-            <button class="hdr-btn hdr-btn-logout" id="logout-btn">로그아웃</button>
+<button class="hdr-btn hdr-btn-logout" id="logout-btn">로그아웃</button>
         </div>
     </header>
 
     <!-- ── 메인 ── -->
     <main class="admin-main">
 
-        <!-- 안내 배너 -->
+        <!-- GA 연동 완료 배너 -->
+        <div class="ga-banner">
+            <span>✅ <strong>Google Analytics 4 연동 완료</strong> · 추적 ID: <code style="background:rgba(0,0,0,.07);padding:2px 6px;border-radius:4px;">G-RXTDCP8G1V</code> · 실시간 방문자 및 전체 통계는 GA 콘솔에서 확인하세요.</span>
+            <a class="ga-btn" href="https://analytics.google.com/" target="_blank" rel="noopener noreferrer">
+                📊 GA 콘솔 열기
+            </a>
+        </div>
+
+        <!-- 로컬 대시보드 안내 배너 -->
         <div class="info-banner">
-            ℹ️ 이 대시보드는 <strong>현재 브라우저</strong>의 localStorage에 기록된 방문 데이터를 보여줍니다.
-            실제 다수 방문자 통계가 필요하다면 Google Analytics 또는 GoatCounter 연동을 권장해요.
+            ℹ️ 아래 대시보드는 <strong>이 브라우저</strong>의 localStorage에 기록된 데이터만 표시합니다. (관리자 본인 방문 기록)
+            실제 전체 방문자 통계는 위 <strong>GA 콘솔</strong>에서 확인하세요.
         </div>
 
         <!-- 요약 카드 -->
@@ -639,7 +687,7 @@
 
     <!-- ── 푸터 ── -->
     <footer class="admin-footer">
-        두근두근타운 관리자 전용 페이지 · 데이터 저장소: localStorage (브라우저 로컬)
+        두근두근타운 관리자 전용 페이지 · 로컬 데이터: localStorage (브라우저 로컬) · 전체 통계: Google Analytics 4 (G-RXTDCP8G1V)
     </footer>
 
 </div><!-- /#dashboard -->
@@ -655,7 +703,7 @@
    ADMIN_PASSWORD  : 관리자 비밀번호 (원하는 값으로 변경하세요)
    STORAGE_KEY     : tracker.js와 반드시 일치해야 함
 ============================================================ */
-const ADMIN_PASSWORD = 'dkdt2024';  // ← 이 비밀번호를 원하는 값으로 바꾸세요!
+const ADMIN_PASSWORD = '6000';
 const STORAGE_KEY    = 'dkdt_visits';
 const SESSION_KEY    = 'dkdt_admin_auth'; // 로그인 세션 유지용
 
@@ -1094,16 +1142,6 @@ function exportJSON() {
 }
 
 /* ============================================================
-   데이터 초기화
-============================================================ */
-function resetData() {
-    if (!confirm('⚠️ 모든 방문 기록을 삭제할까요?\n이 작업은 되돌릴 수 없습니다.')) return;
-    localStorage.removeItem(STORAGE_KEY);
-    renderAll(currentDays); // 차트 새로고침
-    alert('✅ 데이터가 초기화되었습니다.');
-}
-
-/* ============================================================
    로그인 / 로그아웃 처리
 ============================================================ */
 function showDashboard() {
@@ -1157,9 +1195,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 로그아웃
     document.getElementById('logout-btn').addEventListener('click', doLogout);
-
-    // 데이터 초기화
-    document.getElementById('reset-btn').addEventListener('click', resetData);
 
     // JSON 내보내기
     document.getElementById('export-btn').addEventListener('click', exportJSON);

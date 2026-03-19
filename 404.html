@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RXTDCP8G1V"></script>
+    <script>
+        // Google Analytics 4 초기화
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-RXTDCP8G1V');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - 페이지를 찾을 수 없습니다</title>
@@ -163,6 +172,9 @@
             }
         }
     </style>
+
+    <!-- 방문자 추적 스크립트 (로컬 localStorage 기록용) -->
+    <script src="src/js/tracker.js"></script>
 </head>
 <body>
     <div id="header-placeholder"></div>
