@@ -45,3 +45,4 @@
 | 2026-03-20 | admin.html: GA 연동 배너 + GA 콘솔 바로가기 버튼 추가, 로컬 대시보드 안내 문구 수정, GA 스크립트 삽입 |
 | 2026-03-20 | tracker.js는 어느 HTML에도 로드되지 않음 확인 (로컬 대시보드 데이터 없음) |
 | 2026-03-20 | tracker.js 전체 12개 HTML 페이지에 </head> 바로 전에 로드 추가 완료 |
+| 2026-03-21 | csv_to_json.py에 레시피(recipe) 변환 기능 추가 — 레시피.csv → recipes.json(39개) + season_ice_recipes.json(9개) 생성 |

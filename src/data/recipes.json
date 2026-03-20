@@ -1,17 +1,17 @@
 {
   "gradeMultipliers": {
-    "1": 1.0,
+    "1": 1,
     "2": 1.5,
     "3": 2,
     "4": 4,
     "5": 8
   },
   "staminaMultipliers": {
-    "1": 1.0,
+    "1": 1,
     "2": 1.2,
     "3": 1.4,
     "4": 1.6,
-    "5": 2.0
+    "5": 2
   },
   "items": [
     {
@@ -282,7 +282,8 @@
         "밀",
         "물고기(100)"
       ],
-      "image": "seapizza"
+      "image": "seapizza",
+      "buff": "활력 충만"
     },
     {
       "name": "티라미수",
@@ -390,7 +391,8 @@
         "애플파이",
         "피시 앤 칩스"
       ],
-      "image": "camping"
+      "image": "camping",
+      "buff": "무한한 힘"
     },
     {
       "name": "잉글리시 애프터눈 티",
@@ -427,6 +429,18 @@
       "image": "pcocktail"
     },
     {
+      "name": "북유럽파란가재 냉채",
+      "price": 1310,
+      "stamina": 60,
+      "ingredients": [
+        "북유럽파란가재",
+        "북유럽파란가재",
+        "북유럽파란가재",
+        "양상추"
+      ],
+      "image": "bpcocktail"
+    },
+    {
       "name": "미트소스 가지 그라탱",
       "price": 1230,
       "stamina": 75,
@@ -436,7 +450,8 @@
         "식용유",
         "케첩"
       ],
-      "image": "meggplant"
+      "image": "meggplant",
+      "buff": "활력 충만"
     },
     {
       "name": "캔들라이트 디너",
