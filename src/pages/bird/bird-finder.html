@@ -300,7 +300,11 @@
             if (birdName && !bird.name.toLowerCase().includes(birdName)) return false;
             if (bird.level > level) return false;
             const timeOk = bird.time && bird.time.includes(time);
-            const weatherOk = bird.weather && bird.weather.includes(weather);
+            // 무지개는 모든 날씨의 상위 호환이므로, 날씨가 무지개이면 bird.weather 조건과 무관하게 통과
+            // (단, "무지개"라고 명시된 bird는 무지개 날씨에서만 출현 → 별도 처리 없이 includes로 자연스럽게 걸러짐)
+            const weatherOk = weather === '무지개'
+                ? true
+                : bird.weather && bird.weather.includes(weather);
             return timeOk && weatherOk;
         });
 
@@ -403,10 +407,14 @@
 
         return entries.map(([time, weathers]) => {
             // 현재 조건(시간 AND 날씨)이 모두 일치하면 하이라이트
+            // 무지개는 모든 날씨의 상위 호환 → 날씨가 무지개이면 weathers 목록과 무관하게 날씨 조건 만족
+            const weatherMatch = activeWeather === '무지개'
+                ? true
+                : weathers.includes(activeWeather);
             const isMatch = activeTime !== null
                 && activeWeather !== null
                 && time === activeTime
-                && weathers.includes(activeWeather);
+                && weatherMatch;
 
             const matchClass = isMatch ? ' motion-match' : '';
             // 해당 시간대의 날씨 목록을 이모지+텍스트로 나열

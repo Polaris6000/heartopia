@@ -342,6 +342,31 @@
             margin-right: 6px;
         }
 
+        /* ── 버프 배지 ── */
+        .buff-row {
+            margin-bottom: 10px;
+        }
+        .buff-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            background: #fff8e1;
+            color: #b06000;
+            border: 1px solid #f5c842;
+            white-space: nowrap;
+        }
+        /* 테이블 내 버프 셀 */
+        .buff-cell {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #b06000;
+            white-space: nowrap;
+        }
+
         /* 빈 상태 */
         .empty-state {
             text-align: center; padding: 60px 20px;
@@ -702,6 +727,11 @@ function renderCard(r, maxROI, maxGPS) {
     // 시즌 배지 (빙설 시즌 전용 레시피에만 표시)
     const seasonTag = r.season ? `<span class="season-tag">❄️ ${r.season}</span>` : '';
 
+    // 버프: 값이 있으면 "버프이름 + 등급수" 형식으로 표시 (예: 활력 충만1, 활력 충만5)
+    const buffHTML = r.buff
+        ? `<div class="buff-row"><span class="buff-tag">✨ ${r.buff}${currentGrade}</span></div>`
+        : '';
+
     return `
     <div class="recipe-card">
         <div class="recipe-card-header">
@@ -711,6 +741,7 @@ function renderCard(r, maxROI, maxGPS) {
                 <span class="recipe-efficiency-badge ${badge.cls}">${badge.label}</span>
             </div>
         </div>
+        ${buffHTML}
         <div class="ingredients-list">${ingHTML}</div>
         <div class="metrics-grid">
             <div class="metric">
@@ -769,6 +800,11 @@ function renderTable(list, area) {
         // 시즌 배지
         const seasonTagTbl = r.season ? `<span class="season-tag">❄️ ${r.season}</span>` : '';
 
+        // 버프: 값이 있으면 "버프이름 + 등급수" 형식 (예: 활력 충만1)
+        const buffCellHTML = r.buff
+            ? `<span class="buff-tag">✨ ${r.buff}${currentGrade}</span>`
+            : `<span style="color:var(--color-text-muted)">-</span>`;
+
         return `
         <tr>
             <td>${imgSmHTML}${r.name}${seasonTagTbl}</td>
@@ -779,6 +815,7 @@ function renderTable(list, area) {
             <td>${r.roi.toFixed(0)}%</td>
             <td>${r.stamina}</td>
             <td>${r.goldPerStam.toFixed(1)}</td>
+            <td class="buff-cell">${buffCellHTML}</td>
             <td><span class="table-badge ${badge.cls}">${badge.label}</span></td>
         </tr>`;
     }).join('');
@@ -796,6 +833,7 @@ function renderTable(list, area) {
                     <th onclick="setSort('roi')">수익률 ROI</th>
                     <th onclick="setSort('stamina')">체력</th>
                     <th onclick="setSort('stamGold')">골드/체력</th>
+                    <th>버프</th>
                     <th>효율 등급</th>
                 </tr>
             </thead>
