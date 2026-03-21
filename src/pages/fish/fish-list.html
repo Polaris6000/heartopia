@@ -497,7 +497,7 @@
             // image 필드가 있으면 썸네일, 없으면 물고기 이모지 자리표시자
             const imgCell = fish.image
                 ? `<img class="fish-thumb"
-                        src="../../../public/images/fish_img/spr_ui_item_normal_p_fish_fish_${fish.image}.webp"
+                        src="../../../public/images/fish_img/fish_${fish.image}.webp"
                         alt="${fish.name}"
                         onerror="this.outerHTML='<div class=\\" fish-thumb-placeholder\\ "></div>`
                 : `<div class="fish-thumb-placeholder">🐟</div>`;

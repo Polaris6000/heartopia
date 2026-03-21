@@ -480,7 +480,7 @@
             // image 필드가 있으면 썸네일, 없으면 새 이모지 자리표시자
             const imgCell = bird.image
                 ? `<img class="fish-thumb"
-                        src="../../../public/images/bird_img/spr_ui_item_normal_p_bird_bird${bird.image}.webp"
+                        src="../../../public/images/bird_img/bird${bird.image}.webp"
                         alt="${bird.name}"
                         onerror="handleBirdImgError(this)">`
                 : `<div class="fish-thumb-placeholder">🐦</div>`;

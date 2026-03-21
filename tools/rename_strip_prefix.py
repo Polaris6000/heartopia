@@ -3,21 +3,23 @@ rename_strip_prefix.py
 ──────────────────────
 파일명 앞의 공통 접두사를 제거하는 리네임 유틸리티
 
-사용법:
+사용법 (프로젝트 루트에서 실행):
     # 미리보기 (실제 변경 없음)
-    python rename_strip_prefix.py ./insect spr_ui_item_normal_p_insect_
+    python tools/rename_strip_prefix.py public/images/insect_img spr_ui_item_normal_p_insect_
 
     # 실제 적용
-    python rename_strip_prefix.py ./insect spr_ui_item_normal_p_insect_ --apply
+    python tools/rename_strip_prefix.py public/images/insect_img spr_ui_item_normal_p_insect_ --apply
 
     # 여러 폴더 한 번에
-    python rename_strip_prefix.py ./insect ./bird ./fish spr_ui_item_normal_p_ --apply
+    python tools/rename_strip_prefix.py public/images/insect_img public/images/bird_img public/images/fish_img spr_ui_item_normal_p_ --apply
 
     # 확장자 필터
-    python rename_strip_prefix.py ./insect spr_ui_item_normal_p_insect_ --ext .webp .png --apply
+    python tools/rename_strip_prefix.py public/images/insect_img spr_ui_item_normal_p_insect_ --ext .webp .png --apply
 
     # 하위 폴더까지 재귀 탐색
-    python rename_strip_prefix.py ./assets spr_ui_item_normal_p_ --recursive --apply
+    python tools/rename_strip_prefix.py public/images spr_ui_item_normal_p_ --recursive --apply
+
+참고: 폴더 경로는 항상 프로젝트 루트 기준으로 해석됩니다.
 """
 
 import argparse
@@ -100,6 +102,14 @@ def main() -> None:
     parser.add_argument("--recursive", action="store_true", help="하위 폴더까지 재귀 탐색")
 
     args = parser.parse_args()
+
+    # 스크립트 위치(tools/)의 상위 = 프로젝트 루트
+    # 상대 경로로 받은 폴더를 프로젝트 루트 기준으로 해석 (절대 경로면 그대로 사용)
+    project_root = Path(__file__).resolve().parent.parent
+    args.folders = [
+        (project_root / f).resolve() if not f.is_absolute() else f.resolve()
+        for f in args.folders
+    ]
 
     extensions = [e if e.startswith(".") else f".{e}" for e in args.ext] if args.ext else None
 

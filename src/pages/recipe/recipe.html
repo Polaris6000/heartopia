@@ -718,7 +718,7 @@ function renderCard(r, maxROI, maxGPS) {
     const imgHTML = r.image
         ? `<div class="food-img-wrap">
                <img class="food-img"
-                    src="../../../public/images/food_img/spr_ui_item_normal_p_food_${r.image}.webp"
+                    src="../../../public/images/food_img/${r.image}.webp"
                     alt="${r.name}"
                     onerror="this.parentElement.style.display='none'">
            </div>`
@@ -792,7 +792,7 @@ function renderTable(list, area) {
         // 테이블용 소형 이미지 (이미지 키가 있을 때만)
         const imgSmHTML = r.image
             ? `<img class="food-img-sm"
-                    src="../../../public/images/food_img/spr_ui_item_normal_p_food_${r.image}.webp"
+                    src="../../../public/images/food_img/${r.image}.webp"
                     alt="${r.name}"
                     onerror="this.style.display='none'">`
             : '';
