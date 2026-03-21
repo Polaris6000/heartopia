@@ -5,36 +5,57 @@ heartopia 프로젝트의 CSV 데이터를 JSON 포맷으로 변환하는 범용
 
 [폴더 구조]
 heartopia/
-├── src/data/                       ← 변환된 JSON 파일이 저장됨 (자동 덮어쓰기)
-│   ├── insect_data.json
-│   ├── bird_data.json
-│   ├── recipes.json
-│   └── season_ice/
-│       ├── season_ice_insect.json
-│       ├── season_ice_bird.json
-│       └── season_ice_recipes.json
+├── src/data/
+│   ├── fish_data.json               ← 일반 물고기
+│   ├── insect_data.json             ← 일반 곤충
+│   ├── bird_data.json               ← 일반 새
+│   ├── recipes.json                 ← 일반 레시피
+│   ├── crops.json                   ← 일반 작물
+│   ├── shop.json                    ← 상점 (시즌 availability 필드로 구분)
+│   ├── gather.json                  ← 채집 아이템
+│   ├── season_ice/                  ← 빙설 시즌 전용 파일
+│   │   ├── season_ice_fish.json
+│   │   ├── season_ice_insect.json
+│   │   ├── season_ice_bird.json
+│   │   ├── season_ice_recipes.json
+│   │   └── season_ice_crops.json
+│   └── season_dreamlight/           ← 꿈의 명암 시즌 전용 파일
+│       ├── season_dreamlight_fish.json
+│       ├── season_dreamlight_insect.json
+│       ├── season_dreamlight_recipes.json
+│       └── season_dreamlight_crops.json
 └── tools/
-    ├── csv/                        ← 원본 CSV 파일을 여기에 넣으면 됨
+    ├── csv/                         ← 원본 CSV 파일을 여기에 넣으면 됨
+    │   ├── 물고기.csv
     │   ├── 곤충.csv
     │   ├── 새.csv
-    │   └── 레시피.csv
-    └── csv_to_json.py              ← 이 파일
+    │   ├── 레시피.csv
+    │   ├── 작물.csv
+    │   ├── 상점.csv
+    │   └── 채집.csv
+    └── csv_to_json.py               ← 이 파일
+
+[시즌 분류 규칙]
+  - 시즌 컬럼 = "일반"   → 메인 데이터 파일에 포함
+  - 시즌 컬럼 = "빙설"   → season_ice/ 파일에 저장
+  - 시즌 컬럼 = "꿈의 명암" → season_dreamlight/ 파일에 저장
+  - 상점(shop)은 시즌 분리 없이 availability 필드로 구분
 
 [사용법]
   # 모든 타입 일괄 변환
   python tools/csv_to_json.py
 
   # 특정 타입만 변환
-  python tools/csv_to_json.py insect
-  python tools/csv_to_json.py bird
-  python tools/csv_to_json.py recipe
-  python tools/csv_to_json.py insect bird recipe
+  python tools/csv_to_json.py fish
+  python tools/csv_to_json.py insect bird
+  python tools/csv_to_json.py fish insect bird recipe crops shop gather
 
 [새 타입 추가 방법]
   1. convert_*_row() 함수 작성
   2. CONVERTERS 딕셔너리에 항목 추가
-     - 일반 배열 출력: 기본 convert() 사용
-     - 래퍼 객체 출력: custom_fn 키에 전용 변환 함수 지정
+     - 시즌 분리 필요한 타입: main_output / ice_output / dreamlight_output 모두 지정
+     - 시즌 분리 불필요: main_output 만 지정, custom_fn 으로 단순 저장 함수 사용
+     - 래퍼 객체 출력(레시피·작물): custom_fn 에 전용 변환 함수 지정
   3. tools/csv/ 폴더에 CSV 파일 배치
 """
 
@@ -44,20 +65,30 @@ import sys
 from pathlib import Path
 from typing import Any
 
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────
 # 경로 설정
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────
 
-# 이 스크립트 위치 기준으로 프로젝트 루트를 계산
-TOOLS_DIR = Path(__file__).parent          # tools/
-PROJECT_ROOT = TOOLS_DIR.parent            # heartopia/
-CSV_DIR = TOOLS_DIR / "csv"               # tools/csv/
-DATA_DIR = PROJECT_ROOT / "src" / "data"  # src/data/
+# 스크립트 위치(tools/)의 상위 = 프로젝트 루트
+TOOLS_DIR    = Path(__file__).parent           # tools/
+PROJECT_ROOT = TOOLS_DIR.parent                # heartopia/
+CSV_DIR      = TOOLS_DIR / "csv"               # tools/csv/
+DATA_DIR     = PROJECT_ROOT / "src" / "data"   # src/data/
 
 
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────
+# 시즌 분류 상수
+# 새로운 시즌이 추가되면 여기에 값 집합을 추가하고,
+# CONVERTERS 에 season_*_output 경로를 지정하면 됩니다.
+# ─────────────────────────────────────────────────────────
+
+SEASON_ICE_VALUES        = {"빙설"}           # 빙설 시즌 식별 값
+SEASON_DREAMLIGHT_VALUES = {"꿈의 명암"}       # 꿈의 명암 시즌 식별 값
+
+
+# ─────────────────────────────────────────────────────────
 # 공통 파싱 유틸리티
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────
 
 def parse_list_field(value: str) -> list[str]:
     """
@@ -72,11 +103,11 @@ def parse_list_field(value: str) -> list[str]:
 def parse_special(value: str) -> bool | str:
     """
     시즌 컬럼 값을 JSON의 special 필드로 변환.
-    - "일반" → False
-    - 그 외("희귀", "유인기", "특수", "빙설 시즌", "보너스 스테이지" 등) → 문자열 그대로
+    - "일반" 또는 빈 값 → False  (JSON에서 일반 아이템 표시용)
+    - 그 외 ("빙설", "꿈의 명암", "희귀" 등) → 문자열 그대로
     """
-    stripped = value.strip()
-    if stripped == "일반":
+    stripped = (value or "").strip()
+    if not stripped or stripped == "일반":
         return False
     return stripped
 
@@ -85,11 +116,11 @@ def parse_int(value: str) -> int | None:
     """
     문자열을 정수로 변환. 비어 있거나 변환 불가 시 None 반환.
     """
-    if not value or not value.strip():
+    if not value or not str(value).strip():
         return None
     try:
-        return int(value.strip())
-    except ValueError:
+        return int(float(str(value).strip()))  # "10.0" → 10 처리 포함
+    except (ValueError, TypeError):
         return None
 
 
@@ -99,16 +130,14 @@ def parse_number(value: str) -> int | float | None:
     - 소수점 없는 정수형이면 int 반환 (예: "2" → 2)
     - 소수점 있는 실수형이면 float 반환 (예: "1.5" → 1.5)
     - 비어 있거나 변환 불가 시 None 반환
-    레시피 등급 배수처럼 int/float이 혼재하는 경우에 사용.
     """
-    v = value.strip() if value else ""
+    v = str(value).strip() if value else ""
     if not v:
         return None
     try:
         f = float(v)
-        # 소수점 이하가 없으면 int로 반환해 JSON에서 "1.0" 대신 "1"로 표기
         return int(f) if f == int(f) else f
-    except ValueError:
+    except (ValueError, TypeError):
         return None
 
 
@@ -125,15 +154,11 @@ def parse_motion(value: str) -> dict[str, list[str]] | None:
         return None
 
     result: dict[str, list[str]] = {}
-
-    # " / " 기준으로 시간대별 조건을 분리
-    parts = value.split(" / ")
-    for part in parts:
+    for part in value.split(" / "):
         part = part.strip()
         if ": " not in part:
             continue
         time_key, conditions_str = part.split(": ", 1)
-        # 쉼표로 구분된 날씨 조건을 리스트로 변환
         conditions = [c.strip() for c in conditions_str.split(",") if c.strip()]
         if conditions:
             result[time_key.strip()] = conditions
@@ -141,32 +166,35 @@ def parse_motion(value: str) -> dict[str, list[str]] | None:
     return result if result else None
 
 
-# ─────────────────────────────────────────
-# 곤충(Insect) 변환 로직
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────
+# 물고기(Fish) 변환 로직
+# ─────────────────────────────────────────────────────────
 
-def convert_insect_row(row: dict[str, str]) -> dict[str, Any] | None:
+def convert_fish_row(row: dict[str, str]) -> dict[str, Any] | None:
     """
-    CSV 한 행을 곤충 JSON 객체로 변환.
+    CSV 한 행을 물고기 JSON 객체로 변환.
 
-    CSV 컬럼: 이름, 레벨, 서식지, 시간대, 날씨, 판매가, 시즌, 이미지ID
-    JSON 필드: name, level, habitat, time, weather, price, special, image
+    CSV 컬럼: 이름, 레벨, 서식지, 크기, 시간대, 날씨, 판매가, 시즌, 이미지ID
+    JSON 필드: name, level, habitat, size, time, weather, price, special, image(선택)
+
+    이미지 경로: public/images/fish_img/fish_{image}.webp  ← 언더스코어 포함
     """
-    name = row["이름"].strip()
+    name = str(row.get("이름", "")).strip()
     if not name:
         return None  # 빈 행 무시
 
     obj: dict[str, Any] = {
         "name":    name,
-        "level":   parse_int(row["레벨"]),
-        "habitat": row["서식지"].strip(),
-        "time":    parse_list_field(row["시간대"]),
-        "weather": parse_list_field(row["날씨"]),
-        "price":   parse_int(row["판매가"]),
-        "special": parse_special(row["시즌"]),
+        "level":   parse_int(row.get("레벨", "")),
+        "habitat": str(row.get("서식지", "")).strip(),
+        "size":    str(row.get("크기", "")).strip(),
+        "time":    parse_list_field(str(row.get("시간대", ""))),
+        "weather": parse_list_field(str(row.get("날씨", ""))),
+        "price":   parse_int(row.get("판매가", "")),
+        "special": parse_special(str(row.get("시즌", ""))),
     }
 
-    # image가 없는 항목(일부 빙설 시즌 곤충)은 키를 포함하지 않음
+    # 이미지ID: 없는 항목은 키 자체를 포함하지 않음
     image = parse_int(row.get("이미지ID", ""))
     if image is not None:
         obj["image"] = image
@@ -174,9 +202,43 @@ def convert_insect_row(row: dict[str, str]) -> dict[str, Any] | None:
     return obj
 
 
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────
+# 곤충(Insect) 변환 로직
+# ─────────────────────────────────────────────────────────
+
+def convert_insect_row(row: dict[str, str]) -> dict[str, Any] | None:
+    """
+    CSV 한 행을 곤충 JSON 객체로 변환.
+
+    CSV 컬럼: 이름, 레벨, 서식지, 시간대, 날씨, 판매가, 시즌, 이미지ID
+    JSON 필드: name, level, habitat, time, weather, price, special, image(선택)
+
+    이미지 경로: public/images/insect_img/insect{image}.webp  ← 언더스코어 없음
+    """
+    name = str(row.get("이름", "")).strip()
+    if not name:
+        return None
+
+    obj: dict[str, Any] = {
+        "name":    name,
+        "level":   parse_int(row.get("레벨", "")),
+        "habitat": str(row.get("서식지", "")).strip(),
+        "time":    parse_list_field(str(row.get("시간대", ""))),
+        "weather": parse_list_field(str(row.get("날씨", ""))),
+        "price":   parse_int(row.get("판매가", "")),
+        "special": parse_special(str(row.get("시즌", ""))),
+    }
+
+    image = parse_int(row.get("이미지ID", ""))
+    if image is not None:
+        obj["image"] = image
+
+    return obj
+
+
+# ─────────────────────────────────────────────────────────
 # 새(Bird) 변환 로직
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────
 
 def convert_bird_row(row: dict[str, str]) -> dict[str, Any] | None:
     """
@@ -185,33 +247,33 @@ def convert_bird_row(row: dict[str, str]) -> dict[str, Any] | None:
     CSV 컬럼: 이름, 레벨, 서식지, 카테고리, 시간대, 날씨, 판매가, 시즌, 이미지ID,
               깃털 다듬기 조건, 날개 펴기 조건
     JSON 필드: name, level, habitat, time, weather, price, special, category,
-               motion_preening(선택), motion_wingspread(선택), image
+               motion_preening(선택), motion_wingspread(선택), image(선택)
+
+    이미지 경로: public/images/bird_img/bird{image}.webp  ← 언더스코어 없음
     """
-    name = row["이름"].strip()
+    name = str(row.get("이름", "")).strip()
     if not name:
-        return None  # 빈 행 무시
+        return None
 
     obj: dict[str, Any] = {
         "name":     name,
-        "level":    parse_int(row["레벨"]),
-        "habitat":  row["서식지"].strip(),
-        "time":     parse_list_field(row["시간대"]),
-        "weather":  parse_list_field(row["날씨"]),
-        "price":    parse_int(row["판매가"]),
-        "special":  parse_special(row["시즌"]),
-        "category": row["카테고리"].strip(),
+        "level":    parse_int(row.get("레벨", "")),
+        "habitat":  str(row.get("서식지", "")).strip(),
+        "time":     parse_list_field(str(row.get("시간대", ""))),
+        "weather":  parse_list_field(str(row.get("날씨", ""))),
+        "price":    parse_int(row.get("판매가", "")),
+        "special":  parse_special(str(row.get("시즌", ""))),
+        "category": str(row.get("카테고리", "")).strip(),
     }
 
-    # 모션 조건은 값이 있을 때만 키를 추가
-    preening = parse_motion(row.get("깃털 다듬기 조건", ""))
+    preening = parse_motion(str(row.get("깃털 다듬기 조건", "")))
     if preening is not None:
         obj["motion_preening"] = preening
 
-    wingspread = parse_motion(row.get("날개 펴기 조건", ""))
+    wingspread = parse_motion(str(row.get("날개 펴기 조건", "")))
     if wingspread is not None:
         obj["motion_wingspread"] = wingspread
 
-    # image는 값이 있을 때만 추가
     image = parse_int(row.get("이미지ID", ""))
     if image is not None:
         obj["image"] = image
@@ -219,13 +281,12 @@ def convert_bird_row(row: dict[str, str]) -> dict[str, Any] | None:
     return obj
 
 
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────
 # 레시피(Recipe) 변환 로직
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────
 
-# 레시피 변환 중 CSV에서 추출한 등급 배수를 임시 저장하는 모듈 수준 변수.
-# convert_recipe() 호출 시 초기화된 뒤 convert_recipe_row()에서 값이 채워진다.
-_recipe_grade_mult: dict[str, int | float] = {}
+# 레시피 등급 배수를 convert_recipe_row() 실행 중 임시 저장하는 모듈 변수
+_recipe_grade_mult:   dict[str, int | float] = {}
 _recipe_stamina_mult: dict[str, int | float] = {}
 
 
@@ -233,25 +294,29 @@ def convert_recipe_row(row: dict[str, str]) -> dict[str, Any] | None:
     """
     CSV 한 행을 레시피 JSON 객체로 변환.
 
-    CSV 컬럼 (recipes_관리.xlsx → CSV 내보내기 기준):
-      이름, 판매가(1등급), 스태미나(1등급),
-      재료1, 재료2, 재료3, 재료4,   ← 각 재료를 개별 컬럼으로 관리
-      이미지, 시즌, 버프,            ← 버프 컬럼 추가
-      (빈 열), 등급, 판매 배수, 스태미나 배수
+    CSV 컬럼: 이름, 판매가(1등급), 스태미나(1등급),
+              재료1, 재료2, 재료3, 재료4,
+              이미지, 시즌, 버프,
+              (빈 열), 등급, 판매 배수, 스태미나 배수
 
     JSON 필드: name, price, stamina, ingredients, image(선택), buff(선택)
 
+    이미지: food_img/ 폴더의 텍스트 파일명 사용 (예: acupcake.webp)
+
     부수 효과:
-      '등급' 컬럼에 값이 있는 행은 _recipe_grade_mult / _recipe_stamina_mult에
-      등급 배수를 저장한다 (아이템 데이터와 동일 행에 공존 가능).
+      '등급' 컬럼에 값이 있는 행은 _recipe_grade_mult / _recipe_stamina_mult 에 저장
     """
     global _recipe_grade_mult, _recipe_stamina_mult
 
-    # ── 등급 배수 정보 추출 (해당 열이 채워진 행에서만 실행) ──────────────
-    grade_str = row.get("등급", "").strip()
+    # ── 등급 배수 정보 추출 ──────────────────────────────────────────
+    grade_str = str(row.get("등급", "")).strip()
     if grade_str:
-        # "1등급" → "1", "2등급" → "2", ...
-        grade_num    = grade_str.replace("등급", "").strip()
+        raw_num   = grade_str.replace("등급", "").strip()
+        # CSV 에서 소수 문자열("1.0")로 읽힐 수 있으므로 정수 문자열("1")로 정규화
+        try:
+            grade_num = str(int(float(raw_num)))
+        except ValueError:
+            grade_num = raw_num
         price_mult   = parse_number(row.get("판매 배수", ""))
         stamina_mult = parse_number(row.get("스태미나 배수", ""))
         if price_mult is not None:
@@ -259,36 +324,38 @@ def convert_recipe_row(row: dict[str, str]) -> dict[str, Any] | None:
         if stamina_mult is not None:
             _recipe_stamina_mult[grade_num] = stamina_mult
 
-    # ── 아이템 데이터 변환 ────────────────────────────────────────────────
-    name = row["이름"].strip()
+    # ── 아이템 데이터 변환 ───────────────────────────────────────────
+    name = str(row.get("이름", "")).strip()
     if not name:
-        return None  # 이름 없는 행 무시
-
-    # 판매가가 비어 있는 행은 데이터 행이 아님 (범례, 메모 등) → 건너뜀
-    if not row.get("판매가(1등급)", "").strip():
         return None
 
+    # 판매가 컬럼명 유연 처리: "판매가(1등급)" 또는 "판매가 (1등급)"
+    price_raw = row.get("판매가(1등급)", row.get("판매가 (1등급)", "")).strip()
+    if not price_raw:
+        return None  # 가격 없는 행(범례, 메모 등) 건너뜀
+
+    stamina_raw = row.get("스태미나(1등급)", row.get("스태미나 (1등급)", ""))
+
     # 재료1~4 컬럼을 읽어 비어 있지 않은 값만 리스트로 결합
-    # (엑셀에서 재료를 개별 컬럼으로 관리하므로 빈 셀은 건너뜀)
     ingredients = [
         v for key in ("재료1", "재료2", "재료3", "재료4")
-        if (v := row.get(key, "").strip())
+        if (v := str(row.get(key, "")).strip())
     ]
 
     obj: dict[str, Any] = {
         "name":        name,
-        "price":       parse_int(row["판매가(1등급)"]),
-        "stamina":     parse_int(row["스태미나(1등급)"]),
+        "price":       parse_int(price_raw),
+        "stamina":     parse_int(stamina_raw),
         "ingredients": ingredients,
     }
 
-    # 이미지: 빈 값(일부 빙설 시즌 레시피)은 키 자체를 포함하지 않음
-    image = row.get("이미지", "").strip()
+    # 이미지: food_img/{image}.webp 형태로 사용됨 (텍스트 파일명)
+    image = str(row.get("이미지", "")).strip()
     if image:
         obj["image"] = image
 
     # 버프: 값이 있을 때만 키 추가
-    buff = row.get("버프", "").strip()
+    buff = str(row.get("버프", "")).strip()
     if buff:
         obj["buff"] = buff
 
@@ -297,17 +364,17 @@ def convert_recipe_row(row: dict[str, str]) -> dict[str, Any] | None:
 
 def convert_recipe(data_type: str) -> None:
     """
-    레시피 CSV를 읽어 recipes.json / season_ice_recipes.json으로 변환.
+    레시피 CSV를 읽어 아래 3개 JSON 파일로 변환.
+      - recipes.json                            ← 일반 레시피
+      - season_ice/season_ice_recipes.json      ← 빙설 시즌 레시피
+      - season_dreamlight/season_dreamlight_recipes.json  ← 꿈의 명암 시즌 레시피
 
-    일반 convert()와 달리 출력 형식이 단순 배열이 아닌 래퍼 객체:
+    출력 형식 (래퍼 객체):
       {
-        "gradeMultipliers":  { "1": 1, "2": 1.5, ... },
-        "staminaMultipliers": { "1": 1.0, "2": 1.2, ... },
+        "gradeMultipliers":   { "1": 1, "2": 1.33, ... },
+        "staminaMultipliers": { "1": 1, "2": 1.2, ... },
         "items": [ { ... }, ... ]
       }
-
-    빙설 시즌 레시피("시즌" 컬럼이 SEASON_ICE_VALUES에 해당)는
-    season_ice_recipes.json에 동일 래퍼 구조로 분리 저장.
     """
     global _recipe_grade_mult, _recipe_stamina_mult
 
@@ -318,109 +385,414 @@ def convert_recipe(data_type: str) -> None:
     config   = CONVERTERS[data_type]
     csv_path = CSV_DIR / config["csv_file"]
 
-    # CSV 파일 존재 여부 확인
     if not csv_path.exists():
         print(f"  ❌ CSV 파일을 찾을 수 없음: {csv_path}")
-        print(f"     → tools/csv/ 폴더에 '{config['csv_file']}' 파일을 넣어주세요.")
         return
 
-    main_items:   list[dict] = []  # 일반 시즌 레시피
-    season_items: list[dict] = []  # 빙설 시즌 레시피
+    main_items:       list[dict] = []  # 일반 레시피
+    ice_items:        list[dict] = []  # 빙설 레시피
+    dreamlight_items: list[dict] = []  # 꿈의 명암 레시피
 
-    # CSV 읽기 (BOM 포함 UTF-8 대응)
     with open(csv_path, encoding="utf-8-sig", newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            obj = convert_recipe_row(row)  # 등급 배수도 이 안에서 추출됨
+            obj = convert_recipe_row(row)
             if obj is None:
                 continue
 
-            # 시즌 분류: 빙설 시즌이면 special 필드 추가 후 분리
-            season_val = parse_special(row.get("시즌", "일반"))
+            # 시즌 컬럼 값 기준으로 3-way 분류
+            season_val = parse_special(str(row.get("시즌", "")))
             if season_val in SEASON_ICE_VALUES:
-                obj["special"] = season_val  # 빙설 시즌 아이템에만 special 부여
-                season_items.append(obj)
+                obj["special"] = season_val
+                ice_items.append(obj)
+            elif season_val in SEASON_DREAMLIGHT_VALUES:
+                obj["special"] = season_val
+                dreamlight_items.append(obj)
             else:
                 main_items.append(obj)
 
-    # ── 메인 데이터 저장 (래퍼 구조) ────────────────────────────────────
-    main_output: dict[str, Any] = {
-        "gradeMultipliers":   _recipe_grade_mult,
-        "staminaMultipliers": _recipe_stamina_mult,
-        "items":              main_items,
-    }
-    main_path = config["main_output"]
-    main_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(main_path, "w", encoding="utf-8") as f:
-        json.dump(main_output, f, ensure_ascii=False, indent=2)
-    print(f"  ✅ {main_path.relative_to(PROJECT_ROOT)}  ({len(main_items)}개)")
+    # ── 메인 데이터 저장 (래퍼 구조) ────────────────────────────────
+    _save_wrapped_json(
+        config["main_output"],
+        _recipe_grade_mult,
+        _recipe_stamina_mult,
+        main_items,
+    )
+    print(f"  ✅ {config['main_output'].relative_to(PROJECT_ROOT)}  ({len(main_items)}개)")
 
-    # ── 빙설 시즌 데이터 저장 (래퍼 구조, 데이터가 있을 때만) ────────────
-    if season_items:
-        season_output: dict[str, Any] = {
-            "gradeMultipliers":   _recipe_grade_mult,
-            "staminaMultipliers": _recipe_stamina_mult,
-            "items":              season_items,
-        }
-        season_path = config["season_output"]
-        season_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(season_path, "w", encoding="utf-8") as f:
-            json.dump(season_output, f, ensure_ascii=False, indent=2)
-        print(f"  ✅ {season_path.relative_to(PROJECT_ROOT)}  ({len(season_items)}개)")
+    # ── 빙설 데이터 저장 ────────────────────────────────────────────
+    if ice_items:
+        _save_wrapped_json(
+            config["ice_output"],
+            _recipe_grade_mult,
+            _recipe_stamina_mult,
+            ice_items,
+        )
+        print(f"  ✅ {config['ice_output'].relative_to(PROJECT_ROOT)}  ({len(ice_items)}개)")
     else:
-        print(f"  ℹ️  빙설 시즌 데이터 없음 → season 파일 미생성")
+        print(f"  ℹ️  빙설 레시피 없음 → 파일 미생성")
+
+    # ── 꿈의 명암 데이터 저장 ────────────────────────────────────────
+    if dreamlight_items:
+        _save_wrapped_json(
+            config["dreamlight_output"],
+            _recipe_grade_mult,
+            _recipe_stamina_mult,
+            dreamlight_items,
+        )
+        print(f"  ✅ {config['dreamlight_output'].relative_to(PROJECT_ROOT)}  ({len(dreamlight_items)}개)")
+    else:
+        print(f"  ℹ️  꿈의 명암 레시피 없음 → 파일 미생성")
 
 
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────
+# 작물(Crops) 변환 로직
+# ─────────────────────────────────────────────────────────
+
+# 작물 등급 배수를 convert_crops_row() 실행 중 임시 저장하는 모듈 변수
+_crop_grade_mult: dict[str, int | float] = {}
+
+
+def convert_crops_row(row: dict[str, str]) -> dict[str, Any] | None:
+    """
+    CSV 한 행을 작물 JSON 객체로 변환.
+
+    CSV 컬럼: 이름, 씨앗 가격, 수확 시간 (분), 판매가 (1등급), 이미지, 시즌,
+              (빈 열), 등급, 판매 배수
+
+    JSON 필드: name, seedPrice, harvestMinutes, sellPrice, image(선택)
+
+    이미지: crop_img/{image}.webp 형태로 사용됨 (텍스트 파일명)
+            엑셀의 오타 "corp_" → "crop_" 자동 수정
+
+    부수 효과:
+      '등급' 컬럼에 값이 있는 행은 _crop_grade_mult 에 저장
+    """
+    global _crop_grade_mult
+
+    # ── 등급 배수 정보 추출 ──────────────────────────────────────────
+    grade_str = str(row.get("등급", "")).strip()
+    if grade_str:
+        raw_num  = grade_str.replace("등급", "").strip()
+        # CSV 에서 소수 문자열("1.0")로 읽힐 수 있으므로 정수 문자열("1")로 정규화
+        try:
+            grade_num = str(int(float(raw_num)))
+        except ValueError:
+            grade_num = raw_num
+        mult = parse_number(row.get("판매 배수", ""))
+        if mult is not None:
+            _crop_grade_mult[grade_num] = mult
+
+    # ── 아이템 데이터 변환 ───────────────────────────────────────────
+    name = str(row.get("이름", "")).strip()
+    if not name:
+        return None
+
+    # 씨앗 가격이 없는 행(범례, 메모 등)은 건너뜀
+    # 컬럼명 유연 처리: "씨앗 가격" 또는 "씨앗가격"
+    seed_raw = row.get("씨앗 가격", row.get("씨앗가격", "")).strip()
+    if not seed_raw:
+        return None
+
+    # 컬럼명 유연 처리: "수확 시간 (분)" 또는 "수확시간(분)"
+    harvest_raw  = row.get("수확 시간 (분)", row.get("수확시간(분)", ""))
+    # 컬럼명 유연 처리: "판매가 (1등급)" 또는 "판매가(1등급)"
+    sell_raw     = row.get("판매가 (1등급)", row.get("판매가(1등급)", ""))
+
+    obj: dict[str, Any] = {
+        "name":           name,
+        "seedPrice":      parse_int(seed_raw),
+        "harvestMinutes": parse_int(harvest_raw),
+        "sellPrice":      parse_int(sell_raw),
+    }
+
+    # 이미지: crop_img/{image}.webp 형태로 사용됨 (텍스트 파일명)
+    # 엑셀 오타 "corp_9201" → "crop_9201" 자동 수정
+    image = str(row.get("이미지", "")).strip()
+    if image:
+        image = image.replace("corp_", "crop_")  # 엑셀 오타 수정
+        obj["image"] = image
+
+    return obj
+
+
+def convert_crops(data_type: str) -> None:
+    """
+    작물 CSV를 읽어 아래 3개 JSON 파일로 변환.
+      - crops.json                              ← 일반 작물
+      - season_ice/season_ice_crops.json        ← 빙설 시즌 작물
+      - season_dreamlight/season_dreamlight_crops.json  ← 꿈의 명암 시즌 작물
+
+    출력 형식 (래퍼 객체):
+      {
+        "gradeMultipliers": { "1": 1.0, "2": 1.33, ... },
+        "items": [ { ... }, ... ]
+      }
+    """
+    global _crop_grade_mult
+
+    _crop_grade_mult = {}
+
+    config   = CONVERTERS[data_type]
+    csv_path = CSV_DIR / config["csv_file"]
+
+    if not csv_path.exists():
+        print(f"  ❌ CSV 파일을 찾을 수 없음: {csv_path}")
+        return
+
+    main_items:       list[dict] = []
+    ice_items:        list[dict] = []
+    dreamlight_items: list[dict] = []
+
+    with open(csv_path, encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            obj = convert_crops_row(row)
+            if obj is None:
+                continue
+
+            season_val = parse_special(str(row.get("시즌", "")))
+            if season_val in SEASON_ICE_VALUES:
+                obj["special"] = season_val
+                ice_items.append(obj)
+            elif season_val in SEASON_DREAMLIGHT_VALUES:
+                obj["special"] = season_val
+                dreamlight_items.append(obj)
+            else:
+                main_items.append(obj)
+
+    # ── 메인 데이터 저장 (래퍼 구조, staminaMultipliers 없음) ─────────
+    _save_wrapped_json(config["main_output"], _crop_grade_mult, None, main_items)
+    print(f"  ✅ {config['main_output'].relative_to(PROJECT_ROOT)}  ({len(main_items)}개)")
+
+    if ice_items:
+        _save_wrapped_json(config["ice_output"], _crop_grade_mult, None, ice_items)
+        print(f"  ✅ {config['ice_output'].relative_to(PROJECT_ROOT)}  ({len(ice_items)}개)")
+    else:
+        print(f"  ℹ️  빙설 작물 없음 → 파일 미생성")
+
+    if dreamlight_items:
+        _save_wrapped_json(config["dreamlight_output"], _crop_grade_mult, None, dreamlight_items)
+        print(f"  ✅ {config['dreamlight_output'].relative_to(PROJECT_ROOT)}  ({len(dreamlight_items)}개)")
+    else:
+        print(f"  ℹ️  꿈의 명암 작물 없음 → 파일 미생성")
+
+
+# ─────────────────────────────────────────────────────────
+# 상점(Shop) 변환 로직
+# ─────────────────────────────────────────────────────────
+
+def convert_shop_row(row: dict[str, str]) -> dict[str, Any] | None:
+    """
+    CSV 한 행을 상점 아이템 JSON 객체로 변환.
+
+    CSV 컬럼: 이름, 구매가, 일일 한도, 구매 가능 시즌
+    JSON 필드: name, shopPrice, dailyLimit, availability(선택)
+
+    [시즌 처리 방식]
+    상점 아이템은 fish/insect/bird 와 달리 시즌별로 파일을 분리하지 않습니다.
+    대신 availability 필드로 구분하여 단일 shop.json 에 모두 저장합니다.
+      - 항상 구매 가능: availability 필드 없음
+      - 시즌 한정:      availability: "빙설" / "꿈의 명암" / "특별한 날씨"
+
+    [레시피 원가 계산용 아이템 처리]
+    페이지에 노출하지 않을 아이템(예: 물고기(50), 물고기(100) 등 원가 계산 전용)은
+    JSON 파일에서 해당 항목에 "hidden": true 를 직접 추가하세요.
+    상점 페이지는 hidden: true 인 항목을 자동으로 숨깁니다.
+    """
+    name = str(row.get("이름", "")).strip()
+    if not name:
+        return None
+
+    # 구매가가 없는 행은 건너뜀
+    price_raw = str(row.get("구매가", "")).strip()
+    if not price_raw:
+        return None
+
+    obj: dict[str, Any] = {
+        "name":       name,
+        "shopPrice":  parse_int(price_raw),
+        "dailyLimit": parse_int(row.get("일일 한도", "")),
+    }
+
+    # 구매 가능 시즌: 값이 있을 때만 포함 (없으면 항상 구매 가능)
+    availability = str(row.get("구매 가능 시즌", "")).strip()
+    if availability and availability not in ("None", "일반"):
+        obj["availability"] = availability
+
+    return obj
+
+
+def convert_shop(data_type: str) -> None:
+    """
+    상점 CSV를 읽어 shop.json 단일 파일로 저장.
+
+    상점 아이템은 시즌 분리 없이 모두 한 파일에 저장하고
+    각 항목의 availability 필드로 시즌을 구분합니다.
+    페이지에서 availability 필드를 읽어 시즌 필터를 적용하면 됩니다.
+    """
+    config   = CONVERTERS[data_type]
+    csv_path = CSV_DIR / config["csv_file"]
+
+    if not csv_path.exists():
+        print(f"  ❌ CSV 파일을 찾을 수 없음: {csv_path}")
+        return
+
+    items: list[dict] = []
+
+    with open(csv_path, encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            obj = convert_shop_row(row)
+            if obj is not None:
+                items.append(obj)
+
+    save_json(config["main_output"], items)
+    print(f"  ✅ {config['main_output'].relative_to(PROJECT_ROOT)}  ({len(items)}개)")
+
+
+# ─────────────────────────────────────────────────────────
+# 채집(Gather) 변환 로직
+# ─────────────────────────────────────────────────────────
+
+def convert_gather_row(row: dict[str, str]) -> dict[str, Any] | None:
+    """
+    CSV 한 행을 채집 아이템 JSON 객체로 변환.
+
+    CSV 컬럼: 이름, 판매가
+    JSON 필드: name, sellPrice
+
+    채집 아이템은 시즌 구분이 없으며 gather.json 단일 파일에 저장됩니다.
+    """
+    name = str(row.get("이름", "")).strip()
+    if not name:
+        return None
+
+    sell_raw = str(row.get("판매가", "")).strip()
+    if not sell_raw:
+        return None
+
+    return {
+        "name":      name,
+        "sellPrice": parse_int(sell_raw),
+    }
+
+
+def convert_gather(data_type: str) -> None:
+    """
+    채집 CSV를 읽어 gather.json 단일 파일로 저장.
+    """
+    config   = CONVERTERS[data_type]
+    csv_path = CSV_DIR / config["csv_file"]
+
+    if not csv_path.exists():
+        print(f"  ❌ CSV 파일을 찾을 수 없음: {csv_path}")
+        return
+
+    items: list[dict] = []
+
+    with open(csv_path, encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            obj = convert_gather_row(row)
+            if obj is not None:
+                items.append(obj)
+
+    save_json(config["main_output"], items)
+    print(f"  ✅ {config['main_output'].relative_to(PROJECT_ROOT)}  ({len(items)}개)")
+
+
+# ─────────────────────────────────────────────────────────
 # 변환기 설정 테이블
-# ─────────────────────────────────────────
-# 새 데이터 타입을 추가할 때 여기에만 항목을 넣으면 됨.
+# 새 데이터 타입을 추가할 때 여기에만 항목을 넣으면 됩니다.
+#
+# [키 설명]
+#   label           : 출력에 표시되는 한글 이름
+#   csv_file        : tools/csv/ 폴더 기준 CSV 파일명
+#   main_output     : 일반 시즌 JSON 출력 경로
+#   ice_output      : 빙설 시즌 JSON 출력 경로 (시즌 분리가 없는 타입은 생략)
+#   dreamlight_output: 꿈의 명암 시즌 JSON 출력 경로 (시즌 분리가 없는 타입은 생략)
+#   converter       : 행 단위 변환 함수
+#   custom_fn       : 파일 전체를 처리하는 커스텀 함수 (없으면 기본 convert() 사용)
+#                     레시피·작물처럼 래퍼 구조 출력이 필요하거나
+#                     상점·채집처럼 단순 저장이 필요한 경우 지정
+# ─────────────────────────────────────────────────────────
 
 CONVERTERS: dict[str, dict[str, Any]] = {
+    # ── 물고기 ──────────────────────────────────────────────────────
+    "fish": {
+        "label":             "물고기",
+        "csv_file":          "물고기.csv",
+        "main_output":       DATA_DIR / "fish_data.json",
+        "ice_output":        DATA_DIR / "season_ice"        / "season_ice_fish.json",
+        "dreamlight_output": DATA_DIR / "season_dreamlight" / "season_dreamlight_fish.json",
+        "converter":         convert_fish_row,
+        # custom_fn 없음 → 기본 convert() 사용 (3-way 시즌 분리)
+    },
+    # ── 곤충 ────────────────────────────────────────────────────────
     "insect": {
-        "label":          "곤충",
-        "csv_file":       "곤충.csv",
-        "main_output":    DATA_DIR / "insect_data.json",
-        "season_output":  DATA_DIR / "season_ice" / "season_ice_insect.json",
-        "converter":      convert_insect_row,
-        # custom_fn 없음 → 기본 convert() 사용 (단순 배열 출력)
+        "label":             "곤충",
+        "csv_file":          "곤충.csv",
+        "main_output":       DATA_DIR / "insect_data.json",
+        "ice_output":        DATA_DIR / "season_ice"        / "season_ice_insect.json",
+        "dreamlight_output": DATA_DIR / "season_dreamlight" / "season_dreamlight_insect.json",
+        "converter":         convert_insect_row,
     },
+    # ── 새 ──────────────────────────────────────────────────────────
     "bird": {
-        "label":          "새",
-        "csv_file":       "새.csv",
-        "main_output":    DATA_DIR / "bird_data.json",
-        "season_output":  DATA_DIR / "season_ice" / "season_ice_bird.json",
-        "converter":      convert_bird_row,
-        # custom_fn 없음 → 기본 convert() 사용 (단순 배열 출력)
+        "label":             "새",
+        "csv_file":          "새.csv",
+        "main_output":       DATA_DIR / "bird_data.json",
+        "ice_output":        DATA_DIR / "season_ice"        / "season_ice_bird.json",
+        "dreamlight_output": DATA_DIR / "season_dreamlight" / "season_dreamlight_bird.json",
+        "converter":         convert_bird_row,
     },
+    # ── 레시피 ──────────────────────────────────────────────────────
     "recipe": {
-        "label":          "레시피",
-        "csv_file":       "레시피.csv",
-        "main_output":    DATA_DIR / "recipes.json",
-        "season_output":  DATA_DIR / "season_ice" / "season_ice_recipes.json",
-        "converter":      convert_recipe_row,
-        # 출력이 단순 배열이 아닌 래퍼 객체({ gradeMultipliers, staminaMultipliers, items })
-        # 이므로 전용 변환 함수를 지정한다.
-        "custom_fn":      convert_recipe,
+        "label":             "레시피",
+        "csv_file":          "레시피.csv",
+        "main_output":       DATA_DIR / "recipes.json",
+        "ice_output":        DATA_DIR / "season_ice"        / "season_ice_recipes.json",
+        "dreamlight_output": DATA_DIR / "season_dreamlight" / "season_dreamlight_recipes.json",
+        "converter":         convert_recipe_row,
+        # 출력이 단순 배열이 아닌 래퍼 객체이므로 전용 함수 사용
+        "custom_fn":         convert_recipe,
     },
-    # ── 추가 예시 ──────────────────────────────────────────────────────
-    # "fish": {
-    #     "label":         "물고기",
-    #     "csv_file":      "물고기.csv",
-    #     "main_output":   DATA_DIR / "fish_data.json",
-    #     "season_output": DATA_DIR / "season_ice" / "season_ice_fish.json",
-    #     "converter":     convert_fish_row,   # 위에 함수 정의 필요
-    # },
-    # ───────────────────────────────────────────────────────────────────
+    # ── 작물 ────────────────────────────────────────────────────────
+    "crops": {
+        "label":             "작물",
+        "csv_file":          "작물.csv",
+        "main_output":       DATA_DIR / "crops.json",
+        "ice_output":        DATA_DIR / "season_ice"        / "season_ice_crops.json",
+        "dreamlight_output": DATA_DIR / "season_dreamlight" / "season_dreamlight_crops.json",
+        "converter":         convert_crops_row,
+        # 등급 배수 래퍼 구조 출력을 위해 전용 함수 사용
+        "custom_fn":         convert_crops,
+    },
+    # ── 상점 ────────────────────────────────────────────────────────
+    # 시즌 분리 없이 availability 필드로 구분 (custom_fn 필수)
+    "shop": {
+        "label":     "상점",
+        "csv_file":  "상점.csv",
+        "main_output": DATA_DIR / "shop.json",
+        "converter": convert_shop_row,
+        "custom_fn": convert_shop,
+    },
+    # ── 채집 ────────────────────────────────────────────────────────
+    # 시즌 구분 없음, 단순 배열 저장 (custom_fn 필수)
+    "gather": {
+        "label":       "채집",
+        "csv_file":    "채집.csv",
+        "main_output": DATA_DIR / "gather.json",
+        "converter":   convert_gather_row,
+        "custom_fn":   convert_gather,
+    },
 }
 
-# 빙설 시즌으로 분류될 special 값 목록
-SEASON_ICE_VALUES = {"빙설 시즌"}
 
-
-# ─────────────────────────────────────────
-# 변환 실행 함수
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────
+# 저장 유틸리티
+# ─────────────────────────────────────────────────────────
 
 def save_json(path: Path, data: list[dict]) -> None:
     """JSON 파일로 저장. 부모 디렉토리가 없으면 자동 생성."""
@@ -429,76 +801,116 @@ def save_json(path: Path, data: list[dict]) -> None:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
+def _save_wrapped_json(
+    path: Path,
+    grade_mult: dict,
+    stamina_mult: dict | None,
+    items: list[dict],
+) -> None:
+    """
+    등급 배수 래퍼 구조의 JSON 파일로 저장.
+    레시피와 작물처럼 gradeMultipliers + items 형태가 필요한 경우 사용.
+
+    stamina_mult 가 None이면 staminaMultipliers 키를 포함하지 않습니다 (작물 등).
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    output: dict[str, Any] = {"gradeMultipliers": grade_mult}
+    if stamina_mult is not None:
+        output["staminaMultipliers"] = stamina_mult
+    output["items"] = items
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
+
+
+# ─────────────────────────────────────────────────────────
+# 범용 변환 실행 함수 (fish, insect, bird 등 단순 배열 + 시즌 분리)
+# ─────────────────────────────────────────────────────────
+
 def convert(data_type: str) -> None:
     """
-    지정된 타입의 CSV를 읽어 메인 JSON과 빙설 시즌 JSON으로 분리 저장.
+    지정된 타입의 CSV를 읽어 메인 / 빙설 / 꿈의 명암 JSON으로 3-way 분리 저장.
+
+    CONVERTERS 에 ice_output 또는 dreamlight_output 이 없는 타입은
+    해당 시즌 데이터가 있어도 저장하지 않습니다 (경고 출력).
 
     Args:
-        data_type: CONVERTERS 딕셔너리의 키 (예: "insect", "bird")
+        data_type: CONVERTERS 딕셔너리의 키 (예: "fish", "insect", "bird")
     """
-    config = CONVERTERS[data_type]
+    config   = CONVERTERS[data_type]
     csv_path = CSV_DIR / config["csv_file"]
 
-    # CSV 파일 존재 여부 확인
     if not csv_path.exists():
         print(f"  ❌ CSV 파일을 찾을 수 없음: {csv_path}")
         print(f"     → tools/csv/ 폴더에 '{config['csv_file']}' 파일을 넣어주세요.")
         return
 
-    main_data: list[dict]   = []  # 일반 시즌 데이터
-    season_data: list[dict] = []  # 빙설 시즌 데이터
+    main_data:       list[dict] = []  # 일반 시즌
+    ice_data:        list[dict] = []  # 빙설 시즌
+    dreamlight_data: list[dict] = []  # 꿈의 명암 시즌
 
-    # CSV 읽기 (BOM 포함 UTF-8 대응)
     with open(csv_path, encoding="utf-8-sig", newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
             obj = config["converter"](row)
             if obj is None:
-                continue  # 빈 행 건너뜀
+                continue
 
-            # special 값에 따라 메인 / 빙설 시즌으로 분류
-            if obj.get("special") in SEASON_ICE_VALUES:
-                season_data.append(obj)
+            # special 값(parse_special 반환값)으로 시즌 분류
+            special = obj.get("special")
+            if special in SEASON_ICE_VALUES:
+                ice_data.append(obj)
+            elif special in SEASON_DREAMLIGHT_VALUES:
+                dreamlight_data.append(obj)
             else:
                 main_data.append(obj)
 
-    # 메인 데이터 저장
+    # ── 메인 데이터 저장 ─────────────────────────────────────────────
     save_json(config["main_output"], main_data)
     print(f"  ✅ {config['main_output'].relative_to(PROJECT_ROOT)}  ({len(main_data)}개)")
 
-    # 빙설 시즌 데이터 저장 (데이터가 있을 때만)
-    if season_data:
-        save_json(config["season_output"], season_data)
-        print(f"  ✅ {config['season_output'].relative_to(PROJECT_ROOT)}  ({len(season_data)}개)")
+    # ── 빙설 데이터 저장 ─────────────────────────────────────────────
+    if ice_data:
+        ice_output = config.get("ice_output")
+        if ice_output:
+            save_json(ice_output, ice_data)
+            print(f"  ✅ {ice_output.relative_to(PROJECT_ROOT)}  ({len(ice_data)}개)")
+        else:
+            print(f"  ⚠️  빙설 데이터 {len(ice_data)}개가 있지만 ice_output 경로 미설정 — 건너뜀")
     else:
-        print(f"  ℹ️  빙설 시즌 데이터 없음 → season 파일 미생성")
+        print(f"  ℹ️  빙설 데이터 없음 → 파일 미생성")
+
+    # ── 꿈의 명암 데이터 저장 ────────────────────────────────────────
+    if dreamlight_data:
+        dl_output = config.get("dreamlight_output")
+        if dl_output:
+            save_json(dl_output, dreamlight_data)
+            print(f"  ✅ {dl_output.relative_to(PROJECT_ROOT)}  ({len(dreamlight_data)}개)")
+        else:
+            print(f"  ⚠️  꿈의 명암 데이터 {len(dreamlight_data)}개가 있지만 dreamlight_output 경로 미설정 — 건너뜀")
+    else:
+        print(f"  ℹ️  꿈의 명암 데이터 없음 → 파일 미생성")
 
 
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────
 # 진입점
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────────────────────
 
 def main() -> None:
     """
     CLI 인자에 따라 단일 또는 전체 타입을 변환.
 
     사용법:
-      python tools/csv_to_json.py               # 전체 변환
-      python tools/csv_to_json.py insect        # 곤충만 변환
-      python tools/csv_to_json.py bird          # 새만 변환
-      python tools/csv_to_json.py recipe        # 레시피만 변환
-      python tools/csv_to_json.py insect bird   # 곤충 + 새 변환
+      python tools/csv_to_json.py                                  # 전체 변환
+      python tools/csv_to_json.py fish                             # 물고기만
+      python tools/csv_to_json.py fish insect bird                 # 복수 지정
+      python tools/csv_to_json.py fish insect bird recipe crops    # 시즌 분리 타입 전체
     """
-    # 변환할 타입 목록 결정
-    if len(sys.argv) > 1:
-        requested = sys.argv[1:]
-    else:
-        requested = list(CONVERTERS.keys())
+    requested = sys.argv[1:] if len(sys.argv) > 1 else list(CONVERTERS.keys())
 
-    print(f"\n{'─' * 45}")
+    print(f"\n{'─' * 50}")
     print(f"  heartopia CSV → JSON 변환기")
     print(f"  CSV 소스: {CSV_DIR.relative_to(PROJECT_ROOT)}/")
-    print(f"{'─' * 45}")
+    print(f"{'─' * 50}")
 
     for data_type in requested:
         if data_type not in CONVERTERS:
@@ -507,18 +919,18 @@ def main() -> None:
             print(f"     사용 가능: {available}")
             continue
 
-        label    = CONVERTERS[data_type]["label"]
+        label = CONVERTERS[data_type]["label"]
         print(f"\n  [{label}] 변환 중...")
 
-        # custom_fn이 지정된 타입은 해당 함수로 처리 (래퍼 구조 등 특수 출력)
-        # 지정되지 않은 타입은 기본 convert() 함수로 처리 (단순 배열 출력)
+        # custom_fn 이 지정된 타입은 해당 함수로 처리
+        # 지정되지 않은 타입은 기본 convert() 로 처리 (단순 배열 + 3-way 시즌 분리)
         custom_fn = CONVERTERS[data_type].get("custom_fn")
         if custom_fn is not None:
             custom_fn(data_type)
         else:
             convert(data_type)
 
-    print(f"\n{'─' * 45}\n  완료!\n{'─' * 45}\n")
+    print(f"\n{'─' * 50}\n  완료!\n{'─' * 50}\n")
 
 
 if __name__ == "__main__":

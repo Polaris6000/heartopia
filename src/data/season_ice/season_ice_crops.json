@@ -1,17 +1,19 @@
 {
   "gradeMultipliers": {
-    "1": 1.0,
+    "1": 1,
     "2": 1.33,
     "3": 1.67,
-    "4": 2.0,
-    "5": 3.0
+    "4": 2,
+    "5": 3
   },
   "items": [
     {
       "name": "무",
       "seedPrice": 10,
       "harvestMinutes": 15,
-      "sellPrice": 30
+      "sellPrice": 30,
+      "image": "whiteradish",
+      "special": "빙설"
     }
   ]
 }

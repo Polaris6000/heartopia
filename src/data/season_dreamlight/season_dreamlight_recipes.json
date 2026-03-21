@@ -1,0 +1,282 @@
+{
+  "gradeMultipliers": {
+    "1.0": 1,
+    "2.0": 1.5,
+    "3.0": 2,
+    "4.0": 4,
+    "5.0": 8
+  },
+  "staminaMultipliers": {
+    "1.0": 1,
+    "2.0": 1.2,
+    "3.0": 1.4,
+    "4.0": 1.6,
+    "5.0": 2
+  },
+  "items": [
+    {
+      "name": "짭짤한 팝콘통",
+      "price": 900,
+      "stamina": 60,
+      "ingredients": [
+        "옥수수",
+        "버섯",
+        "버터",
+        "버터"
+      ],
+      "image": "food_9201",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "캐러멜 팝콘통",
+      "price": 820,
+      "stamina": 50,
+      "ingredients": [
+        "옥수수",
+        "봄날 카라멜 슈가",
+        "봄날 카라멜 슈가",
+        "버터"
+      ],
+      "image": "food_9202",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "살사 소스 웨이브 감자칩",
+      "price": 280,
+      "stamina": 26,
+      "ingredients": [
+        "감자",
+        "감자",
+        "살사 소스"
+      ],
+      "image": "food_9203",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "짭조름한 더블 버킷",
+      "price": 1230,
+      "stamina": 95,
+      "ingredients": [
+        "짭짤한 팝콘통",
+        "살사 소스 웨이브 감자칩"
+      ],
+      "image": "food_9204",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "달콤한 듀얼 팝콘통",
+      "price": 1150,
+      "stamina": 90,
+      "ingredients": [
+        "캐러멜 팝콘통",
+        "살사 소스 웨이브 감자칩"
+      ],
+      "image": "food_9205",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "로메인 타코",
+      "price": 260,
+      "stamina": 30,
+      "ingredients": [
+        "로메인",
+        "로메인",
+        "살사 소스",
+        "달걀"
+      ],
+      "image": "food_9206",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "나물 로메인 타코",
+      "price": 330,
+      "stamina": 35,
+      "ingredients": [
+        "야생 고사리",
+        "야생 고사리",
+        "로메인 타코"
+      ],
+      "image": "food_9207",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "야생 고사리 로메인 타코",
+      "price": 330,
+      "stamina": 35,
+      "ingredients": [
+        "야생 고사리",
+        "야생 고사리",
+        "로메인 타코"
+      ],
+      "image": "food_9208",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "산마늘 로메인 타코",
+      "price": 330,
+      "stamina": 35,
+      "ingredients": [
+        "산마늘",
+        "산마늘",
+        "로메인 타코"
+      ],
+      "image": "food_9209",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "산우엉 로메인 타코",
+      "price": 330,
+      "stamina": 35,
+      "ingredients": [
+        "산우엉",
+        "산우엉",
+        "로메인 타코"
+      ],
+      "image": "food_9210",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "산겨자 로메인 타코",
+      "price": 330,
+      "stamina": 35,
+      "ingredients": [
+        "산겨자",
+        "산겨자",
+        "로메인 타코"
+      ],
+      "image": "food_9211",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "봄날 과일 홍차",
+      "price": 460,
+      "stamina": 45,
+      "ingredients": [
+        "홍차",
+        "블루베리",
+        "봄날 카라멜 슈가",
+        "봄날 카라멜 슈가"
+      ],
+      "image": "food_9212",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "봄날 사과 홍차",
+      "price": 480,
+      "stamina": 45,
+      "ingredients": [
+        "홍차",
+        "사과",
+        "봄날 카라멜 슈가",
+        "봄날 카라멜 슈가"
+      ],
+      "image": "food_9213",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "봄날 오렌지 홍차",
+      "price": 480,
+      "stamina": 45,
+      "ingredients": [
+        "홍차",
+        "오렌지",
+        "봄날 카라멜 슈가",
+        "봄날 카라멜 슈가"
+      ],
+      "image": "food_9214",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "봄날 블루베리 홍차",
+      "price": 460,
+      "stamina": 45,
+      "ingredients": [
+        "홍차",
+        "블루베리",
+        "봄날 카라멜 슈가",
+        "봄날 카라멜 슈가"
+      ],
+      "image": "food_9215",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "봄날 라즈베리 홍차",
+      "price": 480,
+      "stamina": 45,
+      "ingredients": [
+        "홍차",
+        "라즈베리",
+        "봄날 카라멜 슈가",
+        "봄날 카라멜 슈가"
+      ],
+      "image": "food_9216",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "봄날 딸기 홍차",
+      "price": 800,
+      "stamina": 60,
+      "ingredients": [
+        "홍차",
+        "딸기",
+        "봄날 카라멜 슈가",
+        "봄날 카라멜 슈가"
+      ],
+      "image": "food_9217",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "봄날 포도 홍차",
+      "price": 910,
+      "stamina": 65,
+      "ingredients": [
+        "홍차",
+        "포도",
+        "봄날 카라멜 슈가",
+        "봄날 카라멜 슈가"
+      ],
+      "image": "food_9218",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "봄날 파인애플 홍차",
+      "price": 480,
+      "stamina": 45,
+      "ingredients": [
+        "홍차",
+        "파인애플",
+        "봄날 카라멜 슈가",
+        "봄날 카라멜 슈가"
+      ],
+      "image": "food_9219",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "화려한 관람 세트",
+      "price": 1960,
+      "stamina": 60,
+      "ingredients": [
+        "봄날 과일 홍차",
+        "달콤한 듀얼 팝콘통",
+        "나물 로메인 타코"
+      ],
+      "image": "food_9220",
+      "buff": "원기 왕성",
+      "special": "꿈의 명암"
+    },
+    {
+      "name": "프리미엄 관람 세트",
+      "price": 2370,
+      "stamina": 60,
+      "ingredients": [
+        "봄날 과일 홍차",
+        "짭조름한 더블 버킷",
+        "나물 로메인 타코",
+        "나물 로메인 타코"
+      ],
+      "image": "food_9221",
+      "buff": "활력 충만",
+      "special": "꿈의 명암"
+    }
+  ]
+}

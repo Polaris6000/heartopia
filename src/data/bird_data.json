@@ -193,26 +193,6 @@
     "image": 301
   },
   {
-    "name": "오목눈이",
-    "level": 1,
-    "habitat": "블랑코 머리 위",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 16,
-    "special": "특수",
-    "category": "소형",
-    "image": 119
-  },
-  {
     "name": "청공작",
     "level": 1,
     "habitat": "새들의 복귀 사건",
@@ -2116,7 +2096,7 @@
       "무지개"
     ],
     "price": 300,
-    "special": "보너스 스테이지",
+    "special": false,
     "category": "공작",
     "motion_preening": {
       "아침": [
@@ -2190,58 +2170,6 @@
     "image": 903
   },
   {
-    "name": "파랑딱새",
-    "level": 10,
-    "habitat": "숲-점프대",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 240,
-    "special": "희귀",
-    "category": "소형",
-    "motion_preening": {
-      "아침": [
-        "무지개"
-      ],
-      "낮": [
-        "무지개"
-      ]
-    },
-    "image": 122
-  },
-  {
-    "name": "아조레스멋쟁이새",
-    "level": 10,
-    "habitat": "어촌-등대",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 240,
-    "special": "희귀",
-    "category": "소형",
-    "motion_preening": {
-      "아침": [
-        "무지개"
-      ],
-      "낮": [
-        "무지개"
-      ]
-    },
-    "image": 115
-  },
-  {
     "name": "비둘기조롱이",
     "level": 10,
     "habitat": "온천산-유적",
@@ -2270,5 +2198,77 @@
       ]
     },
     "image": 802
+  },
+  {
+    "name": "파랑딱새",
+    "level": 10,
+    "habitat": "숲-점프대",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 240,
+    "special": false,
+    "category": "소형",
+    "motion_preening": {
+      "아침": [
+        "무지개"
+      ],
+      "낮": [
+        "무지개"
+      ]
+    },
+    "image": 122
+  },
+  {
+    "name": "아조레스멋쟁이새",
+    "level": 10,
+    "habitat": "어촌-등대",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 240,
+    "special": false,
+    "category": "소형",
+    "motion_preening": {
+      "아침": [
+        "무지개"
+      ],
+      "낮": [
+        "무지개"
+      ]
+    },
+    "image": 115
+  },
+  {
+    "name": "오목눈이",
+    "level": 1,
+    "habitat": "블랑코 머리 위",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 16,
+    "special": false,
+    "category": "소형",
+    "image": 119
   }
 ]

@@ -1,5 +1,165 @@
 [
   {
+    "name": "하늘종개",
+    "level": 1,
+    "habitat": "거목강",
+    "size": "작음",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 50,
+    "special": false,
+    "image": 111
+  },
+  {
+    "name": "전갱이",
+    "level": 1,
+    "habitat": "고래바다",
+    "size": "작음",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 50,
+    "special": false,
+    "image": 321
+  },
+  {
+    "name": "미노우",
+    "level": 1,
+    "habitat": "고요한 강",
+    "size": "작음",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 50,
+    "special": false,
+    "image": 118
+  },
+  {
+    "name": "바다가시고기",
+    "level": 1,
+    "habitat": "구해",
+    "size": "작음",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 50,
+    "special": false,
+    "image": 331
+  },
+  {
+    "name": "백조어",
+    "level": 1,
+    "habitat": "근교 호수",
+    "size": "작음",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 50,
+    "special": false,
+    "image": 213
+  },
+  {
+    "name": "붕어",
+    "level": 1,
+    "habitat": "근교 호수",
+    "size": "중간",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 75,
+    "special": false,
+    "image": 207
+  },
+  {
+    "name": "큰얼룩배스",
+    "level": 1,
+    "habitat": "노을강",
+    "size": "중간",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 50,
+    "special": false,
+    "image": 115
+  },
+  {
+    "name": "바다새우",
+    "level": 1,
+    "habitat": "동해",
+    "size": "작음",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 50,
+    "special": false,
+    "image": 317
+  },
+  {
     "name": "민물배스",
     "level": 1,
     "habitat": "모든 강",
@@ -40,9 +200,29 @@
     "image": 217
   },
   {
-    "name": "바벨",
+    "name": "가다랑어",
     "level": 1,
-    "habitat": "얕은 강",
+    "habitat": "모든 바다",
+    "size": "큼",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 210,
+    "special": false,
+    "image": 303
+  },
+  {
+    "name": "배스",
+    "level": 1,
+    "habitat": "모든 바다",
     "size": "중간",
     "time": [
       "아침",
@@ -57,32 +237,12 @@
     ],
     "price": 75,
     "special": false,
-    "image": 114
+    "image": 302
   },
   {
-    "name": "큰얼룩배스",
+    "name": "정어리",
     "level": 1,
-    "habitat": "노을강",
-    "size": "중간",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 50,
-    "special": false,
-    "image": 115
-  },
-  {
-    "name": "미노우",
-    "level": 1,
-    "habitat": "고요한 강",
+    "habitat": "모든 바다",
     "size": "작음",
     "time": [
       "아침",
@@ -97,27 +257,7 @@
     ],
     "price": 50,
     "special": false,
-    "image": 118
-  },
-  {
-    "name": "하늘종개",
-    "level": 1,
-    "habitat": "거목강",
-    "size": "작음",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 50,
-    "special": false,
-    "image": 111
+    "image": 301
   },
   {
     "name": "유럽백조어",
@@ -160,10 +300,10 @@
     "image": 109
   },
   {
-    "name": "붕어",
+    "name": "노랑촉수",
     "level": 1,
-    "habitat": "근교 호수",
-    "size": "중간",
+    "habitat": "바다낚시",
+    "size": "황금",
     "time": [
       "아침",
       "낮",
@@ -175,49 +315,9 @@
       "비",
       "무지개"
     ],
-    "price": 75,
+    "price": 320,
     "special": false,
-    "image": 207
-  },
-  {
-    "name": "백조어",
-    "level": 1,
-    "habitat": "근교 호수",
-    "size": "작음",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 50,
-    "special": false,
-    "image": 213
-  },
-  {
-    "name": "극지연어",
-    "level": 1,
-    "habitat": "온천산수",
-    "size": "중간",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 105,
-    "special": false,
-    "image": 133
+    "image": 343
   },
   {
     "name": "텐치",
@@ -240,29 +340,9 @@
     "image": 128
   },
   {
-    "name": "정어리",
+    "name": "바벨",
     "level": 1,
-    "habitat": "모든 바다",
-    "size": "작음",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 50,
-    "special": false,
-    "image": 301
-  },
-  {
-    "name": "배스",
-    "level": 1,
-    "habitat": "모든 바다",
+    "habitat": "얕은 강",
     "size": "중간",
     "time": [
       "아침",
@@ -277,13 +357,13 @@
     ],
     "price": 75,
     "special": false,
-    "image": 302
+    "image": 114
   },
   {
-    "name": "가다랑어",
+    "name": "극지연어",
     "level": 1,
-    "habitat": "모든 바다",
-    "size": "큼",
+    "habitat": "온천산수",
+    "size": "중간",
     "time": [
       "아침",
       "낮",
@@ -295,49 +375,9 @@
       "비",
       "무지개"
     ],
-    "price": 210,
+    "price": 105,
     "special": false,
-    "image": 303
-  },
-  {
-    "name": "바다가시고기",
-    "level": 1,
-    "habitat": "구해",
-    "size": "작음",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 50,
-    "special": false,
-    "image": 331
-  },
-  {
-    "name": "바다새우",
-    "level": 1,
-    "habitat": "동해",
-    "size": "작음",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 50,
-    "special": false,
-    "image": 317
+    "image": 133
   },
   {
     "name": "갈치",
@@ -360,14 +400,13 @@
     "image": 315
   },
   {
-    "name": "전갱이",
-    "level": 1,
+    "name": "해마",
+    "level": 2,
     "habitat": "고래바다",
     "size": "작음",
     "time": [
       "아침",
       "낮",
-      "저녁",
       "새벽"
     ],
     "weather": [
@@ -375,29 +414,9 @@
       "비",
       "무지개"
     ],
-    "price": 50,
+    "price": 100,
     "special": false,
-    "image": 321
-  },
-  {
-    "name": "노랑촉수",
-    "level": 1,
-    "habitat": "바다낚시",
-    "size": "황금",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 320,
-    "special": false,
-    "image": 343
+    "image": 312
   },
   {
     "name": "돌마자",
@@ -420,10 +439,10 @@
     "image": 116
   },
   {
-    "name": "바다빙어",
+    "name": "아귀",
     "level": 2,
-    "habitat": "초원 호수",
-    "size": "작음",
+    "habitat": "바다낚시",
+    "size": "황금",
     "time": [
       "아침",
       "낮",
@@ -435,27 +454,9 @@
       "비",
       "무지개"
     ],
-    "price": 100,
+    "price": 320,
     "special": false,
-    "image": 127
-  },
-  {
-    "name": "매화농어",
-    "level": 2,
-    "habitat": "온천산수",
-    "size": "작음",
-    "time": [
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 100,
-    "special": false,
-    "image": 215
+    "image": 314
   },
   {
     "name": "머드개복치",
@@ -475,6 +476,24 @@
     "price": 100,
     "special": false,
     "image": 120
+  },
+  {
+    "name": "매화농어",
+    "level": 2,
+    "habitat": "온천산수",
+    "size": "작음",
+    "time": [
+      "낮",
+      "저녁"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 100,
+    "special": false,
+    "image": 215
   },
   {
     "name": "노란전갱이",
@@ -497,29 +516,10 @@
     "image": 305
   },
   {
-    "name": "해마",
+    "name": "바다빙어",
     "level": 2,
-    "habitat": "고래바다",
+    "habitat": "초원 호수",
     "size": "작음",
-    "time": [
-      "아침",
-      "낮",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 100,
-    "special": false,
-    "image": 312
-  },
-  {
-    "name": "아귀",
-    "level": 2,
-    "habitat": "바다낚시",
-    "size": "황금",
     "time": [
       "아침",
       "낮",
@@ -531,9 +531,9 @@
       "비",
       "무지개"
     ],
-    "price": 320,
+    "price": 100,
     "special": false,
-    "image": 314
+    "image": 127
   },
   {
     "name": "민물잰더",
@@ -555,6 +555,25 @@
     "image": 129
   },
   {
+    "name": "대서양연어",
+    "level": 3,
+    "habitat": "고래바다",
+    "size": "중간",
+    "time": [
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 155,
+    "special": false,
+    "image": 313
+  },
+  {
     "name": "홍합",
     "level": 3,
     "habitat": "근교 호수",
@@ -572,64 +591,6 @@
     "price": 100,
     "special": false,
     "image": 6
-  },
-  {
-    "name": "올챙이",
-    "level": 3,
-    "habitat": "온천산수",
-    "size": "작음",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "비",
-      "무지개"
-    ],
-    "price": 100,
-    "special": false,
-    "image": 201
-  },
-  {
-    "name": "유럽민물가재",
-    "level": 3,
-    "habitat": "숲속 호수",
-    "size": "작음",
-    "time": [
-      "아침",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 100,
-    "special": false,
-    "image": 202
-  },
-  {
-    "name": "흰동가리",
-    "level": 3,
-    "habitat": "구해",
-    "size": "작음",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 100,
-    "special": "희귀",
-    "image": 376
   },
   {
     "name": "소라게",
@@ -652,45 +613,6 @@
     "image": 373
   },
   {
-    "name": "대서양난쟁이문어",
-    "level": 3,
-    "habitat": "잔잔한 바다",
-    "size": "작음",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 150,
-    "special": false,
-    "image": 326
-  },
-  {
-    "name": "대서양연어",
-    "level": 3,
-    "habitat": "고래바다",
-    "size": "중간",
-    "time": [
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 155,
-    "special": false,
-    "image": 313
-  },
-  {
     "name": "참문어",
     "level": 3,
     "habitat": "바다낚시",
@@ -711,10 +633,48 @@
     "image": 311
   },
   {
-    "name": "틸라피아",
-    "level": 4,
-    "habitat": "모든 강",
-    "size": "푸른색",
+    "name": "유럽민물가재",
+    "level": 3,
+    "habitat": "숲속 호수",
+    "size": "작음",
+    "time": [
+      "아침",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 100,
+    "special": false,
+    "image": 202
+  },
+  {
+    "name": "올챙이",
+    "level": 3,
+    "habitat": "온천산수",
+    "size": "작음",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
+    "price": 100,
+    "special": false,
+    "image": 201
+  },
+  {
+    "name": "대서양난쟁이문어",
+    "level": 3,
+    "habitat": "잔잔한 바다",
+    "size": "작음",
     "time": [
       "아침",
       "낮",
@@ -726,26 +686,9 @@
       "비",
       "무지개"
     ],
-    "price": 360,
-    "special": "집어기",
-    "image": 126
-  },
-  {
-    "name": "유럽잉어",
-    "level": 4,
-    "habitat": "노을강",
-    "size": "중간",
-    "time": [
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "맑음",
-      "무지개"
-    ],
-    "price": 300,
+    "price": 150,
     "special": false,
-    "image": 104
+    "image": 326
   },
   {
     "name": "민물대구",
@@ -766,33 +709,11 @@
     "image": 107
   },
   {
-    "name": "레드벨리피라냐",
+    "name": "유럽가자미",
     "level": 4,
-    "habitat": "거목강",
+    "habitat": "구해",
     "size": "중간",
     "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 230,
-    "special": "희귀",
-    "image": 136
-  },
-  {
-    "name": "유럽참개구리",
-    "level": 4,
-    "habitat": "모든 호수",
-    "size": "푸른색",
-    "time": [
-      "아침",
-      "낮",
       "저녁",
       "새벽"
     ],
@@ -802,8 +723,8 @@
       "무지개"
     ],
     "price": 320,
-    "special": "집어기",
-    "image": 106
+    "special": false,
+    "image": 318
   },
   {
     "name": "민물게",
@@ -826,80 +747,21 @@
     "image": 203
   },
   {
-    "name": "나비잉어",
+    "name": "유럽잉어",
     "level": 4,
-    "habitat": "초원 호수",
-    "size": "큼",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "비",
-      "무지개"
-    ],
-    "price": 320,
-    "special": false,
-    "image": 222
-  },
-  {
-    "name": "큰입배스",
-    "level": 4,
-    "habitat": "숲속 호수",
+    "habitat": "노을강",
     "size": "중간",
     "time": [
-      "아침",
       "낮",
-      "저녁",
-      "새벽"
+      "저녁"
     ],
     "weather": [
       "맑음",
       "무지개"
     ],
-    "price": 230,
+    "price": 300,
     "special": false,
-    "image": 1
-  },
-  {
-    "name": "대서양은상어",
-    "level": 4,
-    "habitat": "모든 바다",
-    "size": "푸른색",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 320,
-    "special": "집어기",
-    "image": 329
-  },
-  {
-    "name": "유럽가자미",
-    "level": 4,
-    "habitat": "구해",
-    "size": "중간",
-    "time": [
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 320,
-    "special": false,
-    "image": 318
+    "image": 104
   },
   {
     "name": "망둥어",
@@ -940,10 +802,10 @@
     "image": 316
   },
   {
-    "name": "민물베도라치",
-    "level": 5,
-    "habitat": "노을강",
-    "size": "작음",
+    "name": "큰입배스",
+    "level": 4,
+    "habitat": "숲속 호수",
+    "size": "중간",
     "time": [
       "아침",
       "낮",
@@ -952,12 +814,47 @@
     ],
     "weather": [
       "맑음",
+      "무지개"
+    ],
+    "price": 230,
+    "special": false,
+    "image": 1
+  },
+  {
+    "name": "나비잉어",
+    "level": 4,
+    "habitat": "초원 호수",
+    "size": "큼",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
       "비",
+      "무지개"
+    ],
+    "price": 320,
+    "special": false,
+    "image": 222
+  },
+  {
+    "name": "대서양고등어",
+    "level": 5,
+    "habitat": "고래바다",
+    "size": "작음",
+    "time": [
+      "낮",
+      "저녁"
+    ],
+    "weather": [
+      "맑음",
       "무지개"
     ],
     "price": 150,
     "special": false,
-    "image": 121
+    "image": 304
   },
   {
     "name": "루드",
@@ -980,28 +877,13 @@
     "image": 210
   },
   {
-    "name": "송어",
+    "name": "민물베도라치",
     "level": 5,
-    "habitat": "초원 호수",
-    "size": "중간",
+    "habitat": "노을강",
+    "size": "작음",
     "time": [
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "무지개"
-    ],
-    "price": 230,
-    "special": false,
-    "image": 103
-  },
-  {
-    "name": "유럽가재",
-    "level": 5,
-    "habitat": "잔잔한 바다",
-    "size": "중간",
-    "time": [
+      "아침",
+      "낮",
       "저녁",
       "새벽"
     ],
@@ -1010,26 +892,9 @@
       "비",
       "무지개"
     ],
-    "price": 230,
-    "special": false,
-    "image": 333
-  },
-  {
-    "name": "대서양고등어",
-    "level": 5,
-    "habitat": "고래바다",
-    "size": "작음",
-    "time": [
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "맑음",
-      "무지개"
-    ],
     "price": 150,
     "special": false,
-    "image": 304
+    "image": 121
   },
   {
     "name": "유럽날오징어",
@@ -1052,6 +917,41 @@
     "image": 340
   },
   {
+    "name": "유럽가재",
+    "level": 5,
+    "habitat": "잔잔한 바다",
+    "size": "중간",
+    "time": [
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 230,
+    "special": false,
+    "image": 333
+  },
+  {
+    "name": "송어",
+    "level": 5,
+    "habitat": "초원 호수",
+    "size": "중간",
+    "time": [
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
+    "price": 230,
+    "special": false,
+    "image": 103
+  },
+  {
     "name": "첨 연어",
     "level": 6,
     "habitat": "고요한 강",
@@ -1068,6 +968,24 @@
     "price": 150,
     "special": false,
     "image": 117
+  },
+  {
+    "name": "복어",
+    "level": 6,
+    "habitat": "구해",
+    "size": "중간",
+    "time": [
+      "낮",
+      "저녁"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 230,
+    "special": false,
+    "image": 5
   },
   {
     "name": "사루기",
@@ -1088,42 +1006,6 @@
     "price": 230,
     "special": false,
     "image": 132
-  },
-  {
-    "name": "큰진주조개",
-    "level": 6,
-    "habitat": "숲속 호수",
-    "size": "중간",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 380,
-    "special": false,
-    "image": 4
-  },
-  {
-    "name": "복어",
-    "level": 6,
-    "habitat": "구해",
-    "size": "중간",
-    "time": [
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 230,
-    "special": false,
-    "image": 5
   },
   {
     "name": "등불성대",
@@ -1164,10 +1046,10 @@
     "image": 324
   },
   {
-    "name": "큰가시고기",
-    "level": 7,
-    "habitat": "얕은 강",
-    "size": "작음",
+    "name": "큰진주조개",
+    "level": 6,
+    "habitat": "숲속 호수",
+    "size": "중간",
     "time": [
       "아침",
       "낮",
@@ -1175,12 +1057,28 @@
       "새벽"
     ],
     "weather": [
-      "비",
       "무지개"
     ],
-    "price": 150,
+    "price": 380,
     "special": false,
-    "image": 205
+    "image": 4
+  },
+  {
+    "name": "유럽장어",
+    "level": 7,
+    "habitat": "구해",
+    "size": "중간",
+    "time": [
+      "아침",
+      "낮",
+      "저녁"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 380,
+    "special": false,
+    "image": 335
   },
   {
     "name": "줄무늬송사리",
@@ -1201,6 +1099,42 @@
     "image": 214
   },
   {
+    "name": "산갈치",
+    "level": 7,
+    "habitat": "바다낚시",
+    "size": "황금",
+    "time": [
+      "아침",
+      "낮"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
+    "price": 535,
+    "special": false,
+    "image": 308
+  },
+  {
+    "name": "큰가시고기",
+    "level": 7,
+    "habitat": "얕은 강",
+    "size": "작음",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
+    "price": 150,
+    "special": false,
+    "image": 205
+  },
+  {
     "name": "둑중개",
     "level": 7,
     "habitat": "온천산수",
@@ -1217,23 +1151,6 @@
     "price": 150,
     "special": false,
     "image": 212
-  },
-  {
-    "name": "유럽장어",
-    "level": 7,
-    "habitat": "구해",
-    "size": "중간",
-    "time": [
-      "아침",
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 380,
-    "special": false,
-    "image": 335
   },
   {
     "name": "검은점돔",
@@ -1253,21 +1170,21 @@
     "image": 328
   },
   {
-    "name": "산갈치",
-    "level": 7,
-    "habitat": "바다낚시",
-    "size": "황금",
+    "name": "킹크랩",
+    "level": 8,
+    "habitat": "고래바다",
+    "size": "큼",
     "time": [
       "아침",
-      "낮"
+      "낮",
+      "저녁"
     ],
     "weather": [
-      "맑음",
       "무지개"
     ],
     "price": 535,
     "special": false,
-    "image": 308
+    "image": 319
   },
   {
     "name": "펄고기",
@@ -1285,42 +1202,6 @@
     "price": 250,
     "special": false,
     "image": 103
-  },
-  {
-    "name": "금붕어",
-    "level": 8,
-    "habitat": "초원 호수",
-    "size": "작음",
-    "time": [
-      "아침",
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "비",
-      "무지개"
-    ],
-    "price": 250,
-    "special": false,
-    "image": 216
-  },
-  {
-    "name": "북유럽파란가재",
-    "level": 8,
-    "habitat": "숲속 호수",
-    "size": "작음",
-    "time": [
-      "새벽",
-      "저녁"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 250,
-    "special": false,
-    "image": 208
   },
   {
     "name": "해덕대구",
@@ -1341,23 +1222,6 @@
     "image": 341
   },
   {
-    "name": "킹크랩",
-    "level": 8,
-    "habitat": "고래바다",
-    "size": "큼",
-    "time": [
-      "아침",
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 535,
-    "special": false,
-    "image": 319
-  },
-  {
     "name": "황금킹크랩",
     "level": 8,
     "habitat": "바다낚시",
@@ -1374,6 +1238,42 @@
     "price": 850,
     "special": false,
     "image": 2
+  },
+  {
+    "name": "북유럽파란가재",
+    "level": 8,
+    "habitat": "숲속 호수",
+    "size": "작음",
+    "time": [
+      "새벽",
+      "저녁"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 250,
+    "special": false,
+    "image": 208
+  },
+  {
+    "name": "금붕어",
+    "level": 8,
+    "habitat": "초원 호수",
+    "size": "작음",
+    "time": [
+      "아침",
+      "낮",
+      "저녁"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
+    "price": 250,
+    "special": false,
+    "image": 216
   },
   {
     "name": "후첸",
@@ -1410,24 +1310,6 @@
     "image": 102
   },
   {
-    "name": "펌프킨시드",
-    "level": 9,
-    "habitat": "온천산수",
-    "size": "작음",
-    "time": [
-      "아침",
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "맑음",
-      "무지개"
-    ],
-    "price": 250,
-    "special": false,
-    "image": 123
-  },
-  {
     "name": "개복치",
     "level": 9,
     "habitat": "동해",
@@ -1444,22 +1326,6 @@
     "price": 850,
     "special": false,
     "image": 330
-  },
-  {
-    "name": "참다랑어",
-    "level": 9,
-    "habitat": "잔잔한 바다",
-    "size": "큼",
-    "time": [
-      "아침",
-      "낮"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 850,
-    "special": false,
-    "image": 306
   },
   {
     "name": "붉은개복치",
@@ -1482,21 +1348,103 @@
     "image": 339
   },
   {
-    "name": "유럽메기",
-    "level": 10,
-    "habitat": "초원 호수",
-    "size": "중간",
+    "name": "펌프킨시드",
+    "level": 9,
+    "habitat": "온천산수",
+    "size": "작음",
     "time": [
-      "저녁",
-      "새벽"
+      "아침",
+      "낮",
+      "저녁"
     ],
     "weather": [
       "맑음",
       "무지개"
     ],
+    "price": 250,
+    "special": false,
+    "image": 123
+  },
+  {
+    "name": "참다랑어",
+    "level": 9,
+    "habitat": "잔잔한 바다",
+    "size": "큼",
+    "time": [
+      "아침",
+      "낮"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 850,
+    "special": false,
+    "image": 306
+  },
+  {
+    "name": "황새치",
+    "level": 10,
+    "habitat": "고래바다",
+    "size": "큼",
+    "time": [
+      "아침",
+      "낮"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 850,
+    "special": false,
+    "image": 307
+  },
+  {
+    "name": "귀상어",
+    "level": 10,
+    "habitat": "구해",
+    "size": "큼",
+    "time": [
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 850,
+    "special": false,
+    "image": 367
+  },
+  {
+    "name": "청상아리",
+    "level": 10,
+    "habitat": "바다낚시",
+    "size": "황금",
+    "time": [
+      "아침",
+      "낮"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 850,
+    "special": false,
+    "image": 332
+  },
+  {
+    "name": "북극곤들매기",
+    "level": 10,
+    "habitat": "숲속 호수",
+    "size": "중간",
+    "time": [
+      "낮",
+      "저녁"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
     "price": 610,
     "special": false,
-    "image": 3
+    "image": 131
   },
   {
     "name": "블루길",
@@ -1517,113 +1465,13 @@
     "image": 124
   },
   {
-    "name": "북극곤들매기",
+    "name": "유럽메기",
     "level": 10,
-    "habitat": "숲속 호수",
-    "size": "중간",
-    "time": [
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "비",
-      "무지개"
-    ],
-    "price": 610,
-    "special": false,
-    "image": 131
-  },
-  {
-    "name": "귀상어",
-    "level": 10,
-    "habitat": "구해",
-    "size": "큼",
-    "time": [
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 850,
-    "special": false,
-    "image": 367
-  },
-  {
-    "name": "황새치",
-    "level": 10,
-    "habitat": "고래바다",
-    "size": "큼",
-    "time": [
-      "아침",
-      "낮"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 850,
-    "special": false,
-    "image": 307
-  },
-  {
-    "name": "청상아리",
-    "level": 10,
-    "habitat": "바다낚시",
-    "size": "황금",
-    "time": [
-      "아침",
-      "낮"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 850,
-    "special": false,
-    "image": 332
-  },
-  {
-    "name": "금룡어",
-    "level": 11,
     "habitat": "초원 호수",
     "size": "중간",
     "time": [
-      "아침",
       "저녁",
       "새벽"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 395,
-    "special": false,
-    "image": null
-  },
-  {
-    "name": "라이언헤드",
-    "level": 11,
-    "habitat": "온천산수",
-    "size": "중간",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 395,
-    "special": false,
-    "image": null
-  },
-  {
-    "name": "줄자돔/자리돔",
-    "level": 11,
-    "habitat": "잔잔한 바다",
-    "size": "중간",
-    "time": [
-      "낮",
-      "저녁"
     ],
     "weather": [
       "맑음",
@@ -1631,7 +1479,7 @@
     ],
     "price": 610,
     "special": false,
-    "image": null
+    "image": 3
   },
   {
     "name": "고래상어",
@@ -1648,8 +1496,86 @@
       "무지개"
     ],
     "price": 850,
-    "special": false,
-    "image": null
+    "special": false
+  },
+  {
+    "name": "라이언헤드",
+    "level": 11,
+    "habitat": "온천산수",
+    "size": "중간",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 395,
+    "special": false
+  },
+  {
+    "name": "줄자돔/자리돔",
+    "level": 11,
+    "habitat": "잔잔한 바다",
+    "size": "중간",
+    "time": [
+      "낮",
+      "저녁"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
+    "price": 610,
+    "special": false
+  },
+  {
+    "name": "금룡어",
+    "level": 11,
+    "habitat": "초원 호수",
+    "size": "중간",
+    "time": [
+      "아침",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 395,
+    "special": false
+  },
+  {
+    "name": "바다거북",
+    "level": 12,
+    "habitat": "고래바다",
+    "size": "큼",
+    "time": [
+      "낮",
+      "저녁"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 850,
+    "special": false
+  },
+  {
+    "name": "만새기",
+    "level": 12,
+    "habitat": "구해",
+    "size": "중간",
+    "time": [
+      "아침",
+      "낮"
+    ],
+    "weather": [
+      "무지개"
+    ],
+    "price": 850,
+    "special": false
   },
   {
     "name": "엔젤피시",
@@ -1668,55 +1594,6 @@
     "image": 221
   },
   {
-    "name": "버들붕어",
-    "level": 12,
-    "habitat": "숲속 호수",
-    "size": "작음",
-    "time": [
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "비",
-      "무지개"
-    ],
-    "price": 395,
-    "special": false,
-    "image": null
-  },
-  {
-    "name": "만새기",
-    "level": 12,
-    "habitat": "구해",
-    "size": "중간",
-    "time": [
-      "아침",
-      "낮"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 850,
-    "special": false,
-    "image": null
-  },
-  {
-    "name": "바다거북",
-    "level": 12,
-    "habitat": "고래바다",
-    "size": "큼",
-    "time": [
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 850,
-    "special": false,
-    "image": null
-  },
-  {
     "name": "해파리",
     "level": 12,
     "habitat": "바다낚시",
@@ -1731,26 +1608,23 @@
       "무지개"
     ],
     "price": 850,
-    "special": false,
-    "image": null
+    "special": false
   },
   {
-    "name": "블루탱",
-    "level": 13,
-    "habitat": "구해",
+    "name": "버들붕어",
+    "level": 12,
+    "habitat": "숲속 호수",
     "size": "작음",
     "time": [
       "낮",
-      "저녁",
-      "새벽"
+      "저녁"
     ],
     "weather": [
       "비",
       "무지개"
     ],
-    "price": 610,
-    "special": false,
-    "image": null
+    "price": 395,
+    "special": false
   },
   {
     "name": "쏠배감펭",
@@ -1770,6 +1644,23 @@
     "image": 378
   },
   {
+    "name": "블루탱",
+    "level": 13,
+    "habitat": "구해",
+    "size": "작음",
+    "time": [
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
+    "price": 610,
+    "special": false
+  },
+  {
     "name": "환상용어",
     "level": 14,
     "habitat": "동해",
@@ -1785,8 +1676,7 @@
       "무지개"
     ],
     "price": 610,
-    "special": false,
-    "image": null
+    "special": false
   },
   {
     "name": "저고리파랑돔",
@@ -1802,7 +1692,106 @@
       "무지개"
     ],
     "price": 395,
+    "special": false
+  },
+  {
+    "name": "틸라피아",
+    "level": 4,
+    "habitat": "모든 강",
+    "size": "푸른색",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 360,
     "special": false,
-    "image": null
+    "image": 126
+  },
+  {
+    "name": "대서양은상어",
+    "level": 4,
+    "habitat": "모든 바다",
+    "size": "푸른색",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 320,
+    "special": false,
+    "image": 329
+  },
+  {
+    "name": "유럽참개구리",
+    "level": 4,
+    "habitat": "모든 호수",
+    "size": "푸른색",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 320,
+    "special": false,
+    "image": 106
+  },
+  {
+    "name": "흰동가리",
+    "level": 3,
+    "habitat": "구해",
+    "size": "작음",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 100,
+    "special": false,
+    "image": 376
+  },
+  {
+    "name": "레드벨리피라냐",
+    "level": 4,
+    "habitat": "거목강",
+    "size": "중간",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 230,
+    "special": false,
+    "image": 136
   }
 ]

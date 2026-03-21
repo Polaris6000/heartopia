@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RXTDCP8G1V"></script>
+    <script>
+        // Google Analytics 4 초기화
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-RXTDCP8G1V');
+    </script>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>상점 - 두근두근타운</title>
+    <link href="../../css/common.css" rel="stylesheet">
+
+    <!-- 방문자 추적 스크립트 (로컬 localStorage 기록용) -->
+    <script src="../../../src/js/tracker.js"></script>
+
+    <style>
+        /* ────────────────────────────────────────
+           상점 페이지 전용 스타일
+        ──────────────────────────────────────── */
+
+        /* 시즌 필터 버튼 그룹 */
+        .season-filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        /* 시즌 필터 토글 버튼 — common.css filter-btn 스타일 기반 */
+        .season-filter-btn {
+            padding: 5px 12px;
+            border: 1.5px solid var(--color-border);
+            border-radius: 6px;                         /* filter-btn 과 동일한 radius */
+            background: var(--color-surface-light);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--color-text-soft);
+            transition: background 0.15s, border-color 0.15s, color 0.15s;
+            white-space: nowrap;
+        }
+        .season-filter-btn:hover {
+            background: var(--color-border);
+            border-color: var(--color-primary-light);
+        }
+        /* 선택(active) 상태 — 기본: primary 색상 */
+        .season-filter-btn.active {
+            background: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+        }
+        /* 빙설 active */
+        .season-filter-btn.ice.active        { background: #1565c0; border-color: #1565c0; color: #fff; }
+        /* 꿈의 명암 active */
+        .season-filter-btn.dreamlight.active { background: #4527a0; border-color: #4527a0; color: #fff; }
+        /* 특별한 날씨 active */
+        .season-filter-btn.special.active    { background: #b94040; border-color: #b94040; color: #fff; }
+
+        /* 상점 아이템 테이블 */
+        .shop-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        .shop-table th,
+        .shop-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+        .shop-table th {
+            background: #f9f9f9;
+            font-weight: 600;
+            color: #555;
+            cursor: pointer;
+            user-select: none;
+        }
+        .shop-table th:hover { background: #eef; }
+        .shop-table tr:hover td { background: #f5f5f5; }
+
+        /* 가격 열 - 우측 정렬 */
+        .shop-table td.price,
+        .shop-table th.price { text-align: right; }
+
+        /* 시즌 배지 */
+        .shop-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .shop-badge.always      { background: #e8f5e9; color: #2e7d32; } /* 항상 */
+        .shop-badge.ice         { background: #e3f2fd; color: #1565c0; } /* 빙설 */
+        .shop-badge.dreamlight  { background: #ede7f6; color: #4527a0; } /* 꿈의 명암 */
+        .shop-badge.special     { background: #fce4ec; color: #880e4f; } /* 특별한 날씨 */
+
+        /* 검색창 */
+        .search-box {
+            margin-bottom: 16px;
+        }
+        .search-box input {
+            width: 100%;
+            max-width: 320px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        /* 정렬 방향 표시 */
+        .sort-indicator { font-size: 0.75rem; margin-left: 4px; }
+    </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<main>
+    <div class="page-header">
+        <h1>🛍️ 상점</h1>
+        <p>두근두근타운 상점에서 구매할 수 있는 재료 목록입니다</p>
+    </div>
+
+    <!-- 통계 카드 -->
+    <div class="stats" id="stats">
+        <div class="stat-card">
+            <div class="number" id="statTotal">-</div>
+            <div class="label">총 아이템</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="statVisible">-</div>
+            <div class="label">표시 중</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="statMinPrice">-</div>
+            <div class="label">최저 구매가</div>
+        </div>
+    </div>
+
+    <!-- 필터 영역 -->
+    <div class="filter-section">
+        <h2>🔍 필터</h2>
+
+        <!-- 이름 검색 -->
+        <div class="search-box">
+            <label for="shopSearch">🛍️ 아이템 이름 검색</label>
+            <input id="shopSearch" oninput="applyFilters()" placeholder="예: 달걀, 우유, 슈가파우더..." type="text">
+        </div>
+
+        <!-- 시즌 필터 버튼
+             새 시즌 추가 시: 버튼 추가 + JS의 SEASON_BADGE_MAP 에 항목 추가 -->
+        <div>
+            <h3>🗓️ 구매 가능 시즌</h3>
+            <div class="season-filter-group">
+                <!-- data-season 값이 null 이면 '항상 구매 가능' 아이템만 표시 -->
+                <button class="season-filter-btn active" data-season="all"      onclick="setSeasonFilter('all')">전체 보기</button>
+                <button class="season-filter-btn"        data-season="always"   onclick="setSeasonFilter('always')">항상 구매 가능</button>
+                <button class="season-filter-btn ice"    data-season="빙설"     onclick="setSeasonFilter('빙설')">❄️ 빙설 시즌</button>
+                <button class="season-filter-btn dreamlight" data-season="꿈의 명암" onclick="setSeasonFilter('꿈의 명암')">🌙 꿈의 명암</button>
+                <button class="season-filter-btn special" data-season="특별한 날씨" onclick="setSeasonFilter('특별한 날씨')">⚡ 특별한 날씨</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 아이템 목록 테이블 -->
+    <div id="content">
+        <div class="loading">🛍️ 상점 정보를 불러오는 중...</div>
+    </div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="../../js/common.js"></script>
+<script>
+    // ── 전역 상태 ──────────────────────────────────────────────────────────
+
+    let shopData     = [];         // 로드된 전체 상점 데이터 (hidden 아이템 제외)
+    let currentSeason = 'all';     // 현재 선택된 시즌 필터
+    let sortKey      = 'name';     // 현재 정렬 기준
+    let sortDir      = 'asc';      // 정렬 방향
+
+    // ── 시즌 배지 설정 테이블 ──────────────────────────────────────────────
+    // 새 시즌 추가 시 여기에만 항목을 추가하면 됩니다.
+    // availability 필드 값 → { label, cssClass, emoji }
+    const SEASON_BADGE_MAP = {
+        '빙설':       { label: '❄️ 빙설',       cssClass: 'ice',        emoji: '❄️' },
+        '꿈의 명암':   { label: '🌙 꿈의 명암',   cssClass: 'dreamlight', emoji: '🌙' },
+        '특별한 날씨': { label: '⚡ 특별한 날씨', cssClass: 'special',    emoji: '⚡' },
+    };
+
+    // ── 데이터 로드 ──────────────────────────────────────────────────────
+
+    async function loadShopData() {
+        try {
+            const response = await fetch('../../data/shop.json');
+            if (!response.ok) throw new Error('shop.json 파일을 찾을 수 없습니다.');
+
+            const data = await response.json();
+
+            // hidden: true 아이템은 페이지 목록에서 숨김
+            // (레시피 원가 계산용 등 내부 전용 아이템에 사용)
+            shopData = data.filter(item => !item.hidden);
+
+            updateStats();
+            renderTable();
+        } catch (error) {
+            console.error('상점 데이터 로드 오류:', error);
+            document.getElementById('content').innerHTML =
+                `<div class="error">❌ 데이터 파일을 불러올 수 없습니다.</div>`;
+        }
+    }
+
+    // ── 필터 & 정렬 ──────────────────────────────────────────────────────
+
+    /**
+     * 시즌 필터 버튼 클릭 시 호출.
+     * @param {string} season - 'all' | 'always' | availability 값 ('빙설', '꿈의 명암' 등)
+     */
+    function setSeasonFilter(season) {
+        currentSeason = season;
+
+        // 버튼 active 상태 업데이트
+        document.querySelectorAll('.season-filter-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.season === season);
+        });
+
+        applyFilters();
+    }
+
+    /** 현재 필터·정렬 조건을 적용해 테이블을 다시 그립니다 */
+    function applyFilters() {
+        const searchText = document.getElementById('shopSearch')?.value.trim().toLowerCase() || '';
+
+        let filtered = shopData.filter(item => {
+            // 이름 검색
+            if (searchText && !item.name.toLowerCase().includes(searchText)) return false;
+
+            // 시즌 필터
+            if (currentSeason === 'all') {
+                return true;
+            } else if (currentSeason === 'always') {
+                // availability 필드 없는 아이템 = 항상 구매 가능
+                return !item.availability;
+            } else {
+                return item.availability === currentSeason;
+            }
+        });
+
+        // 정렬
+        filtered = sortItems(filtered);
+
+        // 통계 업데이트 (표시 중 개수)
+        document.getElementById('statVisible').textContent = filtered.length;
+
+        renderTable(filtered);
+    }
+
+    /**
+     * 아이템 배열을 현재 sortKey / sortDir 에 따라 정렬.
+     * @param {Array} items
+     * @returns {Array} 정렬된 배열
+     */
+    function sortItems(items) {
+        return [...items].sort((a, b) => {
+            let av = a[sortKey] ?? '';
+            let bv = b[sortKey] ?? '';
+
+            // 숫자 타입은 숫자 비교
+            if (typeof av === 'number' && typeof bv === 'number') {
+                return sortDir === 'asc' ? av - bv : bv - av;
+            }
+
+            // 문자열 비교
+            av = String(av);
+            bv = String(bv);
+            const cmp = av.localeCompare(bv, 'ko');
+            return sortDir === 'asc' ? cmp : -cmp;
+        });
+    }
+
+    /**
+     * 정렬 키를 변경합니다. 같은 키를 다시 클릭하면 방향이 반전됩니다.
+     * @param {string} key - 정렬 기준 필드명
+     */
+    function setSort(key) {
+        if (sortKey === key) {
+            sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortKey = key;
+            sortDir = key === 'name' ? 'asc' : 'desc'; // 이름은 오름차순, 가격은 내림차순 기본
+        }
+        applyFilters();
+    }
+
+    // ── 렌더링 ────────────────────────────────────────────────────────────
+
+    /** 통계 카드 업데이트 */
+    function updateStats() {
+        const visible  = shopData.filter(i => !i.hidden);
+        const prices   = visible.map(i => i.shopPrice).filter(v => v != null);
+        const minPrice = prices.length ? Math.min(...prices) : '-';
+
+        document.getElementById('statTotal').textContent   = shopData.length;
+        document.getElementById('statVisible').textContent = shopData.length;
+        document.getElementById('statMinPrice').textContent = minPrice !== '-' ? `${minPrice}G` : '-';
+    }
+
+    /**
+     * 아이템 배열로 테이블을 렌더링합니다.
+     * @param {Array} [items] - 렌더링할 아이템 배열. 생략 시 shopData 전체 사용
+     */
+    function renderTable(items) {
+        const data = items ?? shopData;
+
+        if (data.length === 0) {
+            document.getElementById('content').innerHTML =
+                '<div class="no-results">조건에 맞는 아이템이 없습니다.</div>';
+            return;
+        }
+
+        // 정렬 방향 표시 헬퍼
+        const arrow = (key) => {
+            if (sortKey !== key) return '';
+            return `<span class="sort-indicator">${sortDir === 'asc' ? '▲' : '▼'}</span>`;
+        };
+
+        const rows = data.map(item => {
+            // 시즌 배지 생성
+            const badge = item.availability
+                ? (() => {
+                    const cfg = SEASON_BADGE_MAP[item.availability];
+                    // SEASON_BADGE_MAP 에 없는 새 시즌은 기본 스타일로 표시
+                    return cfg
+                        ? `<span class="shop-badge ${cfg.cssClass}">${cfg.label}</span>`
+                        : `<span class="shop-badge">${item.availability}</span>`;
+                })()
+                : `<span class="shop-badge always">항상</span>`;
+
+            const limit = item.dailyLimit != null ? `${item.dailyLimit}개/일` : '-';
+
+            return `
+                <tr>
+                    <td>${item.name}</td>
+                    <td class="price">${item.shopPrice != null ? item.shopPrice + 'G' : '-'}</td>
+                    <td>${limit}</td>
+                    <td>${badge}</td>
+                </tr>`;
+        }).join('');
+
+        document.getElementById('content').innerHTML = `
+            <table class="shop-table">
+                <thead>
+                    <tr>
+                        <th onclick="setSort('name')">아이템명 ${arrow('name')}</th>
+                        <th class="price" onclick="setSort('shopPrice')">구매가 ${arrow('shopPrice')}</th>
+                        <th onclick="setSort('dailyLimit')">일일 한도 ${arrow('dailyLimit')}</th>
+                        <th>구매 가능 시즌</th>
+                    </tr>
+                </thead>
+                <tbody>${rows}</tbody>
+            </table>`;
+    }
+
+    // ── 실행 ──────────────────────────────────────────────────────────────
+    loadShopData();
+</script>
+</body>
+</html>

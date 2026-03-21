@@ -112,11 +112,12 @@
             </label>
         </div>
 
-        <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+        <!-- 시즌 추가/제거 버튼 — 새 시즌 추가 시 버튼과 loadSeasonData 경로만 추가 -->
+        <div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; align-items: center;">
             <button onclick="filterFish()">🔍 물고기 찾기</button>
-            <button class="filter-btn season-ice-btn" onclick="loadSeasonData('season_ice_fish.json')">❄️ 빙설 시즌 추가
-            </button>
-            <button class="filter-btn-reset season-ice-btn" onclick="removeSeasonData()">🗑️ 시즌 데이터 제거</button>
+            <button class="filter-btn season-ice-btn"        id="btnIceAdd"        onclick="loadSeasonData('season_ice/season_ice_fish.json', 'ice')">❄️ 빙설 추가</button>
+            <button class="filter-btn season-dreamlight-btn" id="btnDreamlightAdd" onclick="loadSeasonData('season_dreamlight/season_dreamlight_fish.json', 'dreamlight')">🌙 꿈의 명암 추가</button>
+            <button class="filter-btn-reset"                 id="btnSeasonRemove"  onclick="removeSeasonData()">🗑️ 시즌 제거</button>
         </div>
     </div>
 
@@ -232,22 +233,21 @@
         }
     }
 
-    async function loadSeasonData(filename) {
-        if (loadedSeasons.has(filename)) {
+    /**
+     * 시즌 데이터를 fishData 에 병합합니다.
+     * @param {string} dataPath  - src/data/ 기준 상대 경로 (예: 'season_ice/season_ice_fish.json')
+     * @param {string} seasonKey - loadedSeasons 추적에 사용할 고유 키 (예: 'ice', 'dreamlight')
+     */
+    async function loadSeasonData(dataPath, seasonKey) {
+        // 동일 시즌 중복 로드 방지
+        if (loadedSeasons.has(seasonKey)) {
             alert('이미 추가된 시즌입니다.');
             return;
         }
 
         try {
-            let response = await fetch(`../../data/season_ice/${filename}`);
-
-            if (!response.ok) {
-                response = await fetch(`../../data/${filename}`);
-            }
-
-            if (!response.ok) {
-                throw new Error(`${filename} 파일을 찾을 수 없습니다.`);
-            }
+            const response = await fetch(`../../data/${dataPath}`);
+            if (!response.ok) throw new Error(`${dataPath} 파일을 찾을 수 없습니다.`);
 
             const seasonData = await response.json();
 
@@ -257,7 +257,14 @@
                 index === self.findIndex((f) => f.name === fish.name)
             );
 
-            loadedSeasons.add(filename);
+            loadedSeasons.add(seasonKey);
+
+            // 추가 버튼 비활성화
+            const addBtn = document.getElementById(`btn${seasonKey.charAt(0).toUpperCase() + seasonKey.slice(1)}Add`);
+            if (addBtn) addBtn.disabled = true;
+            // 제거 버튼 활성화
+            const removeBtn = document.getElementById('btnSeasonRemove');
+            if (removeBtn) removeBtn.disabled = false;
 
             alert(`${seasonData.length}종의 시즌 데이터가 병합되었습니다.\n(총 ${fishData.length}종)`);
             filterFish();
@@ -286,6 +293,12 @@
             fishData = await response.json();
             fishData = fishData.filter(f => f.level <= 10); // 인게임 해금 레벨 제한
             loadedSeasons.clear();
+
+            // 모든 추가 버튼을 다시 활성화
+            ['btnIceAdd', 'btnDreamlightAdd'].forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) btn.disabled = false;
+            });
 
             alert('모든 시즌 데이터가 제거되었습니다.\n기본 데이터만 표시됩니다.');
             filterFish();

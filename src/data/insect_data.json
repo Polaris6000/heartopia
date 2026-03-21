@@ -1,8 +1,8 @@
 [
   {
-    "name": "호랑나비",
+    "name": "붉은고리호랑나비",
     "level": 1,
-    "habitat": "숲",
+    "habitat": "곤충 유인 사건",
     "time": [
       "아침",
       "낮",
@@ -16,7 +16,64 @@
     ],
     "price": 30,
     "special": false,
-    "image": 101
+    "image": 123
+  },
+  {
+    "name": "아폴로모시나비",
+    "level": 1,
+    "habitat": "곤충 유인 사건",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 30,
+    "special": false,
+    "image": 121
+  },
+  {
+    "name": "슬코스키몰포나비",
+    "level": 1,
+    "habitat": "곤충 유인기",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 90,
+    "special": false,
+    "image": 126
+  },
+  {
+    "name": "아스파라거스벌레",
+    "level": 1,
+    "habitat": "꽃밭",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 55,
+    "special": false,
+    "image": 203
   },
   {
     "name": "유럽갈고리나비",
@@ -57,120 +114,6 @@
     "image": 107
   },
   {
-    "name": "배추흰나비",
-    "level": 1,
-    "habitat": "어촌",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 30,
-    "special": false,
-    "image": 119
-  },
-  {
-    "name": "아폴로모시나비",
-    "level": 1,
-    "habitat": "곤충 유인 사건",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 30,
-    "special": false,
-    "image": 121
-  },
-  {
-    "name": "붉은고리호랑나비",
-    "level": 1,
-    "habitat": "곤충 유인 사건",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 30,
-    "special": false,
-    "image": 123
-  },
-  {
-    "name": "슬코스키몰포나비",
-    "level": 1,
-    "habitat": "곤충 유인기",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 90,
-    "special": "유인기",
-    "image": 126
-  },
-  {
-    "name": "아스파라거스벌레",
-    "level": 1,
-    "habitat": "꽃밭",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 55,
-    "special": false,
-    "image": 203
-  },
-  {
-    "name": "별노린재",
-    "level": 1,
-    "habitat": "홈",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 35,
-    "special": false,
-    "image": 401
-  },
-  {
     "name": "큰고추잠자리",
     "level": 1,
     "habitat": "물가",
@@ -190,65 +133,8 @@
     "image": 501
   },
   {
-    "name": "오아시스메뚜기",
-    "level": 2,
-    "habitat": "온천산",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 45,
-    "special": false,
-    "image": 301
-  },
-  {
-    "name": "연푸른 부전나비",
-    "level": 2,
-    "habitat": "도심",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 105,
-    "special": false,
-    "image": 103
-  },
-  {
-    "name": "녹색호랑풍뎅이",
-    "level": 2,
-    "habitat": "온천산",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 110,
-    "special": false,
-    "image": 202
-  },
-  {
-    "name": "말벌호랑하늘소",
-    "level": 2,
+    "name": "호랑나비",
+    "level": 1,
     "habitat": "숲",
     "time": [
       "아침",
@@ -261,31 +147,13 @@
       "비",
       "무지개"
     ],
-    "price": 110,
+    "price": 30,
     "special": false,
-    "image": 205
+    "image": 101
   },
   {
-    "name": "파란꽃풍뎅이",
-    "level": 2,
-    "habitat": "홈",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "비",
-      "무지개"
-    ],
-    "price": 165,
-    "special": false,
-    "image": 209
-  },
-  {
-    "name": "망치다리메뚜기",
-    "level": 2,
+    "name": "배추흰나비",
+    "level": 1,
     "habitat": "어촌",
     "time": [
       "아침",
@@ -298,14 +166,14 @@
       "비",
       "무지개"
     ],
-    "price": 90,
+    "price": 30,
     "special": false,
-    "image": 303
+    "image": 119
   },
   {
-    "name": "칠성무당벌레",
-    "level": 2,
-    "habitat": "도시 근교",
+    "name": "별노린재",
+    "level": 1,
+    "habitat": "홈",
     "time": [
       "아침",
       "낮",
@@ -313,12 +181,13 @@
       "새벽"
     ],
     "weather": [
+      "맑음",
       "비",
       "무지개"
     ],
-    "price": 110,
+    "price": 35,
     "special": false,
-    "image": 405
+    "image": 401
   },
   {
     "name": "넉점박이잠자리",
@@ -358,11 +227,30 @@
     "image": 702
   },
   {
-    "name": "붉은목제비나비",
-    "level": 3,
-    "habitat": "홈",
+    "name": "칠성무당벌레",
+    "level": 2,
+    "habitat": "도시 근교",
     "time": [
       "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
+    "price": 110,
+    "special": false,
+    "image": 405
+  },
+  {
+    "name": "연푸른 부전나비",
+    "level": 2,
+    "habitat": "도심",
+    "time": [
+      "아침",
+      "낮",
       "저녁",
       "새벽"
     ],
@@ -371,14 +259,14 @@
       "비",
       "무지개"
     ],
-    "price": 90,
+    "price": 105,
     "special": false,
-    "image": 113
+    "image": 103
   },
   {
-    "name": "홍날개",
-    "level": 3,
-    "habitat": "온천산-온천",
+    "name": "말벌호랑하늘소",
+    "level": 2,
+    "habitat": "숲",
     "time": [
       "아침",
       "낮",
@@ -392,7 +280,82 @@
     ],
     "price": 110,
     "special": false,
-    "image": 206
+    "image": 205
+  },
+  {
+    "name": "망치다리메뚜기",
+    "level": 2,
+    "habitat": "어촌",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 90,
+    "special": false,
+    "image": 303
+  },
+  {
+    "name": "녹색호랑풍뎅이",
+    "level": 2,
+    "habitat": "온천산",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 110,
+    "special": false,
+    "image": 202
+  },
+  {
+    "name": "오아시스메뚜기",
+    "level": 2,
+    "habitat": "온천산",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 45,
+    "special": false,
+    "image": 301
+  },
+  {
+    "name": "파란꽃풍뎅이",
+    "level": 2,
+    "habitat": "홈",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
+    "price": 165,
+    "special": false,
+    "image": 209
   },
   {
     "name": "분홍색 철써기",
@@ -414,6 +377,24 @@
     "image": 302
   },
   {
+    "name": "보라네발나비",
+    "level": 3,
+    "habitat": "꽃밭-고래산",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
+    "price": 90,
+    "special": false,
+    "image": 106
+  },
+  {
     "name": "여치",
     "level": 3,
     "habitat": "꽃밭-보라빛 해변",
@@ -429,8 +410,25 @@
       "무지개"
     ],
     "price": 180,
-    "special": "희귀",
+    "special": false,
     "image": 308
+  },
+  {
+    "name": "긴꼬리산누에나방",
+    "level": 3,
+    "habitat": "도시 근교",
+    "time": [
+      "아침",
+      "낮",
+      "저녁"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
+    "price": 105,
+    "special": false,
+    "image": 118
   },
   {
     "name": "흰점꼬리털벌",
@@ -466,13 +464,13 @@
       "무지개"
     ],
     "price": 220,
-    "special": "희귀",
+    "special": false,
     "image": 1101
   },
   {
-    "name": "보라네발나비",
+    "name": "홍날개",
     "level": 3,
-    "habitat": "꽃밭-고래산",
+    "habitat": "온천산-온천",
     "time": [
       "아침",
       "낮",
@@ -481,81 +479,30 @@
     ],
     "weather": [
       "맑음",
+      "비",
       "무지개"
     ],
-    "price": 90,
+    "price": 110,
     "special": false,
-    "image": 106
+    "image": 206
   },
   {
-    "name": "긴꼬리산누에나방",
+    "name": "붉은목제비나비",
     "level": 3,
-    "habitat": "도시 근교",
-    "time": [
-      "아침",
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "맑음",
-      "무지개"
-    ],
-    "price": 105,
-    "special": false,
-    "image": 118
-  },
-  {
-    "name": "표범무늬네발나비",
-    "level": 4,
-    "habitat": "어촌-부두",
+    "habitat": "홈",
     "time": [
       "아침",
       "저녁",
       "새벽"
     ],
     "weather": [
+      "맑음",
       "비",
       "무지개"
     ],
     "price": 90,
     "special": false,
-    "image": 108
-  },
-  {
-    "name": "사성 무당벌레",
-    "level": 4,
-    "habitat": "온천산-화산 호수",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "비",
-      "무지개"
-    ],
-    "price": 165,
-    "special": false,
-    "image": 407
-  },
-  {
-    "name": "매미",
-    "level": 4,
-    "habitat": "숲-영혼의 참나무 숲",
-    "time": [
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 220,
-    "special": false,
-    "image": 1401
+    "image": 113
   },
   {
     "name": "밀잠자리",
@@ -593,6 +540,41 @@
     "image": 304
   },
   {
+    "name": "매미",
+    "level": 4,
+    "habitat": "숲-영혼의 참나무 숲",
+    "time": [
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 220,
+    "special": false,
+    "image": 1401
+  },
+  {
+    "name": "표범무늬네발나비",
+    "level": 4,
+    "habitat": "어촌-부두",
+    "time": [
+      "아침",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
+    "price": 90,
+    "special": false,
+    "image": 108
+  },
+  {
     "name": "무지개 사마귀",
     "level": 4,
     "habitat": "온천산-바위절벽",
@@ -609,6 +591,60 @@
     "price": 195,
     "special": false,
     "image": 602
+  },
+  {
+    "name": "사성 무당벌레",
+    "level": 4,
+    "habitat": "온천산-화산 호수",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
+    "price": 165,
+    "special": false,
+    "image": 407
+  },
+  {
+    "name": "흰마녀밤나방",
+    "level": 5,
+    "habitat": "곤충 유인 사건",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
+    "price": 90,
+    "special": false,
+    "image": 122
+  },
+  {
+    "name": "보라벌",
+    "level": 5,
+    "habitat": "꽃밭-고래산",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
+    "price": 165,
+    "special": false,
+    "image": 703
   },
   {
     "name": "공작나비",
@@ -630,39 +666,21 @@
     "image": 105
   },
   {
-    "name": "신선나비",
+    "name": "이색무당벌레",
     "level": 5,
-    "habitat": "온천산-온천",
+    "habitat": "숲-순록탑",
     "time": [
-      "아침",
-      "낮",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "무지개"
-    ],
-    "price": 90,
-    "special": false,
-    "image": 109
-  },
-  {
-    "name": "흰마녀밤나방",
-    "level": 5,
-    "habitat": "곤충 유인 사건",
-    "time": [
-      "아침",
       "낮",
       "저녁",
       "새벽"
     ],
     "weather": [
-      "맑음",
+      "비",
       "무지개"
     ],
-    "price": 90,
+    "price": 165,
     "special": false,
-    "image": 122
+    "image": 404
   },
   {
     "name": "고산수염하늘소",
@@ -682,21 +700,21 @@
     "image": 208
   },
   {
-    "name": "이색무당벌레",
+    "name": "신선나비",
     "level": 5,
-    "habitat": "숲-순록탑",
+    "habitat": "온천산-온천",
     "time": [
+      "아침",
       "낮",
-      "저녁",
       "새벽"
     ],
     "weather": [
-      "비",
+      "맑음",
       "무지개"
     ],
-    "price": 165,
+    "price": 90,
     "special": false,
-    "image": 404
+    "image": 109
   },
   {
     "name": "파푸아사마귀",
@@ -713,26 +731,8 @@
       "무지개"
     ],
     "price": 390,
-    "special": "희귀",
-    "image": 606
-  },
-  {
-    "name": "보라벌",
-    "level": 5,
-    "habitat": "꽃밭-고래산",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "무지개"
-    ],
-    "price": 165,
     "special": false,
-    "image": 703
+    "image": 606
   },
   {
     "name": "녹색날개호랑나비",
@@ -753,6 +753,24 @@
     "image": 112
   },
   {
+    "name": "물잠자리",
+    "level": 6,
+    "habitat": "숲-숲속 호수",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "비",
+      "무지개"
+    ],
+    "price": 110,
+    "special": false,
+    "image": 504
+  },
+  {
     "name": "산악사슴벌레",
     "level": 6,
     "habitat": "숲-점핑 플랫폼",
@@ -768,23 +786,6 @@
     "price": 275,
     "special": false,
     "image": 201
-  },
-  {
-    "name": "은빛보석풍뎅이",
-    "level": 6,
-    "habitat": "온천산-바위절벽",
-    "time": [
-      "아침",
-      "낮",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "무지개"
-    ],
-    "price": 165,
-    "special": false,
-    "image": 220
   },
   {
     "name": "파란노린재",
@@ -804,39 +805,21 @@
     "image": 402
   },
   {
-    "name": "물잠자리",
+    "name": "은빛보석풍뎅이",
     "level": 6,
-    "habitat": "숲-숲속 호수",
+    "habitat": "온천산-바위절벽",
     "time": [
       "아침",
       "낮",
-      "저녁",
       "새벽"
-    ],
-    "weather": [
-      "비",
-      "무지개"
-    ],
-    "price": 110,
-    "special": false,
-    "image": 504
-  },
-  {
-    "name": "메넬라우스나비",
-    "level": 7,
-    "habitat": "숲-영혼의 참나무 숲",
-    "time": [
-      "아침",
-      "낮",
-      "저녁"
     ],
     "weather": [
       "맑음",
       "무지개"
     ],
-    "price": 150,
+    "price": 165,
     "special": false,
-    "image": 116
+    "image": 220
   },
   {
     "name": "왕나비",
@@ -857,24 +840,6 @@
     "image": 120
   },
   {
-    "name": "티폰쇠똥구리",
-    "level": 7,
-    "habitat": "온천산-유적",
-    "time": [
-      "아침",
-      "낮",
-      "저녁"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 275,
-    "special": false,
-    "image": 204
-  },
-  {
     "name": "보석꽃풍뎅이",
     "level": 7,
     "habitat": "꽃밭-고래산",
@@ -889,6 +854,23 @@
     "price": 275,
     "special": false,
     "image": 210
+  },
+  {
+    "name": "메넬라우스나비",
+    "level": 7,
+    "habitat": "숲-영혼의 참나무 숲",
+    "time": [
+      "아침",
+      "낮",
+      "저녁"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
+    "price": 150,
+    "special": false,
+    "image": 116
   },
   {
     "name": "황금보석풍뎅이",
@@ -923,20 +905,38 @@
     "image": 503
   },
   {
-    "name": "이사벨라나방",
-    "level": 8,
-    "habitat": "숲-영혼의 참나무 숲",
+    "name": "티폰쇠똥구리",
+    "level": 7,
+    "habitat": "온천산-유적",
     "time": [
+      "아침",
       "낮",
       "저녁"
     ],
     "weather": [
       "맑음",
+      "비",
       "무지개"
     ],
-    "price": 150,
+    "price": 275,
     "special": false,
-    "image": 102
+    "image": 204
+  },
+  {
+    "name": "피카소노린재",
+    "level": 8,
+    "habitat": "꽃밭-보라빛 해변",
+    "time": [
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
+    "price": 185,
+    "special": false,
+    "image": 403
   },
   {
     "name": "혜성꼬리나방",
@@ -955,6 +955,22 @@
     "image": 115
   },
   {
+    "name": "이사벨라나방",
+    "level": 8,
+    "habitat": "숲-영혼의 참나무 숲",
+    "time": [
+      "낮",
+      "저녁"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
+    "price": 150,
+    "special": false,
+    "image": 102
+  },
+  {
     "name": "장수풍뎅이",
     "level": 8,
     "habitat": "어촌-어촌 동쪽 부두",
@@ -971,20 +987,23 @@
     "image": 213
   },
   {
-    "name": "피카소노린재",
-    "level": 8,
-    "habitat": "꽃밭-보라빛 해변",
+    "name": "무지개사슴벌레",
+    "level": 9,
+    "habitat": "곤충 유인 사건",
     "time": [
+      "아침",
+      "낮",
       "저녁",
       "새벽"
     ],
     "weather": [
       "맑음",
+      "비",
       "무지개"
     ],
-    "price": 185,
+    "price": 440,
     "special": false,
-    "image": 403
+    "image": 211
   },
   {
     "name": "진주네발나비",
@@ -1019,23 +1038,19 @@
     "image": 215
   },
   {
-    "name": "무지개사슴벌레",
+    "name": "푸른목수벌",
     "level": 9,
-    "habitat": "곤충 유인 사건",
+    "habitat": "어촌-어촌 광장",
     "time": [
-      "아침",
-      "낮",
       "저녁",
       "새벽"
     ],
     "weather": [
-      "맑음",
-      "비",
       "무지개"
     ],
     "price": 440,
     "special": false,
-    "image": 211
+    "image": 701
   },
   {
     "name": "악마꽃사마귀",
@@ -1054,21 +1069,6 @@
     "image": 603
   },
   {
-    "name": "푸른목수벌",
-    "level": 9,
-    "habitat": "어촌-어촌 광장",
-    "time": [
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "무지개"
-    ],
-    "price": 440,
-    "special": false,
-    "image": 701
-  },
-  {
     "name": "헬레나몰포나비",
     "level": 10,
     "habitat": "꽃밭 - 보랏빛 해변",
@@ -1082,6 +1082,22 @@
     "price": 240,
     "special": false,
     "image": 111
+  },
+  {
+    "name": "나선주머니나방",
+    "level": 10,
+    "habitat": "숲-순록탑",
+    "time": [
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "무지개"
+    ],
+    "price": 440,
+    "special": false,
+    "image": 801
   },
   {
     "name": "헤쿠바몰포나비",
@@ -1113,21 +1129,5 @@
     "price": 440,
     "special": false,
     "image": 214
-  },
-  {
-    "name": "나선주머니나방",
-    "level": 10,
-    "habitat": "숲-순록탑",
-    "time": [
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "무지개"
-    ],
-    "price": 440,
-    "special": false,
-    "image": 801
   }
 ]

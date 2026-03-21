@@ -479,39 +479,39 @@ footer {
 ======================================== */
 .filter-section {
     background: var(--color-surface);
-    padding: 20px; /* 기존 30px → 20px */
-    border-radius: 20px;
-    margin-bottom: 20px; /* 기존 30px → 20px */
+    padding: 14px 18px; /* 더 컴팩트하게 축소 */
+    border-radius: 16px;
+    margin-bottom: 16px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .filter-section h2 {
-    font-size: 1.4em; /* 기존 1.8em → 1.4em */
+    font-size: 1.1em;
     color: var(--color-primary);
-    margin-bottom: 14px; /* 기존 20px → 14px */
+    margin-bottom: 10px;
 }
 
 /* 검색창 */
 .search-box {
-    margin-bottom: 16px; /* 기존 25px → 16px */
+    margin-bottom: 10px;
 }
 
 .search-box label {
     display: block;
-    font-size: 1em; /* 기존 1.2em → 1em */
-    color: var(--color-text-strong);
-    margin-bottom: 6px; /* 기존 10px → 6px */
-    font-weight: 400; /* 기존 600 → 400 */
+    font-size: 0.85em;
+    color: var(--color-text-soft);
+    margin-bottom: 4px;
+    font-weight: 500;
 }
 
 .search-box input[type="text"] {
     width: 100%;
-    padding: 10px 12px; /* 기존 15px → 10px 12px */
-    border: 2px solid var(--color-border);
-    border-radius: 10px;
-    font-size: 1em; /* 기존 1.1em → 1em */
-    /* focus 시 변하는 속성: border-color, box-shadow */
-    transition: border-color 0.3s, box-shadow 0.3s;
+    max-width: 320px; /* 검색창 최대 너비 제한 - 전체 너비 차지 방지 */
+    padding: 7px 10px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 0.9em;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .search-box input[type="text"]:focus {
@@ -520,66 +520,95 @@ footer {
     box-shadow: 0 0 0 3px var(--color-primary-a10);
 }
 
-/* 필터 그룹 */
+/* 필터 그룹 컨테이너 — 기본: 1열, 반응형으로 확장 */
 .filter-groups {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 14px; /* 기존 20px → 14px */
-    align-items: start;
-    padding: 8px; /* 기존 15px → 8px */
+    display: flex;          /* grid → flex 로 변경: 내용 크기에 맞게 자연스럽게 배치 */
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    align-items: flex-start;
+}
+
+/* 개별 필터 그룹 */
+.filter-group {
+    min-width: 0;           /* flex 아이템 overflow 방지 */
 }
 
 .filter-group h3 {
-    font-size: 1em; /* 기존 1.2em → 1em */
-    color: var(--color-text-strong);
-    margin-bottom: 10px; /* 기존 15px → 10px */
+    font-size: 0.82em;
+    font-weight: 600;
+    color: var(--color-text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 6px;
 }
 
+/* 체크박스 목록 — 수평 래핑 배치 (기존 수직 → 수평) */
 .checkbox-group {
     display: flex;
-    flex-direction: column;
-    gap: 8px; /* 기존 10px → 8px */
+    flex-direction: row;    /* 수직 나열 → 수평 나열 */
+    flex-wrap: wrap;
+    gap: 4px;
 }
 
 .checkbox-label {
     display: flex;
     align-items: center;
-    gap: 8px; /* 기존 10px → 8px */
+    gap: 5px;
     cursor: pointer;
-    padding: 6px 10px; /* 기존 8px 12px → 6px 10px */
-    border-radius: 8px;
-    transition: background 0.2s;
-    font-size: 1em; /* 기존 1.1em → 1em */
+    padding: 4px 8px;       /* 기존 6px 10px → 더 작게 */
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: background 0.15s, border-color 0.15s;
+    font-size: 0.88em;
+    white-space: nowrap;
 }
 
 .checkbox-label:hover {
     background: var(--color-surface-light);
+    border-color: var(--color-border);
+}
+
+/* 체크된 라벨을 시각적으로 강조 */
+.checkbox-label:has(input:checked) {
+    background: var(--color-primary-surface, #eef2ff);
+    border-color: var(--color-primary-light);
 }
 
 .checkbox-label input[type="checkbox"] {
-    width: 18px; /* 기존 20px → 18px */
-    height: 18px;
+    width: 14px;
+    height: 14px;
     cursor: pointer;
     accent-color: var(--color-primary);
+    flex-shrink: 0;
 }
 
-/* 필터 버튼 */
+/* 필터 액션 버튼 영역 — 수평 래핑 배치 */
 .filter-actions {
     display: flex;
-    flex-direction: column;
-    gap: 8px; /* 기존 10px → 8px */
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    /* width / border-top 은 생략 — crops처럼 side-by-side 레이아웃과 충돌 방지 */
+}
+
+/* filter-groups 안에서 직접 자식으로 쓰일 때만 구분선 표시 (fish/insect/bird 등) */
+.filter-groups > .filter-actions {
+    width: 100%;
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top: 1px solid var(--color-border);
 }
 
 .filter-btn,
 .filter-btn-reset {
-    padding: 9px 18px; /* 기존 10px 20px → 9px 18px */
+    padding: 5px 12px;      /* 더 콤팩트하게 */
     border: none;
-    border-radius: 8px;
-    font-size: 0.9em;
-    font-weight: 400; /* 기존 600 → 400 */
+    border-radius: 6px;
+    font-size: 0.85em;
+    font-weight: 500;
     cursor: pointer;
-    /* hover 시 변하는 속성: background, transform */
-    transition: background 0.3s, transform 0.3s;
+    transition: background 0.2s, transform 0.15s;
     white-space: nowrap;
 }
 
@@ -590,12 +619,13 @@ footer {
 
 .filter-btn:hover {
     background: var(--color-primary-dark);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .filter-btn-reset {
     background: var(--color-surface-light);
     color: var(--color-text-soft);
+    border: 1px solid var(--color-border);
 }
 
 .filter-btn-reset:hover {
@@ -609,6 +639,12 @@ footer {
 .season-ice-btn {
     background-color: #e3f2fd !important;
     color: #1565c0 !important;
+}
+
+/* 꿈의 명암 시즌 버튼 — 새 시즌이 추가되면 아래에 같은 패턴으로 추가하면 됩니다 */
+.season-dreamlight-btn {
+    background-color: #ede7f6 !important;
+    color: #4527a0 !important;
 }
 
 
@@ -1157,19 +1193,14 @@ th.motion-cell {
     }
 
     .filter-groups {
-        grid-template-columns: 1fr;
-        padding: 4px;
-    }
-
-    .filter-actions {
-        flex-direction: row;
-        flex-wrap: wrap;
+        /* flex 레이아웃이 기본이므로 모바일에서도 별도 override 불필요 */
+        gap: 8px 14px;
     }
 
     .filter-btn,
     .filter-btn-reset {
-        flex: 1;
-        min-width: 120px;
+        /* 모바일에서도 flex 나열하되 최소 너비만 보장 */
+        min-width: 80px;
     }
 
     /* 서식지 */
@@ -1221,18 +1252,9 @@ th.motion-cell {
 /* ========================================
    반응형 디자인 - 태블릿 (600px 이상)
 ======================================== */
-@media (min-width: 600px) {
-    .filter-groups {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+/* filter-groups 는 flex wrap 레이아웃 사용 — grid 미디어 쿼리 불필요 */
 
 
 /* ========================================
    반응형 디자인 - PC (1024px 이상)
 ======================================== */
-@media (min-width: 1024px) {
-    .filter-groups {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}

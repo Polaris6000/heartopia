@@ -105,8 +105,12 @@
             </div>
 
             <div class="filter-actions">
-                <button class="filter-btn season-ice-btn" onclick="loadSeasonData('season_ice_bird.json')">❄️ 빙설 시즌 추가</button>
-                <button class="filter-btn-reset season-ice-btn" onclick="removeSeasonData()">🗑️ 시즌 데이터 제거</button>
+                <!-- 빙설 시즌: season_ice/season_ice_bird.json 을 현재 목록에 병합 -->
+                <button class="filter-btn season-ice-btn" onclick="loadSeasonData('season_ice/season_ice_bird.json')">❄️ 빙설 시즌 추가</button>
+                <!-- 꿈의 명암 시즌: 현재 새 데이터는 없으나 추후 추가 시 활성화 -->
+                <!-- <button class="filter-btn season-dreamlight-btn" onclick="loadSeasonData('season_dreamlight/season_dreamlight_bird.json')">🌙 꿈의 명암 추가</button> -->
+                <!-- 로드된 모든 시즌 데이터를 제거하고 기본 데이터로 복원 -->
+                <button class="filter-btn-reset" onclick="removeSeasonData()">🗑️ 시즌 데이터 제거</button>
                 <button class="filter-btn" onclick="selectAllTime()">시간 전체선택</button>
                 <button class="filter-btn" onclick="selectAllWeather()">날씨 전체선택</button>
                 <button class="filter-btn-reset" onclick="resetFilters()">필터 초기화</button>
@@ -216,11 +220,8 @@
         }
 
         try {
-            let response = await fetch(`../../data/season_ice/${filename}`);
-
-            if (!response.ok) {
-                response = await fetch(`../../data/${filename}`);
-            }
+            // filename 에 서브폴더 경로 포함 (예: season_ice/season_ice_bird.json)
+            let response = await fetch(`../../data/${filename}`);
 
             if (!response.ok) {
                 throw new Error(`${filename} 파일을 찾을 수 없습니다.`);
@@ -545,14 +546,17 @@
 
     /**
      * special 값에 따른 아이콘 반환
-     * JSON 실제 값: false | "특수" | "보너스 스테이지" | "희귀" | "빙설 시즌"
+     * JSON 실제 값: false | "특수" | "보너스 스테이지" | "희귀" | "빙설" | "꿈의 명암"
+     * 새 시즌이 추가되면 icons 맵에 키-이모지 쌍을 추가하면 됩니다.
      */
     function getSpecialIcon(special) {
         const icons = {
-            '특수': '🌟',
+            '특수':          '🌟',
             '보너스 스테이지': '🎁',
-            '희귀': '💎',
-            '빙설 시즌': '❄️'
+            '희귀':          '💎',
+            '빙설':          '❄️',
+            '빙설 시즌':      '❄️',  // 구버전 데이터 호환
+            '꿈의 명암':      '🌙',
         };
         return icons[special] || '';
     }

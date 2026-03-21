@@ -1,17 +1,92 @@
 [
-  { "name": "슈가파우더",   "shopPrice": 50, "dailyLimit": 50, "availability": "빙설 시즌" },
-  { "name": "고기",     "shopPrice": 200, "dailyLimit": 50 },
-  { "name": "달걀",     "shopPrice": 100, "dailyLimit": 50 },
-  { "name": "우유",     "shopPrice": 50,  "dailyLimit": 50 },
-  { "name": "치즈",     "shopPrice": 100, "dailyLimit": 50 },
-  { "name": "버터",     "shopPrice": 150, "dailyLimit": 50 },
-  { "name": "커피 원두", "shopPrice": 50,  "dailyLimit": 50 },
-  { "name": "홍차",     "shopPrice": 250, "dailyLimit": 50 },
-  { "name": "말차가루", "shopPrice": 150, "dailyLimit": 50 },
-  { "name": "쌀가루",   "shopPrice": 50,  "dailyLimit": 50 },
-  { "name": "팥",       "shopPrice": 50,  "dailyLimit": 50 },
-  { "name": "식용유",   "shopPrice": 100, "dailyLimit": 50 },
-  { "name": "멸균란",   "shopPrice": 100, "dailyLimit": 50 },
-  { "name": "사탕(150)",   "shopPrice": 150, "dailyLimit": 20, "availability": "특별한 날씨" },
-  { "name": "사탕(200)",   "shopPrice": 200, "dailyLimit": 20, "availability": "특별한 날씨" }
+  {
+    "name": "봄날 카라멜 슈가",
+    "shopPrice": 50,
+    "dailyLimit": 50,
+    "availability": "꿈의 명암"
+  },
+  {
+    "name": "살사 소스",
+    "shopPrice": 50,
+    "dailyLimit": 50,
+    "availability": "꿈의 명암"
+  },
+  {
+    "name": "슈가파우더",
+    "shopPrice": 50,
+    "dailyLimit": 50,
+    "availability": "빙설"
+  },
+  {
+    "name": "사탕(150)",
+    "shopPrice": 150,
+    "dailyLimit": 20,
+    "availability": "특별한 날씨"
+  },
+  {
+    "name": "사탕(200)",
+    "shopPrice": 200,
+    "dailyLimit": 20,
+    "availability": "특별한 날씨"
+  },
+  {
+    "name": "쌀가루",
+    "shopPrice": 50,
+    "dailyLimit": 50
+  },
+  {
+    "name": "우유",
+    "shopPrice": 50,
+    "dailyLimit": 50
+  },
+  {
+    "name": "커피 원두",
+    "shopPrice": 50,
+    "dailyLimit": 50
+  },
+  {
+    "name": "팥",
+    "shopPrice": 50,
+    "dailyLimit": 50
+  },
+  {
+    "name": "달걀",
+    "shopPrice": 100,
+    "dailyLimit": 50
+  },
+  {
+    "name": "멸균란",
+    "shopPrice": 100,
+    "dailyLimit": 50
+  },
+  {
+    "name": "식용유",
+    "shopPrice": 100,
+    "dailyLimit": 50
+  },
+  {
+    "name": "치즈",
+    "shopPrice": 100,
+    "dailyLimit": 50
+  },
+  {
+    "name": "말차가루",
+    "shopPrice": 150,
+    "dailyLimit": 50
+  },
+  {
+    "name": "버터",
+    "shopPrice": 150,
+    "dailyLimit": 50
+  },
+  {
+    "name": "고기",
+    "shopPrice": 200,
+    "dailyLimit": 50
+  },
+  {
+    "name": "홍차",
+    "shopPrice": 250,
+    "dailyLimit": 50
+  }
 ]

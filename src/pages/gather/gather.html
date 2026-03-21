@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RXTDCP8G1V"></script>
+    <script>
+        // Google Analytics 4 초기화
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-RXTDCP8G1V');
+    </script>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>채집 - 두근두근타운</title>
+    <link href="../../css/common.css" rel="stylesheet">
+
+    <!-- 방문자 추적 스크립트 (로컬 localStorage 기록용) -->
+    <script src="../../../src/js/tracker.js"></script>
+
+    <style>
+        /* ────────────────────────────────────────
+           채집 페이지 전용 스타일
+        ──────────────────────────────────────── */
+
+        /* 채집 아이템 테이블 */
+        .gather-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        .gather-table th,
+        .gather-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+        .gather-table th {
+            background: #f9f9f9;
+            font-weight: 600;
+            color: #555;
+            cursor: pointer;
+            user-select: none;
+        }
+        .gather-table th:hover { background: #eef; }
+        .gather-table tr:hover td { background: #f5f5f5; }
+
+        /* 가격 열 - 우측 정렬 */
+        .gather-table td.price,
+        .gather-table th.price { text-align: right; }
+
+        /* 검색창 */
+        .search-box {
+            margin-bottom: 16px;
+        }
+        .search-box input {
+            width: 100%;
+            max-width: 320px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        /* 정렬 방향 표시 */
+        .sort-indicator { font-size: 0.75rem; margin-left: 4px; }
+    </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<main>
+    <div class="page-header">
+        <h1>🌿 채집</h1>
+        <p>두근두근타운에서 채집할 수 있는 아이템 목록입니다</p>
+    </div>
+
+    <!-- 통계 카드 -->
+    <div class="stats" id="stats">
+        <div class="stat-card">
+            <div class="number" id="statTotal">-</div>
+            <div class="label">총 아이템</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="statVisible">-</div>
+            <div class="label">표시 중</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="statMaxPrice">-</div>
+            <div class="label">최고 판매가</div>
+        </div>
+    </div>
+
+    <!-- 필터 영역 -->
+    <div class="filter-section">
+        <h2>🔍 필터</h2>
+
+        <!-- 이름 검색 -->
+        <div class="search-box">
+            <label for="gatherSearch">🌿 아이템 이름 검색</label>
+            <input id="gatherSearch" oninput="applyFilters()" placeholder="예: 사과, 버섯, 꿀..." type="text">
+        </div>
+    </div>
+
+    <!-- 아이템 목록 테이블 -->
+    <div id="content">
+        <div class="loading">🌿 채집 정보를 불러오는 중...</div>
+    </div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="../../js/common.js"></script>
+<script>
+    // ── 전역 상태 ──────────────────────────────────────────────────────────
+
+    let gatherData = [];   // 로드된 채집 데이터 전체
+    let sortKey    = 'name';  // 현재 정렬 기준
+    let sortDir    = 'asc';   // 정렬 방향
+
+    // ── 데이터 로드 ──────────────────────────────────────────────────────
+
+    async function loadGatherData() {
+        try {
+            const response = await fetch('../../data/gather.json');
+            if (!response.ok) throw new Error('gather.json 파일을 찾을 수 없습니다.');
+
+            // hidden: true 아이템은 페이지 목록에서 숨김
+            // (레시피 재료비 계산용 등 내부 전용 아이템에 사용)
+            gatherData = (await response.json()).filter(item => !item.hidden);
+
+            updateStats();
+            renderTable();
+        } catch (error) {
+            console.error('채집 데이터 로드 오류:', error);
+            document.getElementById('content').innerHTML =
+                `<div class="error">❌ 데이터 파일을 불러올 수 없습니다.</div>`;
+        }
+    }
+
+    // ── 필터 & 정렬 ──────────────────────────────────────────────────────
+
+    /** 현재 검색어와 정렬 조건을 적용해 테이블을 다시 그립니다 */
+    function applyFilters() {
+        const searchText = document.getElementById('gatherSearch')?.value.trim().toLowerCase() || '';
+
+        let filtered = gatherData.filter(item => {
+            // 이름 검색 필터
+            if (searchText && !item.name.toLowerCase().includes(searchText)) return false;
+            return true;
+        });
+
+        // 정렬 적용
+        filtered = sortItems(filtered);
+
+        // 표시 중 통계 업데이트
+        document.getElementById('statVisible').textContent = filtered.length;
+
+        renderTable(filtered);
+    }
+
+    /**
+     * 아이템 배열을 현재 sortKey / sortDir 에 따라 정렬.
+     * @param {Array} items
+     * @returns {Array} 정렬된 배열
+     */
+    function sortItems(items) {
+        return [...items].sort((a, b) => {
+            let av = a[sortKey] ?? '';
+            let bv = b[sortKey] ?? '';
+
+            if (typeof av === 'number' && typeof bv === 'number') {
+                return sortDir === 'asc' ? av - bv : bv - av;
+            }
+
+            av = String(av);
+            bv = String(bv);
+            const cmp = av.localeCompare(bv, 'ko');
+            return sortDir === 'asc' ? cmp : -cmp;
+        });
+    }
+
+    /**
+     * 정렬 키를 변경합니다. 같은 키를 다시 클릭하면 방향이 반전됩니다.
+     * @param {string} key - 정렬 기준 필드명
+     */
+    function setSort(key) {
+        if (sortKey === key) {
+            sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortKey = key;
+            sortDir = key === 'name' ? 'asc' : 'desc';
+        }
+        applyFilters();
+    }
+
+    // ── 렌더링 ────────────────────────────────────────────────────────────
+
+    /** 통계 카드 업데이트 */
+    function updateStats() {
+        const prices   = gatherData.map(i => i.sellPrice).filter(v => v != null);
+        const maxPrice = prices.length ? Math.max(...prices) : '-';
+
+        document.getElementById('statTotal').textContent    = gatherData.length;
+        document.getElementById('statVisible').textContent  = gatherData.length;
+        document.getElementById('statMaxPrice').textContent = maxPrice !== '-' ? `${maxPrice}G` : '-';
+    }
+
+    /**
+     * 아이템 배열로 테이블을 렌더링합니다.
+     * @param {Array} [items] - 렌더링할 배열. 생략 시 gatherData 전체 사용
+     */
+    function renderTable(items) {
+        const data = items ?? gatherData;
+
+        if (data.length === 0) {
+            document.getElementById('content').innerHTML =
+                '<div class="no-results">조건에 맞는 아이템이 없습니다.</div>';
+            return;
+        }
+
+        // 정렬 방향 표시 헬퍼
+        const arrow = (key) => {
+            if (sortKey !== key) return '';
+            return `<span class="sort-indicator">${sortDir === 'asc' ? '▲' : '▼'}</span>`;
+        };
+
+        const rows = data.map(item => `
+            <tr>
+                <td>${item.name}</td>
+                <td class="price">${item.sellPrice != null ? item.sellPrice + 'G' : '-'}</td>
+            </tr>`
+        ).join('');
+
+        document.getElementById('content').innerHTML = `
+            <table class="gather-table">
+                <thead>
+                    <tr>
+                        <th onclick="setSort('name')">아이템명 ${arrow('name')}</th>
+                        <th class="price" onclick="setSort('sellPrice')">판매가 ${arrow('sellPrice')}</th>
+                    </tr>
+                </thead>
+                <tbody>${rows}</tbody>
+            </table>`;
+    }
+
+    // ── 실행 ──────────────────────────────────────────────────────────────
+    loadGatherData();
+</script>
+</body>
+</html>

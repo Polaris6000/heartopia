@@ -463,11 +463,20 @@
                 <button class="view-btn" id="btnTable" onclick="setView('table')">테이블</button>
             </div>
         </div>
+        <!-- 빙설 시즌 추가/제거 -->
         <div class="control-group">
             <label>❄️ 빙설 시즌</label>
             <div style="display:flex; gap:6px;">
-                <button class="season-btn"        id="btnSeasonAdd"    onclick="loadSeasonData()">❄️ 시즌 추가</button>
-                <button class="season-btn-remove" id="btnSeasonRemove" onclick="removeSeasonData()" disabled>🗑️ 시즌 제거</button>
+                <button class="season-btn"        id="btnIceAdd"    onclick="loadSeasonData('ice')">❄️ 시즌 추가</button>
+                <button class="season-btn-remove" id="btnIceRemove" onclick="removeSeasonData('ice')" disabled>🗑️ 제거</button>
+            </div>
+        </div>
+        <!-- 꿈의 명암 시즌 추가/제거 — 새 시즌 추가 시 이 블록을 복사해서 id/함수 인자만 수정 -->
+        <div class="control-group">
+            <label>🌙 꿈의 명암</label>
+            <div style="display:flex; gap:6px;">
+                <button class="season-btn season-dreamlight-btn" id="btnDreamlightAdd"    onclick="loadSeasonData('dreamlight')">🌙 시즌 추가</button>
+                <button class="season-btn-remove"                id="btnDreamlightRemove" onclick="removeSeasonData('dreamlight')" disabled>🗑️ 제거</button>
             </div>
         </div>
     </div>
@@ -501,7 +510,11 @@
 let recipeData   = null;
 let allProcessed = [];    // 계산 완료된 레시피 목록
 let baseProcessed = [];   // 시즌 추가 전 원본 레시피 목록 (제거 시 복원용)
-let iceLoaded    = false; // 빙설 시즌 데이터 로드 여부
+// 시즌별 로드 여부 추적 — 새 시즌 추가 시 키만 늘리면 됩니다
+const seasonLoaded = {
+    ice:        false,  // 빙설 시즌
+    dreamlight: false,  // 꿈의 명암 시즌
+};
 let currentGrade = 1;
 let currentView  = 'card';
 let sortKey      = 'profit-desc';
@@ -520,6 +533,16 @@ async function loadAll() {
     ]);
 
     recipeData = recipes;
+
+    // gradeMultipliers / staminaMultipliers 키를 '1.0' → '1' 형태로 정규화.
+    // csv_to_json.py 에서 소수점 키로 저장될 수 있어 String(grade) 조회가 실패하는 버그 방지.
+    ['gradeMultipliers', 'staminaMultipliers'].forEach(field => {
+        const normalized = {};
+        for (const [k, v] of Object.entries(recipeData[field] || {})) {
+            normalized[String(Math.round(parseFloat(k)))] = v;
+        }
+        recipeData[field] = normalized;
+    });
 
     // 작물 (기회비용 = sellPrice)
     for (const c of crops.items) {
@@ -724,8 +747,10 @@ function renderCard(r, maxROI, maxGPS) {
            </div>`
         : '';
 
-    // 시즌 배지 (빙설 시즌 전용 레시피에만 표시)
-    const seasonTag = r.season ? `<span class="season-tag">❄️ ${r.season}</span>` : '';
+    // 시즌 배지 - 시즌명에 따라 이모지 자동 선택
+    const SEASON_EMOJI_MAP = { '빙설': '❄️', '꿈의 명암': '🌙' };
+    const seasonEmoji = (r.season && SEASON_EMOJI_MAP[r.season]) ? SEASON_EMOJI_MAP[r.season] : '🗓️';
+    const seasonTag = r.season ? `<span class="season-tag">${seasonEmoji} ${r.season}</span>` : '';
 
     // 버프: 값이 있으면 "버프이름 + 등급수" 형식으로 표시 (예: 활력 충만1, 활력 충만5)
     const buffHTML = r.buff
@@ -797,8 +822,10 @@ function renderTable(list, area) {
                     onerror="this.style.display='none'">`
             : '';
 
-        // 시즌 배지
-        const seasonTagTbl = r.season ? `<span class="season-tag">❄️ ${r.season}</span>` : '';
+        // 시즌 배지 - 시즌명에 따라 이모지 자동 선택
+        const SEASON_EMOJI_MAP_TBL = { '빙설': '❄️', '꿈의 명암': '🌙' };
+        const seasonEmojiTbl = (r.season && SEASON_EMOJI_MAP_TBL[r.season]) ? SEASON_EMOJI_MAP_TBL[r.season] : '🗓️';
+        const seasonTagTbl = r.season ? `<span class="season-tag">${seasonEmojiTbl} ${r.season}</span>` : '';
 
         // 버프: 값이 있으면 "버프이름 + 등급수" 형식 (예: 활력 충만1)
         const buffCellHTML = r.buff
@@ -842,19 +869,48 @@ function renderTable(list, area) {
     </div>`;
 }
 
-// ── 빙설 시즌 데이터 추가 ──
-async function loadSeasonData() {
-    if (iceLoaded) { alert('이미 빙설 시즌 데이터가 추가되어 있습니다.'); return; }
+// ── 시즌 설정 테이블 ──
+// 새 시즌 추가 시 이 객체에 항목만 추가하면 됩니다.
+// label: 사용자에게 표시되는 이름 / jsonPath: JSON 파일 경로 / emoji: 표시 이모지
+// btnAdd / btnRemove: 버튼 element id
+const SEASON_CONFIG = {
+    ice: {
+        label:    '빙설 시즌',
+        emoji:    '❄️',
+        jsonPath: '../../data/season_ice/season_ice_recipes.json',
+        btnAdd:    'btnIceAdd',
+        btnRemove: 'btnIceRemove',
+    },
+    dreamlight: {
+        label:    '꿈의 명암 시즌',
+        emoji:    '🌙',
+        jsonPath: '../../data/season_dreamlight/season_dreamlight_recipes.json',
+        btnAdd:    'btnDreamlightAdd',
+        btnRemove: 'btnDreamlightRemove',
+    },
+};
+
+// ── 시즌 데이터 추가 ──
+// season: 'ice' | 'dreamlight' (SEASON_CONFIG 의 키)
+async function loadSeasonData(season) {
+    const cfg = SEASON_CONFIG[season];
+    if (!cfg) { console.error('알 수 없는 시즌:', season); return; }
+    if (seasonLoaded[season]) {
+        alert(`이미 ${cfg.label} 데이터가 추가되어 있습니다.`);
+        return;
+    }
 
     try {
-        const res = await fetch('../../data/season_ice/season_ice_recipes.json');
-        if (!res.ok) throw new Error('season_ice_recipes.json을 찾을 수 없습니다.');
+        const res = await fetch(cfg.jsonPath);
+        if (!res.ok) throw new Error(`${cfg.jsonPath} 파일을 찾을 수 없습니다.`);
 
         const json = await res.json();
 
-        // 시즌 레시피를 costMap에 먼저 등록 (다른 시즌 레시피가 재료로 쓰일 때 대비)
+        // 시즌 레시피를 costMap에 등록 (다른 시즌 레시피가 재료로 쓰일 때 대비)
+        // gradeMultipliers 키가 '1.0' 형태일 수 있으므로 둘 다 시도
+        const grade1Mul = json.gradeMultipliers?.['1'] ?? json.gradeMultipliers?.['1.0'] ?? 1;
         for (const item of json.items) {
-            costMap[item.name] = { cost: item.price * json.gradeMultipliers['1'], type: 'recipe' };
+            costMap[item.name] = { cost: item.price * grade1Mul, type: 'recipe' };
         }
 
         // 시즌 아이템 처리 후 기존 목록과 병합 (이름 중복 제거)
@@ -864,42 +920,62 @@ async function loadSeasonData() {
             idx === self.findIndex(r => r.name === item.name)
         );
 
-        iceLoaded = true;
+        seasonLoaded[season] = true;
         // 버튼 상태 업데이트
-        document.getElementById('btnSeasonAdd').disabled    = true;
-        document.getElementById('btnSeasonRemove').disabled = false;
+        document.getElementById(cfg.btnAdd).disabled    = true;
+        document.getElementById(cfg.btnRemove).disabled = false;
 
         updateStats();
         applyFilters();
-        alert(`❄️ 빙설 시즌 레시피 ${seasonProcessed.length}종이 추가되었습니다. (총 ${allProcessed.length}종)`);
+        alert(`${cfg.emoji} ${cfg.label} 레시피 ${seasonProcessed.length}종이 추가되었습니다. (총 ${allProcessed.length}종)`);
     } catch (err) {
         console.error('시즌 데이터 로드 오류:', err);
         alert(`시즌 데이터를 불러오지 못했습니다.\n${err.message}`);
     }
 }
 
-// ── 빙설 시즌 데이터 제거 ──
-function removeSeasonData() {
-    if (!iceLoaded) { alert('제거할 시즌 데이터가 없습니다.'); return; }
+// ── 시즌 데이터 제거 ──
+// season: 'ice' | 'dreamlight'  (특정 시즌만 제거)
+// 인자 없이 호출하면 모든 시즌 제거
+function removeSeasonData(season) {
+    // 특정 시즌 제거
+    if (season) {
+        const cfg = SEASON_CONFIG[season];
+        if (!cfg) return;
+        if (!seasonLoaded[season]) { alert(`제거할 ${cfg.label} 데이터가 없습니다.`); return; }
 
-    // costMap에서 시즌 레시피 항목 제거 (원본 레시피만 남기기)
-    const baseNames = new Set(baseProcessed.map(r => r.name));
-    for (const key of Object.keys(costMap)) {
-        if (!baseNames.has(key)) {
-            // 시즌 레시피로 등록된 costMap 항목 삭제
-            // (기존 비시즌 항목에는 영향 없음 - 이름 겹칠 일 없음)
-        }
+        // 해당 시즌의 아이템을 allProcessed 에서 제거
+        // special 필드로 시즌 레시피를 식별 (csv_to_json.py 에서 special 필드 설정됨)
+        allProcessed = allProcessed.filter(r => {
+            const specialVal = r.special;
+            if (season === 'ice')        return specialVal !== '빙설' && specialVal !== '빙설 시즌';
+            if (season === 'dreamlight') return specialVal !== '꿈의 명암';
+            return true;
+        });
+
+        seasonLoaded[season] = false;
+        document.getElementById(cfg.btnAdd).disabled    = false;
+        document.getElementById(cfg.btnRemove).disabled = true;
+
+        updateStats();
+        applyFilters();
+        alert(`${cfg.emoji} ${cfg.label} 데이터가 제거되었습니다.`);
+        return;
     }
 
-    allProcessed = [...baseProcessed]; // 원본 복원
-    iceLoaded = false;
-    // 버튼 상태 업데이트
-    document.getElementById('btnSeasonAdd').disabled    = false;
-    document.getElementById('btnSeasonRemove').disabled = true;
-
+    // 인자 없이 호출 시 전체 제거 (이전 버전 호환)
+    allProcessed = [...baseProcessed];
+    for (const key of Object.keys(seasonLoaded)) {
+        seasonLoaded[key] = false;
+        const cfg = SEASON_CONFIG[key];
+        if (cfg) {
+            document.getElementById(cfg.btnAdd).disabled    = false;
+            document.getElementById(cfg.btnRemove).disabled = true;
+        }
+    }
     updateStats();
     applyFilters();
-    alert('빙설 시즌 데이터가 제거되었습니다.');
+    alert('모든 시즌 데이터가 제거되었습니다.');
 }
 
 function setSort(field) {
