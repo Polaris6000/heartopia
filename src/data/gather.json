@@ -5,6 +5,10 @@
   { "name": "라즈베리",    "sellPrice": 26 },
   { "name": "버섯",  "sellPrice": 16 },
   { "name": "검은 트러플", "sellPrice": 99 },
+  { "name": "야생 고사리", "sellPrice": 5 },
+  { "name": "산마늘", "sellPrice": 5 },
+  { "name": "산우엉", "sellPrice": 5 },
+  { "name": "산겨자", "sellPrice": 5 },
 
   { "name": "물고기(50)",  "sellPrice": 50 },
   { "name": "물고기(75)",  "sellPrice": 75 },
