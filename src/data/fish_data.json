@@ -362,7 +362,7 @@
   {
     "name": "극지연어",
     "level": 1,
-    "habitat": "온천산수",
+    "habitat": "온천산 호수",
     "size": "중간",
     "time": [
       "아침",
@@ -480,7 +480,7 @@
   {
     "name": "매화농어",
     "level": 2,
-    "habitat": "온천산수",
+    "habitat": "온천산 호수",
     "size": "작음",
     "time": [
       "낮",
@@ -574,6 +574,26 @@
     "image": 313
   },
   {
+    "name": "흰동가리",
+    "level": 3,
+    "habitat": "구해",
+    "size": "작음",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 100,
+    "special": false,
+    "image": 376
+  },
+  {
     "name": "홍합",
     "level": 3,
     "habitat": "근교 호수",
@@ -654,7 +674,7 @@
   {
     "name": "올챙이",
     "level": 3,
-    "habitat": "온천산수",
+    "habitat": "온천산 호수",
     "size": "작음",
     "time": [
       "아침",
@@ -689,6 +709,26 @@
     "price": 150,
     "special": false,
     "image": 326
+  },
+  {
+    "name": "레드벨리피라냐",
+    "level": 4,
+    "habitat": "거목강",
+    "size": "중간",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 230,
+    "special": false,
+    "image": 136
   },
   {
     "name": "민물대구",
@@ -780,6 +820,66 @@
     "price": 150,
     "special": false,
     "image": 113
+  },
+  {
+    "name": "틸라피아",
+    "level": 4,
+    "habitat": "모든 강",
+    "size": "푸른색",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 360,
+    "special": false,
+    "image": 126
+  },
+  {
+    "name": "대서양은상어",
+    "level": 4,
+    "habitat": "모든 바다",
+    "size": "푸른색",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 320,
+    "special": false,
+    "image": 329
+  },
+  {
+    "name": "유럽참개구리",
+    "level": 4,
+    "habitat": "모든 호수",
+    "size": "푸른색",
+    "time": [
+      "아침",
+      "낮",
+      "저녁",
+      "새벽"
+    ],
+    "weather": [
+      "맑음",
+      "비",
+      "무지개"
+    ],
+    "price": 320,
+    "special": false,
+    "image": 106
   },
   {
     "name": "대문짝넙치",
@@ -1137,7 +1237,7 @@
   {
     "name": "둑중개",
     "level": 7,
-    "habitat": "온천산수",
+    "habitat": "온천산 호수",
     "size": "작음",
     "time": [
       "아침",
@@ -1350,7 +1450,7 @@
   {
     "name": "펌프킨시드",
     "level": 9,
-    "habitat": "온천산수",
+    "habitat": "온천산 호수",
     "size": "작음",
     "time": [
       "아침",
@@ -1449,8 +1549,8 @@
   {
     "name": "블루길",
     "level": 10,
-    "habitat": "온천산수",
-    "size": "중간",
+    "habitat": "온천산 호수",
+    "size": "작음",
     "time": [
       "저녁",
       "새벽"
@@ -1501,7 +1601,7 @@
   {
     "name": "라이언헤드",
     "level": 11,
-    "habitat": "온천산수",
+    "habitat": "온천산 호수",
     "size": "중간",
     "time": [
       "아침",
@@ -1693,105 +1793,5 @@
     ],
     "price": 395,
     "special": false
-  },
-  {
-    "name": "틸라피아",
-    "level": 4,
-    "habitat": "모든 강",
-    "size": "푸른색",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 360,
-    "special": false,
-    "image": 126
-  },
-  {
-    "name": "대서양은상어",
-    "level": 4,
-    "habitat": "모든 바다",
-    "size": "푸른색",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 320,
-    "special": false,
-    "image": 329
-  },
-  {
-    "name": "유럽참개구리",
-    "level": 4,
-    "habitat": "모든 호수",
-    "size": "푸른색",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 320,
-    "special": false,
-    "image": 106
-  },
-  {
-    "name": "흰동가리",
-    "level": 3,
-    "habitat": "구해",
-    "size": "작음",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 100,
-    "special": false,
-    "image": 376
-  },
-  {
-    "name": "레드벨리피라냐",
-    "level": 4,
-    "habitat": "거목강",
-    "size": "중간",
-    "time": [
-      "아침",
-      "낮",
-      "저녁",
-      "새벽"
-    ],
-    "weather": [
-      "맑음",
-      "비",
-      "무지개"
-    ],
-    "price": 230,
-    "special": false,
-    "image": 136
   }
 ]

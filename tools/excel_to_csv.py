@@ -20,6 +20,7 @@ csv_to_json.py 실행 전 선행 단계로 사용한다.
 
   # 특정 시트 + 출력 파일명 지정
   python tools/excel_to_csv.py tools/excel/heartopia_data.xlsx --sheet "🍳 레시피" --name 레시피.csv
+  python tools/excel_to_csv.py tools/excel/heartopia_data.xlsx --sheet "🌿 채집" --name 채집.csv
 
   # 시트 목록 확인 (변환 없이 시트명만 출력)
   python tools/excel_to_csv.py tools/excel/heartopia_data.xlsx --list-sheets

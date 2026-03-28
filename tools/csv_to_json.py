@@ -47,6 +47,7 @@ heartopia/
 
   # 특정 타입만 변환
   python tools/csv_to_json.py fish
+  python tools/csv_to_json.py gather
   python tools/csv_to_json.py insect bird
   python tools/csv_to_json.py fish insect bird recipe crops shop gather
 
@@ -659,8 +660,8 @@ def convert_gather_row(row: dict[str, str]) -> dict[str, Any] | None:
     """
     CSV 한 행을 채집 아이템 JSON 객체로 변환.
 
-    CSV 컬럼: 이름, 판매가
-    JSON 필드: name, sellPrice
+    CSV 컬럼: 이름, 판매가, 숨김
+    JSON 필드: name, sellPrice, hidden(optional)
 
     채집 아이템은 시즌 구분이 없으며 gather.json 단일 파일에 저장됩니다.
     """
@@ -672,10 +673,19 @@ def convert_gather_row(row: dict[str, str]) -> dict[str, Any] | None:
     if not sell_raw:
         return None
 
-    return {
+    # 기본 객체 먼저 생성
+    obj: dict[str, Any] = {
         "name":      name,
         "sellPrice": parse_int(sell_raw),
     }
+
+    # 숨김 여부 처리 - CSV의 "True" 문자열을 boolean True 로 변환
+    # 값이 없는 경우(빈 문자열)에는 hidden 필드 자체를 생략
+    hidden = str(row.get("숨김", "")).strip()
+    if hidden:
+        obj["hidden"] = hidden.lower() == "true"
+
+    return obj
 
 
 def convert_gather(data_type: str) -> None:

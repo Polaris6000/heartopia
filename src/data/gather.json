@@ -59,6 +59,11 @@
     "hidden": true
   },
   {
+    "name": "잔디",
+    "sellPrice": 0,
+    "hidden": true
+  },
+  {
     "name": "야생 고사리",
     "sellPrice": 5
   },
@@ -73,5 +78,9 @@
   {
     "name": "산겨자",
     "sellPrice": 5
+  },
+  {
+    "name": "잔디",
+    "sellPrice": 0
   }
 ]

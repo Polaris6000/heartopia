@@ -804,8 +804,8 @@ td {
 }
 
 /* 이름 컬럼 최소 너비 확보 */
-td.item-name, th:first-child {
-    min-width: 100px;
+td.item-name {
+    min-width: 150px;
     word-break: keep-all;
 }
 
