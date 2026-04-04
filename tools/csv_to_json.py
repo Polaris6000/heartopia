@@ -295,10 +295,10 @@ def convert_recipe_row(row: dict[str, str]) -> dict[str, Any] | None:
     """
     CSV 한 행을 레시피 JSON 객체로 변환.
 
-    CSV 컬럼: 이름, 판매가(1등급), 스태미나(1등급),
+    CSV 컬럼: 이름, 판매가(1등급), 체력(1등급),
               재료1, 재료2, 재료3, 재료4,
               이미지, 시즌, 버프,
-              (빈 열), 등급, 판매 배수, 스태미나 배수
+              (빈 열), 등급, 판매 배수, 체력 배수
 
     JSON 필드: name, price, stamina, ingredients, image(선택), buff(선택)
 
@@ -319,7 +319,7 @@ def convert_recipe_row(row: dict[str, str]) -> dict[str, Any] | None:
         except ValueError:
             grade_num = raw_num
         price_mult   = parse_number(row.get("판매 배수", ""))
-        stamina_mult = parse_number(row.get("스태미나 배수", ""))
+        stamina_mult = parse_number(row.get("체력 배수", ""))
         if price_mult is not None:
             _recipe_grade_mult[grade_num] = price_mult
         if stamina_mult is not None:
@@ -335,7 +335,7 @@ def convert_recipe_row(row: dict[str, str]) -> dict[str, Any] | None:
     if not price_raw:
         return None  # 가격 없는 행(범례, 메모 등) 건너뜀
 
-    stamina_raw = row.get("스태미나(1등급)", row.get("스태미나 (1등급)", ""))
+    stamina_raw = row.get("체력(1등급)", row.get("체력 (1등급)", ""))
 
     # 재료1~4 컬럼을 읽어 비어 있지 않은 값만 리스트로 결합
     ingredients = [

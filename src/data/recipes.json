@@ -225,6 +225,58 @@
       "image": "egg"
     },
     {
+      "name": "부활절 달걀",
+      "price": 190,
+      "stamina": 20,
+      "ingredients": [
+        "달걀",
+        "우유"
+      ],
+      "image": "food_9222"
+    },
+    {
+      "name": "부활절 보라 달걀",
+      "price": 620,
+      "stamina": 50,
+      "ingredients": [
+        "달걀",
+        "포도"
+      ],
+      "image": "food_9223"
+    },
+    {
+      "name": "부활절 초록 달걀",
+      "price": 570,
+      "stamina": 50,
+      "ingredients": [
+        "달걀",
+        "양상추"
+      ],
+      "image": "food_9224"
+    },
+    {
+      "name": "부활절 주황 달걀",
+      "price": 190,
+      "stamina": 20,
+      "ingredients": [
+        "달걀",
+        "사과"
+      ],
+      "image": "food_9225"
+    },
+    {
+      "name": "부활절 이스터에그 파티",
+      "price": 1650,
+      "stamina": 55,
+      "ingredients": [
+        "부활절 달걀",
+        "부활절 보라 달걀",
+        "부활절 초록 달걀",
+        "부활절 주황 달걀"
+      ],
+      "image": "food_9226"
+    },
+    {
       "name": "잔디 케이크",
       "price": 690,
       "stamina": 50,
